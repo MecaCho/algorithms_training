@@ -1,0 +1,16 @@
+def solution(arr, remain_mon):
+    ret = []
+    for i in arr:
+        if remain_mon-i > 0:
+            ret = ret.append(i)
+            return solution(arr, remain_mon-i)
+        elif remain_mon-i == 0:
+            ret = ret.append(i)
+            return ret
+        else:
+            return False
+
+
+if __name__ == "__main__":
+    arr = [10, 5, 2, 1]
+    solution(arr, 5)
