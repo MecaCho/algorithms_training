@@ -26,4 +26,24 @@ class Solution(object):
                 if aList[i][j] != " ":
                     ret += aList[i][j] 
         return ret
+   
+```
+Note also that the copies are shallow; nested structures are not copied. This often haunts new Python programmers; consider:
+
+>>> lists = [[]] * 3
+>>> lists
+[[], [], []]
+>>> lists[0].append(3)
+>>> lists
+[[3], [3], [3]]
+What has happened is that [[]] is a one-element list containing an empty list, so all three elements of [[]] * 3 are (pointers to) this single empty list. Modifying any of the elements of lists modifies this single list. You can create a list of different lists this way:
+
+>>>
+>>> lists = [[] for i in range(3)]
+>>> lists[0].append(3)
+>>> lists[1].append(5)
+>>> lists[2].append(7)
+>>> lists
+[[3], [5], [7]]
+    ```
 
