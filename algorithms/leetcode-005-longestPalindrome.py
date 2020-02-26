@@ -15,4 +15,14 @@ class Solution(object):
                 if P[i][j] and (j - i + 1 > len(maxStr)):
                     maxStr = s[i:j+1]
         return maxStr
+```
+Approach 1: Longest Common Substring
+Approach 2: Brute Force
+Approach 3: Dynamic Programming
 
+To improve over the brute force solution, we first observe how we can avoid unnecessary re-computation while validating palindromes. Consider the case "ababa". If we already knew that "bab" is a palindrome, it is obvious that "ababa" must be a palindrome since the two left and right end letters are the same.
+
+Approach 4: Expand Around Center
+    
+Approach 5: Manacher's Algorithm
+```
