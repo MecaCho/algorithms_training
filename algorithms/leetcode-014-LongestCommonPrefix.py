@@ -40,4 +40,13 @@ class Solution(object):
         :type strs: List[str]
         :rtype: str
         """
+        res = ""
+        if not strs:
+            return res
+        shortestStr = min(strs, key=len)
+        for i in range(len(shortestStr)):
+            for item in strs:
+                if item[i] != shortestStr[i]:
+                    return shortestStr[:i]
+        return shortestStr
  ```
