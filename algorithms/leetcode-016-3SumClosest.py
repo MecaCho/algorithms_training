@@ -22,4 +22,34 @@ class Solution(object):
         :type target: int
         :rtype: int
         """
+        # res = target
+        length = len(nums)
+        if length <=3:
+            return sum(nums)
+            
+        nums = sorted(nums)
+
+        result_list = [nums[0] , nums[1] , nums[2]]
+        closer = abs(nums[0] + nums[1] + nums[2] - target)
+        for i in range(length):
+            j = i + 1
+            k = length - 1
+            
+            while j < k:
+                new_sum = nums[i] + nums[j] + nums[k]
+                if abs(new_sum - target) < closer:
+                    closer = abs(new_sum - target)
+                    result_list = [nums[i], nums[j], nums[k]]
+
+                if new_sum - target == 0:
+                    return sum([nums[i], nums[j], nums[k]])
+                
+                if new_sum - target > 0:
+                    # if nums[k] > 0:
+                    k -=1
+                if new_sum - target < 0:
+                    j += 1
+
+
+        return sum(result_list)
 ```
