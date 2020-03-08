@@ -1,3 +1,5 @@
+
+'''
 206. Reverse Linked List
 Reverse a singly linked list.
 
@@ -26,7 +28,7 @@ A linked list can be reversed either iteratively or recursively. Could you imple
 #     def __init__(self, x):
 #         self.val = x
 #         self.next = None
-
+'''
 
 class Solution(object):
     def reverseList(self, head):
@@ -39,11 +41,13 @@ class Solution(object):
             tmp = cur.next
             pre, cur.next = cur, pre
             cur = tmp
-            
+
+        str.__contains__("hello", "h")
         return pre
 
-2.递归
-class Solution(object):
+'''2.递归'''
+
+class Solution1(object):
     def reverseList(self, head):
         """
         :type head: ListNode
@@ -57,4 +61,4 @@ class Solution(object):
         head.next = None
 
         return p
-```
+
