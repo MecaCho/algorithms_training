@@ -39,6 +39,24 @@ Explanation: In this case, no transaction is done, i.e. max profit = 0.
 解释: 在这种情况下, 没有交易完成, 所以最大利润为 0。
 '''
 
+'''
+动态规划
+'''
+class Solution1(object):
+    def maxProfit(self, prices):
+        """
+        :type prices: List[int]
+        :rtype: int
+        """
+        k = 1
+        cash, asset = [float('-inf')] * (k + 1), [0] * (k + 1)
+        for price in prices:
+            for i in range(1, k + 1):
+                cash[i] = max(cash[i], asset[i - 1] - price)
+                asset[i] = max(asset[i], cash[i] + price)
+        return asset[-1]
+      
+      
 class Solution(object):
     def maxProfit(self, prices):
         """
