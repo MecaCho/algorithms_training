@@ -55,7 +55,10 @@ class Solution1(object):
                 cash[i] = max(cash[i], asset[i - 1] - price)
                 asset[i] = max(asset[i], cash[i] + price)
         return asset[-1]
-      
+
+
+def init():
+    print("hello")
       
 class Solution(object):
     def maxProfit(self, prices):
@@ -73,10 +76,19 @@ class Solution(object):
 
         return max_profit(prices)
 
+    @staticmethod
+    def max_profit():
+        print("staticmethod")
+
 '''
 作者：qiuwenqi
 链接：https://leetcode-cn.com/problems/best-time-to-buy-and-sell-stock/solution/python-jian-dan-suan-fa-ji-bai-liao-10000-de-yong-/
 来源：力扣（LeetCode）
 著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
 '''
+
+if __name__ == '__main__':
+    demo = Solution()
+    demo.maxProfit([1,2,4,5,9])
+    demo.max_profit()
 
