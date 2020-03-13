@@ -48,6 +48,33 @@ Bonus points if you could solve it both recursively and iteratively.
 '''
 
 
+'''
+递归
+'''
+# Definition for a binary tree node.
+# class TreeNode(object):
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+
+class Solution1(object):
+    def isSymmetric(self, root):
+        """
+        :type root: TreeNode
+        :rtype: bool
+        """
+        def is_mirror(root_left, root_right):
+            if not root_left and not root_right:
+                return True
+            if not root_right or not root_left:
+                return False
+            if root_left.val != root_right.val:
+                return False
+            return is_mirror(root_left.right, root_right.left) and is_mirror(root_left.left, root_right.right)
+        return is_mirror(root, root)
+
+
 # Definition for a binary tree node.
 # class TreeNode(object):
 #     def __init__(self, x):
