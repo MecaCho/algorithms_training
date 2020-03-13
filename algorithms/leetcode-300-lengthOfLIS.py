@@ -36,7 +36,22 @@ Follow up: Could you improve it to O(n log n) time complexity?
 
 ### 代码
 
-```python
+# 动态规划
+class Solution1(object):
+    def lengthOfLIS(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        dp = []
+        for i in range(len(nums)):
+            dp.append(1)
+            for j in range(i):
+                if nums[i] > nums[j]:
+                    dp[i] = max(dp[j] + 1, dp[i])
+        return max(dp) if dp else 0
+
+# 贪心+二分法
 class Solution(object):
     def lengthOfLIS(self, nums):
         """
@@ -62,4 +77,3 @@ class Solution(object):
                         break
                 cur_nums[l] = nums[i]
         return len(cur_nums)
-```
