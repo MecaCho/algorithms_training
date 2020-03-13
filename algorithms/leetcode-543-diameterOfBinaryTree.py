@@ -58,3 +58,13 @@ class Solution(object):
             return max(L, R) + 1
         deepth(root)
         return self.res - 1
+
+
+if __name__ == '__main__':
+    def gcd(m, n):
+        if n == 0:
+            return m
+        else:
+            return gcd(n, m % n)
+    print(gcd(640, 360))
+    print(gcd(360, 640))
