@@ -1,4 +1,5 @@
-‘’‘
+'''
+# leetcode 53 
 
 53. Maximum Subarray
 Given an integer array nums, find the contiguous subarray (containing at least one number) which has the largest sum and return its sum.
@@ -23,7 +24,9 @@ If you have figured out the O(n) solution, try coding another solution using the
 进阶:
 
 如果你已经实现复杂度为 O(n) 的解法，尝试使用更为精妙的分治法求解。
-’‘’
+
+'''
+
 
 class Solution(object):
     def maxSubArray(self, nums):
