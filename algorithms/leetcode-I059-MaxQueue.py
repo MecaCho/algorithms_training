@@ -74,8 +74,3 @@ class MaxQueue(object):
 # param_1 = obj.max_value()
 # obj.push_back(value)
 # param_3 = obj.pop_front()
-
-作者：qiuwenqi
-链接：https://leetcode-cn.com/problems/dui-lie-de-zui-da-zhi-lcof/solution/python-dui-lie-de-zui-da-zhi-by-qiuwenqi/
-来源：力扣（LeetCode）
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
