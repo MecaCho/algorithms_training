@@ -1,5 +1,6 @@
 
 '''
+
 66. Plus One
 Given a non-empty array of digits representing a non-negative integer, plus one to the integer.
 
@@ -37,6 +38,7 @@ Explanation: The array represents the integer 4321.
 解释: 输入数组表示数字 4321。
 
 '''
+
 
 class Solution(object):
     def plusOne(self, digits):
