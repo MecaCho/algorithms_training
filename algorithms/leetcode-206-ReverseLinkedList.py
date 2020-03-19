@@ -42,7 +42,6 @@ class Solution(object):
             pre, cur.next = cur, pre
             cur = tmp
 
-        str.__contains__("hello", "h")
         return pre
 
 '''2.递归'''
