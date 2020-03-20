@@ -35,3 +35,11 @@ class Solution(object):
         :rtype: int
         """
         return len(nums) *(len(nums)  + 1) / 2 - sum(nums)
+
+#     位运算
+class Solution1:
+    def missingNumber(self, nums):
+        missing = len(nums)
+        for i, num in enumerate(nums):
+            missing ^= i ^ num
+        return missing
