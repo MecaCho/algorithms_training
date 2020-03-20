@@ -50,6 +50,9 @@ class Solution(object):
         :type n: int
         :rtype: bool
         """
+        import math
+        gcd_val = math.gcd(10, 20)
+        print(gcd_val)
         while n:
             if n == 1:
                 return True
@@ -57,3 +60,7 @@ class Solution(object):
                 return False
             n /= 3
         return False
+
+if __name__ == '__main__':
+    demo = Solution()
+    demo.isPowerOfThree(27)
