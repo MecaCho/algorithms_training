@@ -1,6 +1,6 @@
 
 '''
-常数时间插入、删除和获取随机元素
+380. 常数时间插入、删除和获取随机元素
 设计一个支持在平均 时间复杂度 O(1) 下，执行以下操作的数据结构。
 
 insert(val)：当元素 val 不存在时，向集合中插入该项。
@@ -32,6 +32,7 @@ randomSet.insert(2);
 // 由于 2 是集合中唯一的数字，getRandom 总是返回 2 。
 randomSet.getRandom();
 
+380. Insert Delete GetRandom O(1)
 Design a data structure that supports all following operations in average O(1) time.
 
 insert(val): Inserts an item val to the set if not already present.
