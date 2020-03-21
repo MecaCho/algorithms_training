@@ -1,5 +1,6 @@
 .idea
 .idea_bak
+push.py
 
 *.log
 .idea

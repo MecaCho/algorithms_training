@@ -14,7 +14,7 @@
  * algorithms/LRU-cache
  * [LRU-cache](algorithms/LRU-cache/README.md)
  * algorithms/red-black-tree
- * [red-black-tree](algorithms/red-black-tree/README.md)
+ * [red-black-tree](algorithms/tree/README.md)
  * algorithms/search
  * [search](algorithms/search/README.md)
  * algorithms/trie
