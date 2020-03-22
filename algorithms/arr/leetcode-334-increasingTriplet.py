@@ -65,3 +65,56 @@ class Solution(object):
                 if j + 1 <= len(min_vals) - 1:
                     min_vals[j + 1] = nums[i]
         return False
+
+
+class Solution1(object):
+    def increasingTriplet(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: bool
+        """
+        if len(nums) < 3:
+            return False
+        left = []
+        min_val = nums[0]
+
+        for i in range(len(nums)):
+            if nums[i] > min_val:
+                left.append(min_val)
+            else:
+                min_val = nums[i]
+                left.append(None)
+
+        right = []
+        max_val = nums[-1]
+        for i in range(len(nums) - 1, 0, -1):
+            if nums[i] < max_val:
+                right.append(max_val)
+            else:
+                max_val = nums[i]
+                right.append(None)
+        # print(left, right[::-1])
+
+        for i in range(len(nums)):
+            if left[i] is not None and right[len(nums) - 1 - i] is not None:
+                return True
+        return False
+
+
+# 动态规划
+class Solution2(object):
+    def increasingTriplet(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: bool
+        """
+        length = len(nums)
+        dp = [1] * length
+        for i in range(length):
+            for j in range(0, i):
+                if nums[i] > nums[j]:
+                    dp[i] = max(dp[j] + 1, dp[i])
+        return max(dp) >= 3 if length > 2 else False
+
+
+
