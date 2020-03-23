@@ -32,3 +32,35 @@ class Solution(object):
             val_list.append(head.val)
             head = head.next
         return val_list[-k]
+
+    
+# Definition for singly-linked list.
+# class ListNode(object):
+#     def __init__(self, x):
+#         self.val = x
+#         self.next = None
+
+class Solution1(object):
+    def kthToLast(self, head, k):
+        """
+        :type head: ListNode
+        :type k: int
+        :rtype: int
+        """
+        # val_list = []
+        # while head:
+        #     val_list.append(head.val)
+        #     head = head.next
+        # return val_list[-k]
+        fast = head
+        slow = head
+        while k > 0:
+            if not fast:
+                return -1
+            k -= 1
+            fast = fast.next
+        while fast:
+            fast = fast.next
+            slow = slow.next
+        return slow.val if slow else -1
+
