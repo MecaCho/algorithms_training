@@ -33,7 +33,7 @@ class Solution(object):
             head = head.next
         return val_list[-k]
 
-    
+
 # Definition for singly-linked list.
 # class ListNode(object):
 #     def __init__(self, x):
