@@ -59,3 +59,10 @@ class Solution(object):
 
         return [hash_map[A[j]] for j in range(len(A))]
 
+
+class Solution1(object):
+    def anagramMappings(self, A, B):
+        D = {x: i for i, x in enumerate(B)}
+        return [D[x] for x in A]
+
+
