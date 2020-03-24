@@ -74,3 +74,45 @@ class Solution(object):
         for i in range(2, N+1):
             dp.append(dp[i-1] + dp[i-2])
         return dp[N]
+
+'''
+递归
+class Solution:
+    def fib(self, N: int) -> int:
+        if N <= 1:
+            return N
+        return self.fib(N-1) + self.fib(N-2)
+func fib(N int) int {
+    if N <= 1 {
+        return N
+    }
+    return fib(N-1) + fib(N-2)
+}
+
+# 迭代
+class Solution:
+    def fib(self, N: int) -> int:
+        if (N <= 1):
+            return N
+        if (N == 2):
+            return 1
+
+        current = 0
+        prev1 = 1
+        prev2 = 1
+
+        # Since range is exclusive and we want to include N, we need to put N+1.
+        for i in range(3, N+1):
+            current = prev1 + prev2
+            prev2 = prev1
+            prev1 = current
+        return current
+
+
+# Contributed by LeetCode user mereck.
+class Solution:
+  def fib(self, N):
+  	golden_ratio = (1 + 5 ** 0.5) / 2
+  	return int((golden_ratio ** N + 1) / 5 ** 0.5)
+
+'''
