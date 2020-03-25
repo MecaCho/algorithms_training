@@ -1,8 +1,27 @@
 '''
-面试题07. 重建二叉树
-输入某二叉树的前序遍历和中序遍历的结果，请重建该二叉树。假设输入的前序遍历和中序遍历的结果中都不含重复的数字。
+105. Construct Binary Tree from Preorder and Inorder Traversal
+Given preorder and inorder traversal of a tree, construct the binary tree.
 
- 
+Note:
+You may assume that duplicates do not exist in the tree.
+
+For example, given
+
+preorder = [3,9,20,15,7]
+inorder = [9,3,15,20,7]
+Return the following binary tree:
+
+    3
+   / \
+  9  20
+    /  \
+   15   7
+   
+105. 从前序与中序遍历序列构造二叉树
+根据一棵树的前序遍历与中序遍历构造二叉树。
+
+注意:
+你可以假设树中没有重复的元素。
 
 例如，给出
 
@@ -15,15 +34,7 @@
   9  20
     /  \
    15   7
- 
 
-限制：
-
-0 <= 节点个数 <= 5000
-
- 
-
-注意：本题与主站 105 题重复：https://leetcode-cn.com/problems/construct-binary-tree-from-preorder-and-inorder-traversal/
 '''
 
 # Definition for a binary tree node.
