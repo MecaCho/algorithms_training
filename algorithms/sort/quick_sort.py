@@ -7,7 +7,7 @@ def log_time(func):
     def wrap(*args):
         s_time = time.time()
         ret = func(*args)
-        print time.time() - s_time
+        print(time.time() - s_time)
         return ret
     return wrap
 
