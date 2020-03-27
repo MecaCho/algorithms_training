@@ -39,3 +39,6 @@ class Solution(object):
                 is_prime_dict[ i *2:n:i] = [0] * (( n -1 - 2* i) / i + 1)
 
         return sum(is_prime_dict)
+
+if __name__ == '__main__':
+    print(bin(100)[::-1][:-2])
