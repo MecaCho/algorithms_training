@@ -38,11 +38,10 @@ class Solution(object):
         :type amount: int
         :rtype: int
         """
-        max_num = 999999
-        dp = [max_num] * (amount + 1)
-        dp[0] = 0
-        for i in range(amount + 1):
+        dp = [0]
+        for i in range(1, amount+1):
+            dp.append(float("inf"))
             for coin in coins:
-                if i - coin >= 0:
-                    dp[i] = min(dp[i - coin] + 1, dp[i]) 
-        return dp[amount] if dp[amount] != max_num else -1
+                if i-coin >= 0:
+                    dp[i] = min(dp[i-coin] + 1, dp[i])
+        return dp[amount] if dp[amount] != float("inf") else -1
