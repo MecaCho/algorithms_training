@@ -83,7 +83,68 @@ Constraints:
 0 <= deck[i] < 10^4
 '''
 
+class Solution1(object):
+    def find_gcd(self, val_list):
+        def gcd(m, n):
+            if n == 0:
+                return m
+            else:
+                return gcd(n, m % n)
+
+        import functools
+        return functools.reduce(gcd, val_list)
+
+    def hasGroupsSizeX(self, deck):
+        """
+        :type deck: List[int]
+        :rtype: bool
+        """
+        # quick_sort_lambda = lambda arr: arr if not arr else quick_sort_lambda([key for key in arr if key < arr[0]]) + [arr[0]] + quick_sort_lambda([key for key in arr if key > arr[0]])
+
+        def gcd(m, n):
+            if n == 0:
+                return m
+            else:
+                return gcd(n, m % n)
+
+        # gcd = lambda x, y: x if x == 0 else gcd(x, y % x)
+        if not deck:
+            return False
+        import collections
+        hash_map = collections.Counter(deck)
+        print(hash_map.values())
+        for i in hash_map.values():
+            print(i)
+        # for i in deck:
+        #     if i in hash_map:
+        #         hash_map[i] += 1
+        #     else:
+        #         hash_map[i] = 1
+        # print(hash_map)
+        # min_num = min(hash_map.values())
+
+        print(self.find_gcd(hash_map.values()))
+
+        # if min_num < 2:
+        #     return False
+        # for num in hash_map.values():
+        #     gcd_ = gcd(num, min_num)
+        #     min_num = gcd_
+        #     if num % gcd_ != 0 or gcd_ < 2:
+        #         return False
+        # return True
+
 class Solution(object):
+    def find_gcd(self, val_list):
+        def gcd(m, n):
+            if n == 0:
+                return m
+            else:
+                return gcd(n, m % n)
+
+        import functools
+        return functools.reduce(gcd, val_list)
+
     def hasGroupsSizeX(self, deck):
         """
         :type deck: List[int]
@@ -106,6 +167,8 @@ class Solution(object):
         # print(hash_map)
         min_num = min(hash_map.values())
 
+        print(self.find_gcd(hash_map.values()))
+
         if min_num < 2:
             return False
         for num in hash_map.values():
@@ -116,5 +179,5 @@ class Solution(object):
         return True
 
 if __name__ == '__main__':
-    demo = Solution()
+    demo = Solution1()
     demo.hasGroupsSizeX([1,2,2,1,1,1])
