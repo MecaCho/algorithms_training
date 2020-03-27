@@ -40,10 +40,8 @@ class Solution(object):
         """
         import math
         def is_qrt(n):
-            sqrt_val = int(math.sqrt(n))
-            res = sqrt_val * sqrt_val == n
-
-            return res
+            sqrt_val = math.sqrt(n)
+            return n / sqrt_val == int(sqrt_val)
 
         for i in range(int(math.sqrt(c))+1):
             if is_qrt(c-i*i):
