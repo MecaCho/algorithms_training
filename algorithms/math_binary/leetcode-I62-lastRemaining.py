@@ -20,6 +20,8 @@
 
 1 <= n <= 10^5
 1 <= m <= 10^6
+
+https://blog.csdn.net/u011500062/article/details/72855826
 '''
 
 
