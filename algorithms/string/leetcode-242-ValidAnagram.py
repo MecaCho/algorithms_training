@@ -54,3 +54,21 @@ class Solution(object):
                 return False
         return set(s) == set(t)
         # return len(s) == len(t) and set(s) == set(t)
+
+class Solution1(object):
+    def isAnagram(self, s, t):
+        """
+        :type s: str
+        :type t: str
+        :rtype: bool
+        """
+        if len(s) != len(t):
+            return False
+        hash_map = {i:0 for i in range(26)}
+        for i in range(len(s)):
+            hash_map[ord(s[i])-ord("a")] += 1
+            hash_map[ord(t[i])-ord("a")] -= 1
+        for k, v in hash_map.items():
+            if v != 0:
+                return False
+        return True

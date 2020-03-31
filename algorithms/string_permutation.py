@@ -14,8 +14,8 @@ def dfs(s, ret=[]):
 
 
 def insert_char(s, char):
-    return [s[:i] + char + s[i:] for i in xrange(len(s)+1)]
+    return [s[:i] + char + s[i:] for i in range(len(s)+1)]
 
 if __name__ == '__main__':
-    print dfs("abcdefg", [])
-    print insert_char("abc", "d")
+    print(dfs("abcdefg", []))
+    print(insert_char("abc", "d"))
