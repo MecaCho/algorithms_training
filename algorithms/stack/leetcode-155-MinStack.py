@@ -39,9 +39,6 @@ minStack.getMin();   --> Returns -2.
 '''
 
 
-
-
-
 class MinStack(object):
 
     def __init__(self):
