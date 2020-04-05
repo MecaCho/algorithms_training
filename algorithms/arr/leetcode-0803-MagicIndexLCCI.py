@@ -44,3 +44,20 @@ class Solution(object):
             if i == nums[i]:
                 return i
         return -1
+
+class Solution1(object):
+    def find(self, nums):
+        if not nums:
+            return -1
+
+        n = len(nums)
+        i = 0
+        while i < n:
+            if nums[i] == i:
+                return i
+            if nums[i] > i:  # 此时我们可以排除索引i到nums[i-1]这一整段
+                i = nums[i]  # 由于数组可以保持平稳，所以nums[i]这一元素不可排除
+            else:
+                i += 1
+
+        return -1
