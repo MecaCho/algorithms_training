@@ -33,11 +33,11 @@ One possible answer is: [0,-3,9,-10,null,5]，which represents the following tre
 '''
 
 # Definition for a binary tree node.
-# class TreeNode(object):
-#     def __init__(self, x):
-#         self.val = x
-#         self.left = None
-#         self.right = None
+class TreeNode(object):
+    def __init__(self, x):
+        self.val = x
+        self.left = None
+        self.right = None
 
 class Solution(object):
     def sortedArrayToBST(self, nums):
