@@ -46,3 +46,28 @@ class Solution(object):
                     visted.append((i, j))
                     # count += 1
         return len(visted)
+
+
+class Solution1(object):
+    def movingCount(self, m, n, k):
+        """
+        :type m: int
+        :type n: int
+        :type k: int
+        :rtype: int
+        """
+        def check_sum(n):
+            res = 0
+            while n:
+                res += n % 10
+                n /= 10
+            return res
+        def dfs(i, j):
+            if i >= m or j >= n or check_sum(i)+check_sum(j) > k:
+                return
+            visted.append((i, j))
+            dfs(i, j+1)
+            dfs(i+1, j)
+        visted = [(0, 0)]
+        dfs(0,0)
+        return len(visted)
