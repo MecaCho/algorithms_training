@@ -37,7 +37,31 @@
 注意：本题与主站 240 题相同：https://leetcode-cn.com/problems/search-a-2d-matrix-ii/
 '''
 
+# best solution
 class Solution(object):
+    def searchMatrix(self, matrix, target):
+        """
+        :type matrix: List[List[int]]
+        :type target: int
+        :rtype: bool
+        """
+        if not matrix or not matrix[0]:
+            return False
+        col_len = len(matrix)
+        row_len = len(matrix[0])
+        i = 0
+        j = row_len -1
+        while i < col_len and j >= 0:
+            if matrix[i][j] == target:
+                return True
+            elif matrix[i][j] > target:
+                j -= 1
+            else:
+                i += 1
+        return False
+
+# binary search
+class Solution1(object):
     def findNumberIn2DArray(self, matrix, target):
         """
         :type matrix: List[List[int]]
@@ -70,4 +94,18 @@ class Solution(object):
                     return True
             else:
                 continue
+        return False
+
+# violence solution
+class Solution2(object):
+    def searchMatrix(self, matrix, target):
+        """
+        :type matrix: List[List[int]]
+        :type target: int
+        :rtype: bool
+        """
+        for nums in matrix:
+            for num in nums:
+                if num == target:
+                    return True
         return False

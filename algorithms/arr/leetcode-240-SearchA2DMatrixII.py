@@ -41,9 +41,67 @@ Given target = 20, return false.
 '''
 
 
-
-
+# best solution
 class Solution(object):
+    def searchMatrix(self, matrix, target):
+        """
+        :type matrix: List[List[int]]
+        :type target: int
+        :rtype: bool
+        """
+        if not matrix or not matrix[0]:
+            return False
+        col_len = len(matrix)
+        row_len = len(matrix[0])
+        i = 0
+        j = row_len -1
+        while i < col_len and j >= 0:
+            if matrix[i][j] == target:
+                return True
+            elif matrix[i][j] > target:
+                j -= 1
+            else:
+                i += 1
+        return False
+
+# binary search
+class Solution1(object):
+    def findNumberIn2DArray(self, matrix, target):
+        """
+        :type matrix: List[List[int]]
+        :type target: int
+        :rtype: bool
+        """
+        # matrix = list(zip(matrix))
+        if not matrix or not matrix[0]:
+            return False
+        col_len = len(matrix)
+        row_len = len(matrix[0])
+
+        def binary_find(arr):
+            l,r  = 0, len(arr)-1
+            while l <= r:
+                mid = (l + r) / 2
+                if target < arr[mid]:
+                    r = mid - 1
+                elif target > arr[mid]:
+                    l = mid + 1
+                else:
+                    return True
+            return False
+
+
+        for i in range(col_len):
+            if matrix[i][row_len-1] >= target:
+                res =  binary_find(matrix[i])
+                if res:
+                    return True
+            else:
+                continue
+        return False
+    
+
+class Solution2(object):
     def searchMatrix(self, matrix, target):
         """
         :type matrix: List[List[int]]
