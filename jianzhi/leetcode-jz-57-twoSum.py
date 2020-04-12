@@ -38,3 +38,31 @@ class Solution(object):
             else:
                 hash_map[target-num] = num
         return []
+
+
+# 双指针法
+class Solution1(object):
+    def twoSum(self, nums, target):
+        """
+        :type nums: List[int]
+        :type target: int
+        :rtype: List[int]
+        """
+        # hash_map = {}
+        # for num in nums:
+        #     if num in hash_map:
+        #         return [hash_map[num], num]
+        #     else:
+        #         hash_map[target-num] = num
+        # return []
+
+        i, j = 0, len(nums) - 1
+        while i < j:
+            sum_ = nums[i] + nums[j]
+            if sum_ > target:
+                j -= 1
+            elif sum_ < target:
+                i += 1
+            else:
+                return [nums[i], nums[j]]
+
