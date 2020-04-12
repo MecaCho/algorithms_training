@@ -48,3 +48,27 @@ class Solution1(object):
             elif numbers[m] < numbers[j]: j = m
             else: j -= 1
         return numbers[i]
+
+class Solution1_(object):
+    def findMin(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        #             # 由于原始数组是递增，那么旋转之后，旋转点左右的两部分仍然是递增的
+            # # 这里记原始数组中旋转点左侧的数组为 A，原始数组中旋转点右侧的数组为 B
+            # # 旋转之后有原来的 AB 变成了 BA，
+            # if numbers[mid] > numbers[r]:
+            #     # 说明mid在原来的 B 部分
+        i,j = 0, len(nums)-1
+        while i < j:
+            mid = (i+j) // 2
+            if nums[mid] > nums[j]:
+                i = mid + 1
+            elif nums[mid] < nums[j]:
+                j = mid
+            else:
+                j -= 1
+            # print(i, j)
+        # print(i, j)
+        return nums[i] if nums else None
