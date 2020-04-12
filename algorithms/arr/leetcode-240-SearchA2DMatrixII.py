@@ -99,7 +99,7 @@ class Solution1(object):
             else:
                 continue
         return False
-    
+
 
 class Solution2(object):
     def searchMatrix(self, matrix, target):
