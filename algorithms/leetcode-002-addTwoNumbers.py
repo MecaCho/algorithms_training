@@ -1,8 +1,8 @@
 # Definition for singly-linked list.
-# class ListNode(object):
-#     def __init__(self, x):
-#         self.val = x
-#         self.next = None
+class ListNode(object):
+    def __init__(self, x):
+        self.val = x
+        self.next = None
 
 class Solution(object):
     def addTwoNumbers(self, l1, l2):
@@ -33,6 +33,7 @@ class Solution(object):
 
 def stringToListNode(input):
     # Generate list from the input
+    import json
     numbers = json.loads(input)
 
     # Now convert that list into linked list
@@ -71,7 +72,6 @@ def main():
             ret = Solution().addTwoNumbers(l1, l2)
 
             out = listNodeToString(ret)
-            print out
         except StopIteration:
             break
 
