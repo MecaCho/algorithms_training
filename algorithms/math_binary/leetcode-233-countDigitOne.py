@@ -28,14 +28,14 @@ class Solution(object):
         :type n: int
         :rtype: int
         """
-        countr = 0
+        count = 0
         i = 1
         while i <= n:
 
             divider = i * 10
-            countr += (n / divider) * i + min(max((n % divider) - i + 1, 0), i)
+            count += (n / divider) * i + min(max((n % divider) - i + 1, 0), i)
             i *= 10
 
-        return countr
+        return count
 
 
