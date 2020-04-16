@@ -56,3 +56,37 @@ class Solution(object):
         for l in res:
             nums.extend(l)
         return nums
+
+
+class Solution1(object):
+    def levelOrder(self, root):
+        import collections
+        if not root: return []
+        res, queue = [], collections.deque()
+        queue.append(root)
+        while queue:
+            node = queue.popleft()
+            res.append(node.val)
+            if node.left: queue.append(node.left)
+            if node.right: queue.append(node.right)
+        return res
+
+
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+
+class Solution2(object):
+    def levelOrder(self, root):
+        if not root: return []
+        res = []
+        q = [root]
+        while q:
+            node = q.pop(0)
+            res.append(node.val)
+            if node.left: q.append(node.left)
+            if node.right: q.append(node.right)
+        return res
