@@ -62,3 +62,38 @@ class Solution(object):
                 res[i] = res[i][::-1]
 
         return res
+
+
+# Definition for a binary tree node.
+# class TreeNode(object):
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+
+class Solution2(object):
+    def levelOrder(self, root):
+        """
+        :type root: TreeNode
+        :rtype: List[List[int]]
+        """
+        if not root:
+            return []
+        q = [root]
+        res = []
+        deep = 1
+        while q:
+            tmp = []
+            for i in range(len(q)):
+                node = q.pop(0)
+                if not node:
+                    break
+
+                tmp.append(node.val)
+                if node.left:
+                    q.append(node.left)
+                if node.right:
+                    q.append(node.right)
+            tmp = tmp[::-1] if len(res) % 2 == 1 else tmp
+            res.append(tmp)
+        return res
