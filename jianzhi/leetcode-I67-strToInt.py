@@ -53,6 +53,8 @@
 '''
 
 
+import re
+
 class Solution(object):
     def strToInt(self, str):
         """
