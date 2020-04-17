@@ -34,3 +34,19 @@ const options={0:'a',1:'b',2:'c',}
   </el-option>
 </el-select>
 ```
+
+# v-if多个条件判断语句
+
+还有条件则继续增加v-else-if
+```
+<div v-if="item.enable === '已签到'">
+    <span class="badge badge-success">{{ item.enable }}</span>
+</div>
+<div v-else-if="item.enable === '缺勤'">
+    <span class="badge badge-danger">{{ item.enable }}</span>
+</div>
+<div v-else-if="item.enable === '请假'">
+    <span class="badge badge-warning">{{ item.enable}}</span>
+</div>
+```
+
