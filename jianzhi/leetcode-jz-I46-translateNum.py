@@ -39,3 +39,37 @@ class Solution(object):
                         dfs(s[:], res+chr(a_num+tmp))
         dfs(vals, "")
         return len(self.res_list)
+
+
+# 动态规划
+class Solution1(object):
+    def translateNum(self, num):
+        """
+        :type num: int
+        :rtype: int
+        """
+
+        num_list = [i for i in str(num)]
+        dp = [1 for i in range(len(num_list))]
+        for i in range(1, len(num_list)):
+            if 10 <= int(num_list[i - 1]) * 10 + int(num_list[i]) <= 25:
+                dp[i] = dp[i - 1] + dp[i - 2]
+            else:
+                dp[i] = dp[i - 1]
+        # print(dp)
+        return dp[-1]
+        # self.res_list = []
+        # vals = [int(i) for i in str(num)]
+        # a_num = ord("a")
+        # def dfs(s=None, res=""):
+        #     if not s:
+        #         self.res_list.append(res)
+        #     else:
+        #         tmp = s.pop(0)
+        #         dfs(s[:], res+chr(a_num+tmp))
+        #         if s:
+        #             tmp = tmp*10 + s.pop(0)
+        #             if 10 <= tmp <=25:
+        #                 dfs(s[:], res+chr(a_num+tmp))
+        # dfs(vals, "")
+        # return len(self.res_list)
