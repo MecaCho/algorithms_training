@@ -36,3 +36,18 @@ class Solution(object):
             return (3**(div-1))*4
         elif remainder == 2:
             return (3**div)*2
+
+#         动态规划
+class Solution2(object):
+    def integerBreak(self, n):
+        """
+        :type n: int
+        :rtype: int
+        """
+        dp = [1 for i in range(n+1)]
+
+        for i in range(1, n+1):
+            for j in range(1, i):
+                dp[i] = max(dp[i], dp[i-j]*j, (i-j)*j)
+        # print(dp)
+        return dp[-1]

@@ -45,3 +45,20 @@ class Solution(object):
                 dp[i] = max(dp[i], dp[i-j]*j, (i-j)*j)
         # print(dp)
         return dp[-1]
+
+class Solution2(object):
+    def cuttingRope(self, n):
+        """
+        :type n: int
+        :rtype: int
+        """
+        div = n / 3
+        if n <= 3:
+            return [1,1,1,2][n]
+        remainder = n % 3
+        if remainder == 0:
+            return 3**div
+        elif remainder == 1:
+            return (3**(div-1))*4
+        elif remainder == 2:
+            return (3**div)*2
