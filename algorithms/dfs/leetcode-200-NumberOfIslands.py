@@ -51,6 +51,7 @@ class Solution(object):
         :type grid: List[List[str]]
         :rtype: int
         """
+
         def dfs(i, j):
             if i < 0 or j < 0 or i >= len(grid) or j >= len(grid[0]):
                 return 0
@@ -60,7 +61,7 @@ class Solution(object):
                 # print(i, j, grid[i][j])
                 res = 1
                 grid[i][j] = "0"
-                for add_i ,add_j in [(0, -1), (0, 1), (1, 0), (-1, 0)]:
+                for add_i, add_j in [(0, -1), (0, 1), (1, 0), (-1, 0)]:
                     # if grid[i + add_i][j + add_j]
                     res += dfs(i + add_i, j + add_j)
                 # print(i, j, res)
@@ -69,7 +70,7 @@ class Solution(object):
         ans = []
         for i in range(len(grid)):
             for j in range(len(grid[0])):
-                if grid[i][j ]= ="1":
+                if grid[i][j] == "1":
                     ans.append(dfs(i, j))
 
         # print(ans, grid)
