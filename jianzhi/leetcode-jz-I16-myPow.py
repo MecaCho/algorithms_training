@@ -48,3 +48,21 @@ class Solution(object):
             return self.myPow(x*x, n/2)
         else:
             return self.myPow(x*x, n/2)*x
+
+
+# 迭代方法
+class Solution1(object):
+    def myPow(self, x, n):
+        """
+        :type x: float
+        :type n: int
+        :rtype: float
+        """
+        if x == 0: return 0
+        res = 1
+        if n < 0: x, n = 1 / x, -n
+        while n:
+            if n & 1: res *= x
+            x *= x
+            n >>= 1
+        return res
