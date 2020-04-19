@@ -39,3 +39,18 @@ class Solution(object):
         new_nums = sorted(map(str, nums), key=LargerNumKey)
         return "".join(new_nums)
 
+
+
+import functools
+class Solution1(object):
+    def minNumber(self, nums):
+        def sort_rule(x, y):
+            a, b = x + y, y + x
+            if a > b: return 1
+            elif a < b: return -1
+            else: return 0
+
+        strs = [str(num) for num in nums]
+        strs.sort(key=functools.cmp_to_key(sort_rule))
+        return ''.join(strs)
+
