@@ -1,4 +1,4 @@
-
+'''
 面试题 10.01. Sorted Merge LCCI
 You are given two sorted arrays, A and B, where A has a large enough buffer at the end to hold B. Write a method to merge B into A in sorted order.
 
@@ -29,8 +29,9 @@ B = [2,5,6],       n = 3
 此处撰写解题思路
 
 ### 代码
+'''
 
-```python
+
 class Solution(object):
     def merge(self, A, m, B, n):
         """
@@ -57,5 +58,3 @@ class Solution(object):
                 A[cur] = b_val
                 pb -= 1
             cur -= 1
-```
-```
