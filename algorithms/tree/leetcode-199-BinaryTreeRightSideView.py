@@ -39,6 +39,33 @@ Explanation:
 #         self.left = None
 #         self.right = None
 
+class Solution1(object):
+    def rightSideView(self, root):
+        """
+        :type root: TreeNode
+        :rtype: List[int]
+        """
+        self.vals = []
+        def dfs(root, deep):
+            if not root:
+                return
+            if not self.vals or len(self.vals) == deep:
+                self.vals.append([root.val])
+            elif len(self.vals) >= deep+1:
+                self.vals[deep].append(root.val)
+            dfs(root.left, deep+1)
+            dfs(root.right, deep+1)
+        dfs(root, 0)
+        return [val[-1] for val in self.vals]
+
+
+# Definition for a binary tree node.
+# class TreeNode(object):
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+
 class Solution(object):
     def rightSideView(self, root):
         """
