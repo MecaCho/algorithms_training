@@ -102,3 +102,32 @@ class Solution(object):
             return max_count
 
         return -1
+
+
+
+class Solution1(object):
+    def minNumberOfFrogs(self, croakOfFrogs):
+        """
+        :type croakOfFrogs: str
+        :rtype: int
+        """
+        max_count = 0
+        croak = "croak"
+        hash_map = {c: 0 for c in "croak"}
+        for k in range(len(croakOfFrogs)):
+            if croakOfFrogs[k] not in hash_map:
+                return -1
+            hash_map[croakOfFrogs[k]] += 1
+            for i in range(1, len(croak)):
+                if hash_map[croak[i]] > hash_map[croak[i - 1]]:
+                    print(croak[i], hash_map[croak[i]])
+                    return -1
+            if croakOfFrogs[k] == "k":
+                max_count = max(max_count, hash_map["c"] - hash_map["k"] + 1)
+                for c in croak:
+                    hash_map[c] = hash_map[c] - 1
+        for c in croak:
+            if hash_map[c] != 0:
+                return -1
+
+        return max_count
