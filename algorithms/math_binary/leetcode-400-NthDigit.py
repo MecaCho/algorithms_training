@@ -58,15 +58,15 @@ class Solution(object):
         :type n: int
         :rtype: int
         """
-        step = [10]
+        steps = [10]
         j = 2
-        st = 10
-        while st <= 2**31 and n >= st:
-            st +=  j*9*(pow(10, (j-1)))
-            step.append(st)
+        step = 10
+        while step <= 2**31 and n >= step:
+            step += j*9*(pow(10, (j-1)))
+            steps.append(step)
             j += 1
         if n < 10:
             return n
-        for k in range(1, len(step)+1):
-            if n < step[k]:
-                return int(str(10**k + (n - step[k-1]) / (k+1))[(n-step[k-1])%(k+1)])
+        for k in range(1, len(steps)+1):
+            if n < steps[k]:
+                return int(str(10**k + (n - steps[k-1]) / (k+1))[(n-steps[k-1])%(k+1)])
