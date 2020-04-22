@@ -157,3 +157,22 @@ class Solution(object):
         last_word = tmp + " " * (maxWidth - len(tmp)) if len(tmp) <= maxWidth else tmp.strip()
         res.append(last_word)
         return res
+
+
+if __name__ == '__main__':
+    import heapq
+    ll = [1, 2, 3, 6, 5, 1, 3, 4, 8]
+    h = heapq.heapify(ll)
+    print(h, ll)
+    l = [2, 3, 4, 5]
+    hh = heapq.heappush(l, 1)
+    heapq.heappop(l)
+    heapq.nsmallest()
+    print(hh, l)
+
+    l = []
+    heapq.heappush(l, [1, 2])
+    print(heapq.nlargest(1, l, key=lambda x:x[0]*x[0] + x[1]*x[1]))
+    heapq.heappush(l, [3, 2])
+    print(heapq.nlargest(1, l, key=lambda x:x[0]*x[0] + x[1]*x[1]))
+    print(l)
