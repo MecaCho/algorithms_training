@@ -30,7 +30,8 @@ board 和 word 中只包含大写和小写英文字母。
 79. Word Search
 Given a 2D board and a word, find if the word exists in the grid.
 
-The word can be constructed from letters of sequentially adjacent cell, where "adjacent" cells are those horizontally or vertically neighboring. The same letter cell may not be used more than once.
+The word can be constructed from letters of sequentially adjacent cell, where "adjacent" cells are those horizontally
+or vertically neighboring. The same letter cell may not be used more than once.
 
 Example:
 
@@ -63,21 +64,18 @@ class Solution(object):
         :rtype: bool
         """
 
-        add_list = [(1 ,0), (-1 ,0), (0 ,1), (0, -1)]
+        add_list = [(1, 0), (-1, 0), (0, 1), (0, -1)]
         col_len = len(board)
         if not col_len or not word or not board[0]:
             return False
         row_len = len(board[0])
-        self.val_list = []
-        marks = [[False for j in range(row_len)] for i in range(col_len)]
 
         def dfs(i, j, k):
-
             if i < 0 or j < 0 or i >= col_len or j >= row_len:
                 return False
             if not board[i][j] or board[i][j] != word[k]:
                 return False
-            if k+ 1 >= len(word):
+            if k + 1 >= len(word):
                 return True
             tmp = board[i][j]
             board[i][j] = ""
@@ -93,7 +91,5 @@ class Solution(object):
                     res = dfs(i, j, 0)
                     if res:
                         return True
-                    # print(word[0], self.val_list)
-                    # word in self.val_list
 
         return False
