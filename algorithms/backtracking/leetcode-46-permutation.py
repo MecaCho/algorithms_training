@@ -41,7 +41,7 @@ class Solution(object):
         :rtype: List[List[int]]
         """
         self.vals = []
-        def dfs(nums, res=None):
+        def backtrack(nums, res=None):
             if not nums:
                 self.vals.append(res)
                 return
@@ -51,14 +51,13 @@ class Solution(object):
             val = nums[0]
             for i in range(len(res)+1):
                 # print(res, val, res[:i] + [val] + res[i:])
-                dfs(new_nums, res[:i] + [val] + res[i:])
+                backtrack(new_nums, res[:i] + [val] + res[i:])
             # if not res:
-            # dfs(nums, [val]+res[:])
+            # backtrack(nums, [val]+res[:])
 
-        dfs(nums, res=[])
+        backtrack(nums, res=[])
         # print(len(self.vals))
         return self.vals
-
 
 
 
