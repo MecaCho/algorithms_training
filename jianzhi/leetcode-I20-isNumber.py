@@ -78,12 +78,28 @@ class Solution(object):
         # return bool(re.match(r"[+-]?([0-9]+|[\.]?[0-9]*)([0-9]+|[\.]?[0-9]+[e]?[+-]?[0-9]*)", str(s).strip()))
 
 
+class Solution1(object):
+    def isNumber(self, s):
+        """
+        :type s: str
+        :rtype: bool
+        """
+        # "-1E-16"
+        return bool(re.match(r"^[-+]?(\.\d+|\d+\.?\d*)([eE][-+]?\d+)?$", s.strip()))
+
+
+
 if __name__ == '__main__':
     s = "123e10"
     import string
     print(s.isnumeric())
     res = re.match(r' *[+-]?([0-9]+(\.[0-9]*)?|\.[0-9]+)(e[+-]?[0-9]+)? *$', s)
     print(res)
+
+    demo = Solution1()
+    for s in ["+100", "5e2", "-123", "3.1416", "0123", "-1E-16", " ", "12e", "1a3.14", "1.2.3", "+-5", "12e+5.4"]:
+        print(s, demo.isNumber(s))
+
 
 
 '''
