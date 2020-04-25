@@ -43,18 +43,11 @@ class Solution(object):
         hash_map = collections.defaultdict(list)
         for i in range(len(words)):
             hash_map[words[i]].append(i)
-        if word1 == word2:
-            indexs = hash_map[word1]
-            res = float("inf")
-            for i in range(1, len(indexs)):
-                res = min(indexs[i] - indexs[i-1], res)
-            return res
         word1_list = hash_map[word1]
         word2_list = hash_map[word2]
-        # print(word1_list, word2_list, hash_map)
         res = float("inf")
         for i in word1_list:
             for j in word2_list:
-                res = min(abs(i-j), res)
+                if i != j:
+                    res = min(abs(i-j), res)
         return res
-
