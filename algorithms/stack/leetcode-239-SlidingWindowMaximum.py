@@ -63,7 +63,7 @@ Constraints:
 1 <= k <= nums.length
 '''
 
-
+# 暴力破解
 class Solution(object):
     def maxSlidingWindow(self, nums, k):
         """
@@ -78,6 +78,36 @@ class Solution(object):
             res.append(max(nums[i:i+k]))
         return res
 
+# 单调队列
+class Solution1(object):
+    def maxSlidingWindow(self, nums, k):
+        """
+        :type nums: List[int]
+        :type k: int
+        :rtype: List[int]
+        """
+        if not nums or not k:
+            return []
+        res = []
+        q = []
+        maxs = []
+        for i in range(len(nums)):
+            num = nums[i]
+            q.append(num)
+
+            while maxs and num > maxs[-1]:
+                maxs.pop()
+            maxs.append(num)
+            print(maxs)
+
+            if len(q) >= k:
+                res.append(maxs[0])
+
+                val = q.pop(0)
+                if val == maxs[0]:
+                    maxs.pop(0)
+
+        return res
 
 '''
 方法一：暴力法

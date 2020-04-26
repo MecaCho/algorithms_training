@@ -39,18 +39,18 @@ def solution_itoor(n, arr):
     for i in xrange(1,n+1):
         sub_list = itertools.combinations_with_replacement(arr, i)
         for sub in sub_list:
-            print sub
+            # print sub
             if sum(sub) == n:
                 ret += 1
     return ret
 
 
 if __name__ == "__main__":
-    print change(arr, N)
-    for i in xrange(10):
-        print i,fac(i)
-    print fac(N)
-    print solution_itoor(N, arr)
+    # print change(arr, N)
+    # for i in xrange(10):
+    #     print i,fac(i)
+    # print fac(N)
+    # print solution_itoor(N, arr)
 
     '''
     1 1
