@@ -98,7 +98,7 @@ class Solution1(object):
             while maxs and num > maxs[-1]:
                 maxs.pop()
             maxs.append(num)
-            print(maxs)
+            # print(maxs)
 
             if len(q) >= k:
                 res.append(maxs[0])
