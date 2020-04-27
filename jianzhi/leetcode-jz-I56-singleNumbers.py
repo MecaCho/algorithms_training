@@ -38,6 +38,29 @@ class Solution(object):
         return res
 
 
+class Solution1(object):
+    def singleNumbers(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: List[int]
+        """
+        from collections import defaultdict
+        d = defaultdict(int)
+        for num in nums:
+            d[num] += 1
+        res = []
+        for k, v in d.items():
+            if v == 1:
+                res.append(k)
+        return res
+        # from collections import Counter
+        # hash_map = Counter(nums)
+        # res = []
+        # for k, v in hash_map.items():
+        #     if v == 1:
+        #         res.append(k)
+        # return res
+
 '''
 前菜
 本题和主站260 是一样的. 除了这个，主站还有136和137。 总共加起来本系列一共三道题。 三道题全部都是位运算的套路，如果你想练习位运算的话，不要错过哦～～
