@@ -60,6 +60,16 @@ class Solution(object):
         return self.vals
 
 
+import itertools
+
+class Solution1(object):
+    def permute(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: List[List[int]]
+        """
+        return list(itertools.permutations(nums))
+
 
 '''
 思路：
