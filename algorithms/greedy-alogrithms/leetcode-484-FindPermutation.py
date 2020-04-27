@@ -54,6 +54,9 @@ class Solution(object):
         :type s: str
         :rtype: List[int]
         """
+        import itertools
+        itertools.permutations()
+        itertools.combinations([], )
         res = [i+1 for i in range(len(s)+1)]
         i = 0
         while i < len(s):
