@@ -62,6 +62,9 @@ Note:
 1 <= K <= 1e8
 '''
 
+# First define a function f(x) that counts the number of missing elements until x.
+
+# Then use binary search with the given function f(x) to find the kth missing element.
 
 class Solution(object):
     def missingElement(self, nums, k):
