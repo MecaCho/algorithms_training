@@ -1,6 +1,7 @@
 
 
-系统基础
+# 系统基础
+
 1.Linux系统的启动过程：从硬件上电到init程序加载完毕截止
 
 BIOS自检－>MBR(GRUB)－>KERNEL－>KERNEL自解压－>内核初始化－>内核启动
@@ -185,6 +186,7 @@ Golang：
 	pporf
 	Benchmark
 
+```python
 # Definition for singly-linked list.
 # class ListNode(object):
 #     def __init__(self, x):
@@ -220,3 +222,4 @@ class Solution(object):
             return all_nodes[0]
         else:
             return None
+```
