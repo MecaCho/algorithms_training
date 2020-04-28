@@ -53,10 +53,6 @@ All characters of S are lowercase English letters.
 '''
 
 
-
-
-
-
 class Solution(object):
     def numKLenSubstrNoRepeats(self, S, K):
         """
@@ -67,11 +63,39 @@ class Solution(object):
         hash_map = {}
         res = []
         for i in range(len(S)):
+            # 刷新滑动窗口
             hash_map[S[i]] = i
-            min_index = min(hash_map.values())
-            if len(hash_map) == K and i - min_index + 1 == K:
-                res.append(S[min_index:min_index+K])
+            # 条件判断，如果窗口为临界点
             if len(hash_map) == K:
+                min_index = min(hash_map.values())
+                # 满足条件的窗口加入结果
+                if i - min_index + 1 == K:
+                    res.append(S[min_index:min_index+K])
+                # 滑动窗口
                 hash_map.pop(S[min_index])
 
         return len(res)
+
+
+'''
+首先滑动窗口经典套路如下：
+
+string s, t;
+// 在 s 中寻找 t 的「最小覆盖子串」
+int left = 0, right = 0;
+string res = s;
+
+while(right < s.size()) {
+    window.add(s[right]);
+    right++;
+    // 如果符合要求，移动 left 缩小窗口
+    while (window 符合要求) {
+        // 如果这个窗口的子串更短，则更新 res
+        res = minLen(res, window);
+        window.remove(s[left]);
+        left++;
+    }
+}
+return res;
+
+'''
