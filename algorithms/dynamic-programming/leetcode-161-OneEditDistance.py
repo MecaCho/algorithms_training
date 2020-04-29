@@ -68,8 +68,8 @@ class Solution(object):
         for i in range(len(s)):
             if s[i] != t[i]:
                 if len(s) < len(t):
-                    return s[i:] == t[ i +1:]
+                    return s[i:] == t[i +1:]
                 else:
-                    return s[ i +1:] == t[ i +1:]
+                    return s[i +1:] == t[i +1:]
 
         return len(t) - len(s) == 1
