@@ -9,19 +9,19 @@ class Solution(object):
         """
         ret = []
 
-        def dfs(s, index=0, ip="", ret=[]):
+        def backtrack(s, index=0, ip="", ret=[]):
             if index == 4:
                 if not s:
                     ret.append(ip.strip("."))
                     return ret
                 return
-            for i in xrange(1, 4, 1):
+            for i in range(1, 4, 1):
                 if i <= len(s) and s[:i] and self.is_num(s[:i]):
-                    dfs(s[i:], index + 1, ip + s[:i] + ".", ret)
+                    backtrack(s[i:], index + 1, ip + s[:i] + ".", ret)
 
-        dfs(s, 0, "", ret)
+        backtrack(s, 0, "", ret)
         return ret
 
 if __name__ == '__main__':
     demo = Solution()
-    print demo.restoreIpAddresses("19200255")
+    print(demo.restoreIpAddresses("19200255"))
