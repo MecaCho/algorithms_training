@@ -58,7 +58,7 @@ class Solution(object):
                 self.res.append(new_c)
             else:
                 for i in range(pre, n):
-                    num = i+ 1
+                    num = i + 1
                     if not new_c or num not in new_c:
                         backtrack(num, new_c + [num])
 
