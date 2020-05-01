@@ -66,6 +66,31 @@ class Solution(object):
         :rtype: List[List[int]]
         """
         self.res = []
+
+        candidates = sorted(candidates)
+        def backtrack(pre, cur, target):
+            # print(pre, cur, target)
+            if target == 0 and cur not in self.res:
+                self.res.append(cur)
+            pre_c = None
+            for i in range(pre, len(candidates)):
+                if target - candidates[i] >= 0:
+                    if pre_c is None or pre_c != candidates[i]:
+                        pre_c = candidates[i]
+                        backtrack(i+1, cur + [candidates[i]], target-candidates[i])
+
+        backtrack(0, [], target)
+        return self.res
+
+
+class Solution0(object):
+    def combinationSum2(self, candidates, target):
+        """
+        :type candidates: List[int]
+        :type target: int
+        :rtype: List[List[int]]
+        """
+        self.res = []
         candidates = sorted(candidates)
 
         def get_towsum(target, cur):
