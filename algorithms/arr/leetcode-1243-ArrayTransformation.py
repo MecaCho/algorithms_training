@@ -98,3 +98,36 @@ class Solution(object):
         while ad:
             ad = adjust()
         return self.arr
+
+
+class Solution1(object):
+    def transformArray(self, arr):
+        """
+        :type arr: List[int]
+        :rtype: List[int]
+        """
+        import copy
+        self.arr = arr
+        def adjust():
+            # flag = 0
+            # tmp = copy.deepcopy(self.arr)
+            change = []
+            for i in range(1, len(self.arr)-1):
+                if self.arr[i] < self.arr[i-1] and self.arr[i] < self.arr[i+1]:
+                    # tmp[i] += 1
+                    # flag = 1
+                    change.append((i, 1))
+                elif self.arr[i] > self.arr[i-1] and self.arr[i] > self.arr[i+1]:
+                    # tmp[i] -= 1
+                    # flag = 1
+                    change.append((i, -1))
+            for index, add in change:
+                self.arr[index] += add
+            # self.arr[:] = tmp
+            return True if change else False
+        ad = adjust()
+        # print(ad)
+        while ad:
+            # print(ad)
+            ad = adjust()
+        return self.arr
