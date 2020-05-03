@@ -90,7 +90,8 @@ Constraints:
 1 <= num <= 10^8
 '''
 
-
+# We need to get the max and min value after changing num and the answer is max - min.
+# Use brute force, try all possible changes and keep the minimum and maximum values.
 class Solution(object):
     def maxDiff(self, num):
         """
