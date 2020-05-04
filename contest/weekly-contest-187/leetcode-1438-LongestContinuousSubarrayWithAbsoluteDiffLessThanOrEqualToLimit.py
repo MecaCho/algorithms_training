@@ -151,3 +151,36 @@ Use a sliding window approach keeping the maximum and minimum value using a data
 '''
 More specifically, use the two pointer technique, moving the right pointer as far as possible to the right until the subarray is not valid (maxValue - minValue > limit), then moving the left pointer until the subarray is valid again (maxValue - minValue <= limit). Keep repeating this process.
 '''
+
+# solutions
+
+'''
+思路
+使用滑动窗口保持符合条件的子数组，记录最长长度
+怎样确定子数组是否符合条件，需要知道两个关键数据
+21. 子数组中的最大值
+22. 子数组中的最小值
+需要对滑入窗口的数据记录，滑出的数据删除，并且使这些记录方便的算出最大值和最小值
+31. 使用 map / multiset 可以在滑入滑出的时候方便的增减对应数据
+32. 同时 map / multiset 本身是有序的，可以方便的找出最大值最小值
+答题
+C++C++
+    int longestSubarray(vector<int>& nums, int limit) {
+        map<int, int> m;
+        int ans = 0;
+        int i = 0;
+        for (int j = 0; j < nums.size(); j++) {
+            m[nums[j]]++;
+            while (m.rbegin()->first - m.begin()->first > limit) {
+                m[nums[i]]--;
+                if (m[nums[i]] == 0) {
+                    m.erase(nums[i]);
+                }
+                i++;
+            }
+            ans = max(ans, j - i + 1);
+        }
+        return ans;
+    }
+
+'''
