@@ -90,8 +90,6 @@ class Solution(object):
 #         check = zip(*((a >= b, a <= b) for a, b in zip(s1, s2)))
 #         return any(map(all, check))
 
-
-
 if __name__ == '__main__':
     demo = Solution()
     cases = [("abe", "acd"), ("leetcodee", "interview"), ("abc", "xya")]
