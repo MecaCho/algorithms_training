@@ -88,3 +88,14 @@ class Solution(object):
         for i in range(len(paths)):
             if paths[i][1] not in starts:
                 return paths[i][1]
+
+
+# tips
+
+'''
+Start in any city and use the path to move to the next city.
+'''
+
+'''
+Eventually, you will reach a city with no path outgoing, this is the destination city.
+'''
