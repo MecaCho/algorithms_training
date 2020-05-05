@@ -30,8 +30,36 @@ Output: [1,3,2]
 Follow up: Recursive solution is trivial, could you do it iteratively?
 '''
 
+# Definition for a binary tree node.
+# class TreeNode(object):
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
 
 
+# 迭代
+class Solution1(object):
+    def inorderTraversal(self, root):
+        """
+        :type root: TreeNode
+        :rtype: List[int]
+        """
+        self.vals = []
+        stack = []
+        cur = root
+        while cur or stack:
+            while cur:
+                stack.append(cur)
+                cur = cur.left
+            cur = stack.pop()
+            self.vals.append(cur.val)
+            cur = cur.right
+        print(self.vals)
+        return self.vals
+
+
+# 递归
 # Definition for a binary tree node.
 # class TreeNode(object):
 #     def __init__(self, x):
