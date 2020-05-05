@@ -37,8 +37,11 @@ Explanation: Paint house 0 into color 0, paint house 1 into color 2. Minimum cos
 Follow up:
 Could you solve it in O(nk) runtime?
 '''
+if __name__ == '__main__':
 
-
+    import re
+    print(re.split(r"[a-zA-Z]", "ab123abc"))
+    print(re.split(r"[0-9]", "ab123abc"))
 
 class Solution(object):
     def minCostII(self, costs):
