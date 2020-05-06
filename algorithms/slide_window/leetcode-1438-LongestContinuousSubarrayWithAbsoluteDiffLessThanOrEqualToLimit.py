@@ -175,3 +175,166 @@ class Solution(object):
                 # print(max_length, len(cur), max(cur), min(cur), cur)
         # print(len(nums), max(nums), min(nums))
         return max_length
+
+
+class Solution1(object):
+    def longestSubarray(self, nums, limit):
+        """
+        :type nums: List[int]
+        :type limit: int
+        :rtype: int
+        """
+        # if not nums:
+        #     return 0
+        # curr_max = nums[0] # 当子数组下最大值 这里初始化为第一个数
+        # curr_min = nums[0] # 当子数组下最大值 这里初始化为第一个数
+        # sub_nums = [] # 以数组作为窗口滑动
+        # for num in nums:
+        #     if abs(num - curr_max) <=  limit and abs(num - curr_min) <=  limit and abs(curr_max - curr_min) <= limit:
+        #         curr_max = max(num,curr_max)
+        #         curr_min = min(num,curr_min)
+        #         sub_nums.append(num)
+        #     else:
+        #         sub_nums.append(num)
+        #         sub_nums.pop(0)
+        #         curr_max = max(sub_nums) # 当子数组最大值
+        #         curr_min = min(sub_nums) # 当前子数组最小值
+        # return  len(sub_nums)
+
+        max_length = 1
+        cur = [nums[0]]
+        max_val = min_val = nums[0]
+        for i in range(1, len(nums)):
+            if nums[i] > max_val:
+                max_val = nums[i]
+            if nums[i] < min_val:
+                min_val = nums[i]
+
+            if max_val - min_val <= limit:
+                cur.append(nums[i])
+                max_length = max(max_length, len(cur))
+            else:
+                # if max_val == nums[i]:
+                #     cur = nums[index_map[min_val]+1:i+1]
+
+                # elif min_val == nums[i]:
+                #     cur = nums[index_map[max_val]+1:i+1]
+                # cur = cur[1:] + [nums[i]]
+                cur.append(nums[i])
+                cur.pop(0)
+                max_val = max(cur)
+                min_val = min(cur)
+                # if max_val == nums[i]:
+                #     j = i - 1
+                #     while j >= 0:
+                #         if max_val - nums[j] <= limit:
+                #             min_val = nums[j]
+                #             break
+                #     cur = nums[j:i+1]
+                # elif min_val == nums[i]:
+                #     j = i - 1
+                #     while j >= 0:
+                #         if nums[j] - min_val <= limit:
+                #             max_val = nums[j]
+                #             break
+                #     cur = nums[j:i+1]
+
+        #     index_map[nums[i]] = i
+
+        # mins = []
+        # maxs = []
+        # cur = []
+        # max_length = 0
+
+        # for i in range(len(nums)):
+        #     num = nums[i]
+        #     cur.append(num)
+
+        #     if not mins or num <= mins[-1]:
+        #         mins.append(num)
+        #     if not maxs or num >= maxs[-1]:
+        #         maxs.append(num)
+
+        #     min_val = mins[-1]
+        #     max_val = maxs[-1]
+
+        #     # print(min_val, mins, max_val, maxs, cur, len(cur))
+        #     if max_val - min_val > limit:
+        #         pop_val = cur.pop(0)
+        #         if pop_val == mins[0]:
+        #             mins.pop(0)
+        #             if not mins:
+        #                 mins.append(cur[0])
+        #                 i = 1
+        #                 while i < len(cur):
+        #                     if cur[i] <= mins[-1]:
+        #                         mins.append(cur[i])
+        #                     i += 1
+        #         if pop_val == maxs[0]:
+        #             maxs.pop(0)
+        #             if not maxs:
+        #                 maxs.append(cur[0])
+        #                 i = 1
+        #                 while i < len(cur):
+        #                     if cur[i] >= maxs[-1]:
+        #                         maxs.append(cur[i])
+        #                     i += 1
+        #     else:
+        #         max_length = max(max_length, len(cur))
+        #         # print(max_length, len(cur), max(cur), min(cur), cur)
+        # # print(len(nums), max(nums), min(nums))
+        return max_length
+
+
+'''
+方法一 滑动窗口
+解题思路
+维护一直最大值和最小值
+维护一个最长数组
+sub\_nums增加的条件=\begin{cases} abs(num - curr\_max) <= limit & 判断当前元素是否复合条件，当前元素和数组中最大元素比较\\ abs(num - curr\_min) <= limit & 判断当前元素是否复合条件，当前元素和数组中最小元素比较 \\ abs(curr\_max - curr\_min) <= limit & 判断数组中元素是否符合条件，数组中最大元素和最小元素比较 \end{cases}
+sub_nums增加的条件= 
+⎩
+⎪
+⎨
+⎪
+⎧
+​	
+  
+abs(num−curr_max)<=limit
+abs(num−curr_min)<=limit
+abs(curr_max−curr_min)<=limit
+​	
+  
+判断当前元素是否复合条件，当前元素和数组中最大元素比较
+判断当前元素是否复合条件，当前元素和数组中最小元素比较
+判断数组中元素是否符合条件，数组中最大元素和最小元素比较
+​	
+ 
+
+当不复合数组增加条件，则以当前长度向后移动
+在向后移动的同时，数组中元素也在在发生变化，所以需要更新数组中的最大最小值
+时间复杂度复杂度 0(n)0(n) 空间复杂度 0(n)0(n)
+执行过程 举例 nums = [10,1,2,4,7,2] limit = 5
+
+
+代码
+pythonjava
+class Solution(object):
+    def longestSubarray(self, nums, limit):
+        if not nums:
+            return 0
+        curr_max = nums[0] # 当子数组下最大值 这里初始化为第一个数
+        curr_min = nums[0] # 当子数组下最大值 这里初始化为第一个数
+        sub_nums = [] # 以数组作为窗口滑动
+        for num in nums:
+            if abs(num - curr_max) <=  limit and abs(num - curr_min) <=  limit and abs(curr_max - curr_min) <= limit:
+                curr_max = max(num,curr_max)
+                curr_min = min(num,curr_min)
+                sub_nums.append(num)
+            else:    
+                sub_nums.append(num)
+                sub_nums.pop(0)
+                curr_max = max(sub_nums) # 当子数组最大值
+                curr_min = min(sub_nums) # 当前子数组最小值
+        return  len(sub_nums)
+'''
