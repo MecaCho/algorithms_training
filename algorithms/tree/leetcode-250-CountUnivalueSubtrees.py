@@ -65,6 +65,55 @@ class Solution(object):
         return len([i for i in self.vals if len(set(i)) == 1])
 
 
+# Definition for a binary tree node.
+# class TreeNode(object):
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+
+class Solution1(object):
+    def countUnivalSubtrees(self, root):
+        """
+        :type root: TreeNode
+        :rtype: int
+        """
+
+        # self.vals = []
+        # def dfs(root, res):
+        #     if not root:
+        #         return res
+        #     else:
+        #         root_val = root.val
+        #         left = dfs(root.left, [])
+        #         right = dfs(root.right, [])
+        #         tmp = left + [root_val] + right
+        #         self.vals.append(tmp)
+        #         return tmp
+        # dfs(root, [])
+        # print(self.vals)
+        # return len([i for i in self.vals if len(set(i)) == 1])
+        self.count = 0
+        def dfs(root):
+            if not root:
+                return True
+            else:
+                root_val = root.val
+                left = dfs(root.left)
+                right = dfs(root.right)
+                res = left and right
+                if root.left and root_val != root.left.val:
+                    return False
+                if root.right and root_val != root.right.val:
+                    return False
+                if res:
+                    self.count += 1
+                return res
+        dfs(root)
+        # print(self.count)
+        return self.count
+
+
 '''
 方法一：深度优先搜索
 直觉
