@@ -115,3 +115,16 @@ class Solution(object):
         # while head:
         #     head.printValue()
         #     head = head.getNext()
+
+
+class Solution1(object):
+    def printLinkedListInReverse(self, head):
+        """
+        :type head: ImmutableListNode
+        :rtype: None
+        """
+        if not head:
+            return
+
+        self.printLinkedListInReverse(head.next)
+        head.printValue()
