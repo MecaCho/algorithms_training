@@ -40,6 +40,24 @@ Explanation: The array represents the integer 4321.
 '''
 
 
+class Solution1(object):
+    def plusOne(self, digits):
+        """
+        :type digits: List[int]
+        :rtype: List[int]
+        """
+        for i in range(len(digits) - 1, -1, -1):
+            digits[i] += 1
+            digits[i] %= 10
+
+            if digits[i] != 0:
+                return digits
+        digits = [1] + digits
+        return digits
+
+        # return [int(i) for i in list(str(int("".join([str(digit) for digit in digits])) + 1))]
+
+
 class Solution(object):
     def plusOne(self, digits):
         """
