@@ -94,5 +94,62 @@ class Solution(object):
 '''
 Try to model the problem as a graph problem.
 The given graph is a tree.
+The problem is reduced to finding the lowest common ancestor of two nodes in a tree.
+'''
+
+'''
+最近公共祖先问题
+定义
+最近公共祖先问题（LCA：Lowest common ancestor），指的是在“树”中寻找某两个结点的最近的公共祖先。
+
+解决方案
+设两个结点为a、b。
+
+1、求路径，有2种思路
+
+求正向路径：一般需要使用DFS/BFS遍历树：从根结点出发，直到遇到目标结点，同时记录当前路径。如果是BST，那么路径是唯一确定的，可以不用搜索，直接用二分查找。
+求反向路径：对树进行预处理，也使用DFS/BFS遍历树，使用哈希表建立“结点 => 父结点”的映射。然后从目标结点出发，一直追溯到根结点，同时记录路径。
+2、寻找，也有2种思路
+
+使用双指针遍历：路径从根结点开始两两比较，第一个不同点（表示分叉）的上一个点就是LCA。
+使用集合（哈希表）标记：路径从a到根结点全部标记，再从b出发，遇到的第一个相同点就是LCA。
+题型
+236. 二叉树的最近公共祖先，模板题
+235. 二叉搜索树的最近公共祖先，在二叉树基础上进一步变为BST
+5109. 最小公共区域，不必再建树
+160. 相交链表，链表也是树
+本题题解（JavaScript语言）
+本题中，输入已经是对树中父子关系、兄弟关系的描述，所以并不需要再建树。直接找出路径即可。
+
+这里我使用Set标记法：
+
+/**
+ * 哈希表：记录父结点
+ * 
+ * 时间：128ms
+ */
+var findSmallestRegion = function (regions, x, y) {
+  const parent = new Map() // 记录父结点
+  for (const [p, ...children] of regions) {
+    for (const child of children) {
+      parent.set(child, p)
+    }
+  }
+
+  // 标记x的路径
+  const xx = new Set()
+  xx.add(x)
+  while (parent.has(x)) {
+    x = parent.get(x)
+    xx.add(x)
+  }
+
+  // 从y开始寻找共同祖先
+  if (xx.has(y)) return y
+  while (parent.has(y)) {
+    y = parent.get(y)
+    if (xx.has(y)) return y
+  }
+};
 
 '''
