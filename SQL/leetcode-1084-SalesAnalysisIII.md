@@ -1,5 +1,7 @@
+
+# 1084. Sales Analysis III
 ```
-1083. 销售分析 II
+1084. 销售分析III
 SQL架构
 Table: Product
 
@@ -10,7 +12,7 @@ Table: Product
 | product_name | varchar |
 | unit_price   | int     |
 +--------------+---------+
-product_id 是这张表的主键
+product_id 是这个表的主键
 Table: Sales
 
 +-------------+---------+
@@ -25,9 +27,11 @@ Table: Sales
 +------ ------+---------+
 这个表没有主键，它可以有重复的行.
 product_id 是 Product 表的外键.
-编写一个 SQL 查询，查询购买了 S8 手机却没有购买 iPhone 的买家。注意这里 S8 和 iPhone 是 Product 表中的产品。
+ 
 
-查询结果格式如下图表示：
+编写一个SQL查询，报告2019年春季才售出的产品。即仅在2019-01-01至2019-03-31（含）之间出售的商品。
+
+查询结果格式如下所示：
 
 Product table:
 +------------+--------------+------------+
@@ -44,19 +48,19 @@ Sales table:
 +-----------+------------+----------+------------+----------+-------+
 | 1         | 1          | 1        | 2019-01-21 | 2        | 2000  |
 | 1         | 2          | 2        | 2019-02-17 | 1        | 800   |
-| 2         | 1          | 3        | 2019-06-02 | 1        | 800   |
-| 3         | 3          | 3        | 2019-05-13 | 2        | 2800  |
+| 2         | 2          | 3        | 2019-06-02 | 1        | 800   |
+| 3         | 3          | 4        | 2019-05-13 | 2        | 2800  |
 +-----------+------------+----------+------------+----------+-------+
 
 Result table:
-+-------------+
-| buyer_id    |
-+-------------+
-| 1           |
-+-------------+
-id 为 1 的买家购买了一部 S8，但是却没有购买 iPhone，而 id 为 3 的买家却同时购买了这 2 部手机。
++-------------+--------------+
+| product_id  | product_name |
++-------------+--------------+
+| 1           | S8           |
++-------------+--------------+
+id为1的产品仅在2019年春季销售，其他两个产品在之后销售。
 
-1083. Sales Analysis II
+1084. Sales Analysis III
 SQL架构
 Table: Product
 
@@ -84,7 +88,7 @@ This table has no primary key, it can have repeated rows.
 product_id is a foreign key to Product table.
  
 
-Write an SQL query that reports the buyers who have bought S8 but not iPhone. Note that S8 and iPhone are products present in the Product table.
+Write an SQL query that reports the products that were only sold in spring 2019. That is, between 2019-01-01 and 2019-03-31 inclusive.
 
 The query result format is in the following example:
 
@@ -103,28 +107,23 @@ Sales table:
 +-----------+------------+----------+------------+----------+-------+
 | 1         | 1          | 1        | 2019-01-21 | 2        | 2000  |
 | 1         | 2          | 2        | 2019-02-17 | 1        | 800   |
-| 2         | 1          | 3        | 2019-06-02 | 1        | 800   |
-| 3         | 3          | 3        | 2019-05-13 | 2        | 2800  |
+| 2         | 2          | 3        | 2019-06-02 | 1        | 800   |
+| 3         | 3          | 4        | 2019-05-13 | 2        | 2800  |
 +-----------+------------+----------+------------+----------+-------+
 
 Result table:
-+-------------+
-| buyer_id    |
-+-------------+
-| 1           |
-+-------------+
-The buyer with id 1 bought an S8 but didn't buy an iPhone. The buyer with id 3 bought both.
-
++-------------+--------------+
+| product_id  | product_name |
++-------------+--------------+
+| 1           | S8           |
++-------------+--------------+
+The product with id 1 was only sold in spring 2019 while the other two were sold after.
 ```
 
-
+# Write your MySQL query statement below
 
 ```
 # Write your MySQL query statement below
-select s.buyer_id from Sales s left join Product p on p.product_id=s.product_id group by s.buyer_id having COUNT(IF(p.product_name = 'S8',TRUE, null)) >= 1 AND COUNT(IF(p.product_name = 'iPhone',TRUE, null)) = 0;
-
--- select s.buyer_id from Sales s left join Product p on p.product_id=s.product_id where COUNT(IF(p.product_name = 'S8',TRUE, null)) >= 1 AND COUNT(IF(p.product_name = 'iPhone',TRUE, null)) = 0;
-
-select distinct buyer_id from Sales s join Product p on s.product_id=p.product_id where p.product_name="S8" and buyer_id not in (select buyer_id from Sales s join Product p on s.product_id=p.product_id where p.product_name="iPhone");
-
+select product_id, product_name from Product where product_id not in(
+select product_id from Sales where sale_date not between '2019-01-01' and '2019-03-31');
 ```
