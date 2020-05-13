@@ -3,8 +3,7 @@
 
 # 栈
 
-栈存储区，每个Goroutine又一个栈，存储了静态数据，包括函数栈帧、静态结构、原生类型值和指向动态结构的指针。
-
+栈存储区，每个Goroutine有一个栈，存储了静态数据，包括函数栈帧、静态结构、原生类型值和指向动态结构的指针。
 
 # Go内存使用----栈与堆
 
@@ -14,22 +13,22 @@
 
 ## 堆
 
-堆不是由OS管理
-具有最大内存空间
-保存动态数据
-可能会成倍增长，导致程序会随着时间耗尽内存
+- 堆不是由OS管理    
+- 具有最大内存空间
+- 保存动态数据    
+可能会成倍增长，导致程序会随着时间耗尽内存    
 
 随着时间流逝，内存空间变得支离破碎---->GC
 
 # Go内存管理
 
-1。需要内存时自动分配
-2。不需要时GC
+1。需要内存时自动分配     
+2。不需要时GC     
 runtime完成，开发人员不必处理
 
 ## 1。内存分配
 
-thread local cache：
+thread local cache：    
 使用线程本地缓存来加速小对象分配
 
 维护scan/noscan的span来加速GC
@@ -58,14 +57,14 @@ mcache微小分配器分配小雨16B的对象
 
 ## 打开 GC ⽇日志
 
-只要在程序执⾏之前加上环境变量GODEBUG=gctrace=1
-如:GODEBUG=gctrace=1 go test -bench=.
+只要在程序执⾏之前加上环境变量GODEBUG=gctrace=1    
+如:GODEBUG=gctrace=1 go test -bench=.    
 GODEBUG=gctrace=1 go run main.go
 
-日志详细信息参考: https://godoc.org/runtime
+日志详细信息参考: https://godoc.org/runtime     
    gc次数  时间  gc时间占的百分比                                       堆大小--gc开始-gc结束--现存   所有堆大小   用到的processor
 gc 2925 @1.879s 3%: 0.002+0.12+0.011 ms clock, 0.038+0.054/0.075/0.12+0.18 ms cpu, 4->4->0 MB, 5 MB goal, 16 P
-scvg: 0 MB released
+scvg: 0 MB released    
 scvg: inuse: 2, idle: 61, sys: 63, released: 58, consumed: 5 (MB)
 
 
