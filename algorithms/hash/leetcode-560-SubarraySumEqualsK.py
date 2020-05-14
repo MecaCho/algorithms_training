@@ -144,3 +144,11 @@ func subarraySum(nums []int, k int) int {
 空间复杂度：O(n)O(n)，其中 nn 为数组的长度。哈希表在最坏情况下可能有 nn 个不同的键值，因此需要 O(n)O(n) 的空间复杂度。
 
 '''
+
+
+'''
+Will Brute force work here? Try to optimize it.
+Can we optimize it by using some extra space?
+What about storing sum frequencies in a hash table? Will it be useful?
+sum(i,j)=sum(0,j)-sum(0,i), where sum(i,j) represents the sum of all the elements from index i to j-1. Can we use this property to optimize it.
+'''
