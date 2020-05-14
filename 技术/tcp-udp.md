@@ -42,6 +42,11 @@ TCP 中， SYN 被当作数据部分的一个字节。
 当另一方也没有数据再发送的时候，则发出连接释放通知，对方确认后就完全关闭了TCP连接。
 ```
 
+time_wait问题：    
+net.ipv4.tcp_tw_reuse=1    
+net.ipv4.tcp_tw_recycle=0    
+net.ipv4.tcp_max_tw_bucket=0    
+
 # 可靠传输
 
 ## 1.确认机制
