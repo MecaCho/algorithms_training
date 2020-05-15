@@ -128,6 +128,24 @@ class Solution1(object):
         # return res.next
 
 
+# 递归
+class Solution2(object):
+
+    def swapPairs(self, head):
+        """
+        :type head: ListNode
+        :rtype: ListNode
+        """
+        # return self.reverseKGroup(head, 2)
+
+        if not head or not head.next:
+            return head
+        res = head.next
+        head.next = self.swapPairs(res.next)
+        res.next = head
+
+        return res
+
 '''
 方法一：递归
 这个题目要求我们从第一个节点开始两两交换链表中的节点，且要真正的交换节点。
