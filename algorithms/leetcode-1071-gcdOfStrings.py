@@ -1,4 +1,6 @@
-‘’‘
+
+
+'''
 1071. Greatest Common Divisor of Strings
 For strings S and T, we say "T divides S" if and only if S = T + ... + T  (T concatenated with itself 1 or more times)
 
@@ -52,7 +54,9 @@ str1[i] and str2[i] are English uppercase letters.
 1 <= str1.length <= 1000
 1 <= str2.length <= 1000
 str1[i] 和 str2[i] 为大写英文字母
-’‘’
+'''
+
+
 
 class Solution(object):
     def gcdOfStrings(self, str1, str2):
