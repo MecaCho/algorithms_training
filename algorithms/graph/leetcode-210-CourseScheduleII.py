@@ -99,7 +99,7 @@ class Solution(object):
 
         return self.res[::-1]
 
-
+"".capitalize()
 # tips
 
 '''

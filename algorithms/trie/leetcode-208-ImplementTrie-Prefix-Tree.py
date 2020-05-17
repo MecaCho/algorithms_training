@@ -71,7 +71,9 @@ class Trie(object):
         for w in word:
             tree = tree.get(w)
             if tree is None:
-                return False
+                print(tree)
+                tree = tree.items()
+                # return False
         return True if tree.get("end") else False
 
 
@@ -172,6 +174,12 @@ class Trie1(object):
                 return False
         return True
 
+if __name__ == '__main__':
+    trie = Trie()
+
+    trie.insert("apple")
+    print(trie.root)
+    print(trie.search("pple"))
 
 # Your Trie object will be instantiated and called as such:
 # obj = Trie()
