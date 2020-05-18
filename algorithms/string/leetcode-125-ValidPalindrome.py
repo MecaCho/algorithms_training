@@ -35,6 +35,17 @@ Output: false
 
 import re
 
+
+class Solution1(object):
+    def isPalindrome(self, s):
+        """
+        :type s: str
+        :rtype: bool
+        """
+        new_s = "".join([i.lower() for i in re.findall("[A-Za-z0-9]", s)])
+        return new_s[::-1] == new_s
+
+
 class Solution(object):
     def isPalindrome(self, s):
         """
