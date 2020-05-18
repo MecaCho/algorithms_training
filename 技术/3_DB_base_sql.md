@@ -84,3 +84,13 @@ host权限表：配合db权限表对给定主机上数据库级操作权限作�
 insert into application (id, name, project_id, env_type,env_id, created_at, upgrade_his) select 40000165, t2.name, t2.project_id, "PERF",30000091, t2.created_at, "" from application t2 where id=40000138;
 
 ```
+
+bin_log    
+
+```
+show variables like '%log_bin%';
+show binary logs;
+show master status;
+
+mysqlbinlog: /usr/bin/mysqlbinlog mysql-bin.000007
+```
