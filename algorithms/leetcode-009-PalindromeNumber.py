@@ -1,4 +1,5 @@
-```
+
+'''
 Determine whether an integer is a palindrome. An integer is a palindrome when it reads the same backward as forward.
 
 Example 1:
@@ -38,8 +39,9 @@ Coud you solve it without converting the integer to a string?
 进阶:
 
 你能不将整数转为字符串来解决这个问题吗？
+'''
 
-```
+
 class Solution(object):
     def isPalindrome(self, x):
         """
@@ -47,9 +49,9 @@ class Solution(object):
         :rtype: bool
         """
         return str(x) == str(x)[::-1]
-   
-   
- class Solution(object):
+
+
+class Solution1(object):
     def isPalindrome(self, x):
         """
         :type x: int
