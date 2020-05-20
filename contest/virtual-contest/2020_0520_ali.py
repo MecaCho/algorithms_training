@@ -152,9 +152,10 @@ class Trie(object):
         """
         tree = self.root
         for i in range(len(word)):
-            if tree is None or not tree.get(word[i]):
-                tree[word[i]] = {}
-            tree = tree.get(word[i])
+            tree = tree.setdefault(word[i], {})
+            # if tree is None or not tree.get(word[i]):
+            #     tree[word[i]] = {}
+            # tree = tree.get(word[i])
         tree["end"] = True
         # print(self.root)
 
@@ -193,3 +194,12 @@ class Trie(object):
 # param_2 = obj.search(word)
 # param_3 = obj.startsWith(prefix)
 
+
+if __name__ == '__main__':
+    trie = Trie()
+    trie.insert("apple")
+    trie.insert("app")
+    res = trie.search("ap")
+    print(res)
+    print(trie.search("apple"))
+    print(trie.startsWith("appl"))

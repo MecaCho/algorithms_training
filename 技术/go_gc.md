@@ -37,7 +37,7 @@ thread local cache：
 
 ### Tiny-微小对象，size<16B
 
-mcache微小分配器分配小雨16B的对象
+mcache微小分配器分配小于16B的对象
 
 ### 小对象， 16B<size<32KB
 
@@ -109,4 +109,46 @@ go test -trace trace.out
 ```
 go tool trace trace.out
 ```
+
+# 逃逸分析
+
+终端运行命令查看逃逸分析日志：
+
+go build -gcflags=-m
+
+## 逃逸分析的作用是什么呢？    
+
+逃逸分析的好处是为了减少gc的压力，不逃逸的对象分配在栈上，当函数返回时就回收了资源，不需要gc标记清除。
+
+逃逸分析完后可以确定哪些变量可以分配在栈上，栈的分配比堆快，性能好(逃逸的局部变量会在堆上分配 ,而没有发生逃逸的则有编译器在栈上分配)。
+
+同步消除，如果你定义的对象的方法上有同步锁，但在运行时，却只有一个线程在访问，此时逃逸分析后的机器码，会去掉同步锁运行。
+
+## 逃逸总结：    
+
+栈上分配内存比在堆中分配内存有更高的效率
+
+栈上分配的内存不需要GC处理
+
+堆上分配的内存使用完毕会交给GC处理
+
+逃逸分析目的是决定内分配地址是栈还是堆
+
+逃逸分析在编译阶段完成
+
+- 提问：函数传递指针真的比传值效率高吗？
+
+我们知道传递指针可以减少底层值的拷贝，可以提高效率，但是如果拷贝的数据量小，
+由于指针传递会产生逃逸，可能会使用堆，也可能会增加GC的负担，所以传递指针不一定是高效的。
+
+```
+From a correctness standpoint, you don’t need to know. Each variable in Go exists as long as there are references to it. The storage location chosen by the implementation is irrelevant to the semantics of the language.
+
+The storage location does have an effect on writing efficient programs. When possible, the Go compilers will allocate variables that are local to a function in that function’s stack frame.
+
+However, if the compiler cannot prove that the variable is not referenced after the function returns, then the compiler must allocate the variable on the garbage-collected heap to avoid dangling pointer errors. Also, if a local variable is very large, it might make more sense to store it on the heap rather than the stack.
+
+In the current compilers, if a variable has its address taken, that variable is a candidate for allocation on the heap. However, a basic escape analysis recognizes some cases when such variables will not live past the return from the function and can reside on the stack.
+```
+
 

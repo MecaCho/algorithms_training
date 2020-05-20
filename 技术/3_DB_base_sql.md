@@ -80,6 +80,31 @@ columns_priv权限表：记录数据列级的操作权限。
 host权限表：配合db权限表对给定主机上数据库级操作权限作更细致的控制。这个权限表不受GRANT和REVOKE语句的影响。
 
 
+# union和unionall的区别是什么？    
+
+union就是将两个SELECT语句查询的结果集合并(两个SELECT可以是同一个表，也可以是不同表)，如果需要排序，在第二个SELECT语句后加ORDER BY语句，会对所有结果进行排序。
+
+union默认是会去除重复的数据的，会对结果集做去重处理，union all不会做去重处理。
+
+所以union效率慢一些，如果能确定结果不会重复或者需要不去重的结果，那么应该使用union all，效率会高一些。
+
+
+# Join的工作流程是怎么样的，怎么进行优化？    
+
+join的大概使用是怎么样的？
+full outer join 会包含两个表不满足条件的行
+
+left outer join 会包含左边的表不满足条件的行
+
+right outer join 会包含右边的表不满足条件的行
+
+inner join 就是只包含满足条件的行
+
+cross join 从表A循环取出每一条记录去表B匹配，cross join 后面不能跟on，只能跟where
+
+
+
+
 ```
 insert into application (id, name, project_id, env_type,env_id, created_at, upgrade_his) select 40000165, t2.name, t2.project_id, "PERF",30000091, t2.created_at, "" from application t2 where id=40000138;
 

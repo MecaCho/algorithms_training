@@ -45,7 +45,6 @@ class Trie(object):
         """
         self.root = {}
 
-
     def insert(self, word):
         """
         Inserts a word into the trie.
@@ -58,8 +57,6 @@ class Trie(object):
                 tree[w] = {}
             tree = tree.get(w)
         tree["end"] = True
-
-
 
     def search(self, word):
         """
