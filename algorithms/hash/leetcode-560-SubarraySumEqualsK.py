@@ -145,6 +145,7 @@ func subarraySum(nums []int, k int) int {
 
 '''
 
+# tips
 
 '''
 Will Brute force work here? Try to optimize it.
