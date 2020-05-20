@@ -1,3 +1,4 @@
+'''
 13. Roman to Integer
 Roman numerals are represented by seven different symbols: I, V, X, L, C, D and M.
 
@@ -84,10 +85,9 @@ C 可以放在 D (500) 和 M (1000) 的左边，来表示 400 和 900。
 输入: "MCMXCIV"
 输出: 1994
 解释: M = 1000, CM = 900, XC = 90, IV = 4.
+'''
 
 
-
-```
 class Solution(object):
     def romanToInt(self, s):
         """
@@ -107,6 +107,4 @@ class Solution(object):
             while len(s) >= 2 and s[:2] == k:
                 res += value
                 s = s[2:]
-```
-
         return res
