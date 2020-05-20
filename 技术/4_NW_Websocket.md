@@ -33,8 +33,10 @@ is running
 • HTTP 长连接只能基于简单的超时(常见为 65 秒)
  • WebSocket 连接基于 ping/pong 心跳机制维持
  
-### 兼容 HTTP 协议
-• 默认使用 80 或者 443 端口 • 协议升级
+### 兼容 HTTP 协议    
+
+• 默认使用 80 或者 443 端口 
+• 协议升级
 • 代理服务器可以简单支持
 
 ### 设计哲学:在 Web 约束下暴露 TCP 给上层    
@@ -64,7 +66,8 @@ Frame 数据帧
 • 一旦发送或者接收到关闭帧，连接处于 CLOSING 状态
 • 一旦发送了关闭帧，且接收到关闭帧，连接处于 CLOSED 状态 • TCP 连接关闭后，WebSocket 连接才完全被关闭
 
-### frame-masking-key 掩码        
+### frame-masking-key 掩码   
+     
 • 客户端消息:MASK 为 1(包括控制帧)，传递 32 位无法预测的、随机的 Masking-key • 服务器端消息:MASK 为 0
 
 掩码如何防止缓存污染攻击?
