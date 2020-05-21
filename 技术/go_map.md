@@ -76,6 +76,11 @@ double-checking。
 延迟删除。 删除一个键值只是打标记，只有在提升dirty的时候才清理删除的数据。
 优先从read读取、更新、删除，因为对read的读取不需要锁。
 
+sync.Map是通过冗余的两个数据结构(read、dirty),实现性能的提升。
+为了提升性能，load、delete、store等操作尽量使用只读的read；
+为了提高read的key击中概率，采用动态调整，将dirty数据提升为read；
+对于数据的删除，采用延迟标记删除法，只有在提升dirty的时候才删除。
+
 ```
 type Map struct {
     // 当涉及到dirty数据的操作的时候，需要使用这个锁
@@ -86,7 +91,10 @@ type Map struct {
     // 实际上，实际也会更新这个数据的entries,如果entry是未删除的(unexpunged), 并不需要加锁。如果entry已经被删除了，需要加锁，以便更新dirty数据。
     read atomic.Value // readOnly
 
-    // dirty数据包含当前的map包含的entries,它包含最新的entries(包括read中未删除的数据,虽有冗余，但是提升dirty字段为read的时候非常快，不用一个一个的复制，而是直接将这个数据结构作为read字段的一部分),有些数据还可能没有移动到read字段中。
+    //包含最新的写入的数据，并且在写的时候，会把read 中未被删除的数据拷贝到该dirty中，因为是普通的map存在并发安全问题，需要用到上面的mu字段。
+
+    // dirty数据包含当前的map包含的entries,它包含最新的entries(包括read中未删除的数据,虽有冗余，
+    //但是提升dirty字段为read的时候非常快，不用一个一个的复制，而是直接将这个数据结构作为read字段的一部分),有些数据还可能没有移动到read字段中。
     // 对于dirty的操作需要加锁，因为对它的操作可能会有读写竞争。
     // 当dirty为空的时候， 比如初始化或者刚提升完，下一次的写操作会复制read字段中未删除的数据到这个数据中。
     dirty map[interface{}]*entry
