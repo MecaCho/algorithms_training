@@ -229,6 +229,9 @@ tcpdump -i lo port 80 -c 3 -S
 2。SYN/ACK 报文
 3。ACK 报文
 
+![tcp_c](img/tcp_3.jpeg)
+
+
 # 三次握手状态变迁
 
 ## 五种状态    
@@ -710,6 +713,8 @@ nextSendTime = now + packet.size /
 关闭连接:防止数据丢失;与应用层交互    
 • FIN:结束     
 • ACK:确认    
+
+![tcp_c](img/tcp_4.jpeg)
 
 ## TCP 状态机    
 
