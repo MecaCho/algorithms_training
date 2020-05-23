@@ -103,3 +103,40 @@
 
         C、 使用socket选项SO_TIMESTAMP，通过带外数据获取到数据到达系统缓冲区的时间。
 ```
+
+# JWT
+
+
+节省集中式令牌校验开销，实现无状态授权认证，是jwt等自包含令牌一大优势。
+
+## 怎么验证签名是有效的呢？
+
+jwt自校验的意思是说它的状态是自包含的(jwt令牌里头本身就有状态信息，例如用户id，也有签名算法信息)，
+并不需要到DB或者其它地方去获取状态。
+
+jwt令牌的有效性是通过签名算法+secret(也可以用公私钥)保证的，任何拿到jwt(并且有secret)的服务都可以校验。
+
+任何没有secret的中间环节，都可以看到jwt里头信息，但是不能篡改里头的信息。
+
+## jwt是无状态的，对于spring cloud这种分布式系统是否还需要分布式session？
+
+传统web应用有session概念，如有需要可以集中存memcached/redis等实现分布式session。
+微服务尽量无状态，一般不讲session，授权认证可用无状态jwt，也可用oauth2集中校验式令牌，
+令牌存memccached/redis缓存，由网关集中验，或每个资源服务集中验，这种方式有点类似分布式session。
+
+## 需要做SSO，用oauth + jwt怎么实现呢？
+
+如果按oauth2的一个做法，你每个应用都应该在oauth2服务器上注册client，后面每个应用client都需要去oauth2服务器认证授权获取token，比如针对web应用可以走授权码流程，这个时候每个client获得的token其实是不同的，但是只要用户的browser在oauth2服务器上登录过，那么oauth2服务器就会暂存web session，后面只要session不过期，用户browser再次访问oauth2服务器(即便是另外一个client应用)，就不需要登录了，brower直接跳回，后台自动完成授权码的后续流程，也就是获得token。
+
+
+## token和refresh_token这个具体关系是怎么样的,比如说登录成功后可以把token写到herder,这个refresh_token是调用授权服务器生成的吗 ？可以有其他处理方式吗？比如说我想自己生成一个refresh_token,但是这两者具体细节是怎样的
+
+如果使用授权码模式且启用支持refresh token，则用户webapp经过授权认证可获取一对access token和refresh token对，后继访问api可用access token，refresh token可暂存（一般可存webapp对应db或cache，后面如果access token过期的话，webapp就可用refresh token重新获取access token。
+
+## 大型产品生产环境中一般会选用jwt这种方案吗？还是会使用redis做缓存好呢？
+
+具体要看场景对安全的严格要求程度，大部分场景轻量级jwt这种无状态自包含令牌就基本ok了，有些要求比较严的场景（比如金融行业），需要透明令牌+有状态集中式校验，这个时候一般可以采用redis做令牌缓存进行令牌校验操作的性能优化。
+
+
+
+
