@@ -61,6 +61,50 @@ class LFUCache(object):
         # obj.put(key,value)
 
 
+import collections
+
+class LRUCache(object):
+
+    def __init__(self, capacity):
+        """
+        :type capacity: int
+        """
+        self.vals = collections.OrderedDict()
+        self.remains = capacity
+
+
+    def get(self, key):
+        """
+        :type key: int
+        :rtype: int
+        """
+        res = None
+        if key in self.vals:
+            res = self.vals[key]
+            self.vals.pop(key)
+            self.vals[key] = res
+        return res
+
+
+    def put(self, key, value):
+        """
+        :type key: int
+        :type value: int
+        :rtype: None
+        """
+        if self.remains > 0:
+            self.vals[key] = value
+            self.remains -= 1
+        else:
+            self.vals.popitem(last=False)
+            self.vals[key] = value
+
+
+
+# Your LRUCache object will be instantiated and called as such:
+# obj = LRUCache(capacity)
+# param_1 = obj.get(key)
+# obj.put(key,value)
 
 if __name__ == '__main__':
     demo = LFUCache(2)
