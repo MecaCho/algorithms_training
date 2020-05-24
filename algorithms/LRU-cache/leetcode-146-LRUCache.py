@@ -115,9 +115,50 @@ class LRUCache(object):
 # obj.put(key,value)
 
 
+class LRUCacheNew(object):
+
+    def __init__(self, capacity):
+        """
+        :type capacity: int
+        """
+        self.vals = collections.OrderedDict()
+        self.capacity = capacity
+
+    def get(self, key):
+        """
+        :type key: int
+        :rtype: int
+        """
+
+        res = -1
+        if key in self.vals:
+            res = self.vals.pop(key)
+            self.vals[key] = res
+        return res
+
+    def put(self, key, value):
+        """
+        :type key: int
+        :type value: int
+        :rtype: None
+        """
+
+        if key in self.vals:
+            self.vals.pop(key)
+        self.vals[key] = value
+
+        if len(self.vals) > self.capacity:
+            self.vals.popitem(last=False)
+
+
+# Your LRUCache object will be instantiated and called as such:
+# obj = LRUCache(capacity)
+# param_1 = obj.get(key)
+# obj.put(key,value)
+
+
 
 # solutions
-
 
 
 '''
