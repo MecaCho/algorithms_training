@@ -99,6 +99,28 @@ class Solution(object):
         res = max(res, max(dp[-1][-1]))
         return res
 
+
+
+class Solution1(object):
+    def maxDotProduct(self, nums1, nums2):
+        """
+        :type nums1: List[int]
+        :type nums2: List[int]
+        :rtype: int
+        """
+        dp = [[[-float("inf"), nums1[i] * nums2[j]] for j in range(len(nums2))] for i in range(len(nums1))]
+
+        for i in range(len(nums1)):
+            for j in range(len(nums2)):
+                max1 = max(dp[i - 1][j]) if i > 0 else -float("inf")
+                max2 = max(dp[i][j - 1]) if j > 0 else -float("inf")
+                dp[i][j][0] = max(max1, max2)
+                if i > 0 and j > 0:
+                    dp[i][j][1] = max(max(dp[i - 1][j - 1]) + nums1[i] * nums2[j], dp[i][j][1])
+
+        return max(dp[-1][-1])
+
+
 # tips
 
 '''
