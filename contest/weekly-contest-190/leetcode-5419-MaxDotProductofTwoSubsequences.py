@@ -99,6 +99,12 @@ class Solution(object):
         res = max(res, max(dp[-1][-1]))
         return res
 
+# tips
+
+'''
+Use dynamic programming, define DP[i][j] as the maximum dot product of two subsequences starting in the position i of nums1 and position j of nums2.
+'''
+
 # 题解
 
 '''
