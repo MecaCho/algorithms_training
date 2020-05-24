@@ -27,7 +27,7 @@ class Solution(object):
                     ret += aList[i][j] 
         return ret
    
-```
+'''
 Note also that the copies are shallow; nested structures are not copied. This often haunts new Python programmers; consider:
 
 >>> lists = [[]] * 3
@@ -45,5 +45,5 @@ What has happened is that [[]] is a one-element list containing an empty list, s
 >>> lists[2].append(7)
 >>> lists
 [[3], [5], [7]]
-    ```
+'''
 
