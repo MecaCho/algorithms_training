@@ -156,6 +156,15 @@ class LRUCacheNew(object):
 # param_1 = obj.get(key)
 # obj.put(key,value)
 
+# testcases
+
+if __name__ == '__main__':
+#     ["LRUCache","get","put","get","put","put","get","get"]
+# [[2],[2],[2,6],[1],[1,5],[1,2],[1],[2]]
+
+    cache = LRUCacheNew(2)
+
+#
 
 
 # solutions
