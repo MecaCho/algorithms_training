@@ -118,6 +118,40 @@ class Solution(object):
                 res += 1
         return res
 
+import math
+
+if __name__ == '__main__':
+    res = "111".rjust(8, "0")
+    print(res)
+    print(int(math.log(1000, 2)))
+    a = 9
+    print(bin(a), a.bit_length())
+# Definition for a binary tree node.
+# class TreeNode(object):
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class SolutionNum2(object):
+    def pseudoPalindromicPaths (self, root):
+        """
+        :type root: TreeNode
+        :rtype: int
+        """
+        r = [0]
+        s = set()
+        def toggle(elem):
+            if elem in s: s.remove(elem)
+            else: s.add(elem)
+        def dfs(u):
+            if not u: return
+            toggle(u.val)
+            if not u.left and not u.right and len(s) <= 1: r[0] += 1
+            if u.left: dfs(u.left)
+            if u.right: dfs(u.right)
+            toggle(u.val)
+        dfs(root)
+        return r[0]
 
 # tips
 

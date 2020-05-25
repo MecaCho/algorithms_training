@@ -119,3 +119,9 @@ class Solution(object):
             if w[:len(searchWord)] == searchWord:
                 return i+1
         return -1
+
+
+class Solution1:
+    def isPrefixOfWord(self, sentence: str, searchWord: str) -> int:
+        words = sentence.split()
+        return next((idx + 1 for idx, w in enumerate(words) if w.startswith(searchWord)), -1)

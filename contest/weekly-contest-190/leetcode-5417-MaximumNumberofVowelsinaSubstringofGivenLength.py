@@ -103,6 +103,16 @@ class Solution(object):
         return max_num
 
 
+class Solution1:
+    def maxVowels(self, s: str, k: int) -> int:
+        value = [0]
+        for c in s:
+            value.append(value[-1] + int(c in "aeiou"))
+        ans = 0
+        for i in range(k, len(s) + 1):
+            ans = max(ans, value[i] - value[i - k])
+        return ans
+
 
 # tips
 
