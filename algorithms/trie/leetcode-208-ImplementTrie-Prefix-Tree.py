@@ -36,7 +36,6 @@ You may assume that all inputs are consist of lowercase letters a-z.
 All inputs are guaranteed to be non-empty strings.
 '''
 
-
 class Trie(object):
 
     def __init__(self):
