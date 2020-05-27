@@ -61,3 +61,10 @@ if __name__ == "__main__":
     6 111111 51 42 33
     7 111111 61 52 43
     '''
+
+    a = []
+    def change(a=None):
+        a = [1,2,3]
+        return a
+    change(a)
+    print(a)
