@@ -61,3 +61,51 @@ class Solution1(object):
 
         return p
 
+# golang
+
+'''
+
+// 递归
+
+type ListNode struct {
+	Val  int
+	Next *ListNode
+}
+
+func reverseList(head *ListNode) *ListNode {
+
+	if head == nil || head.Next == nil {
+		return head
+	}
+
+	p := reverseList(head.Next)
+
+	head.Next.Next = head
+	head.Next = nil
+
+	return p
+
+}
+
+// 迭代
+/**
+ * Definition for singly-linked list.
+ * type ListNode struct {
+ *     Val int
+ *     Next *ListNode
+ * }
+ */
+func reverseList(head *ListNode) *ListNode {
+	var pre *ListNode
+	cur := head
+	for cur != nil {
+		tmp := cur.Next
+		cur.Next = pre
+		pre = cur
+		cur = tmp
+	}
+    
+	return pre
+
+}
+'''
