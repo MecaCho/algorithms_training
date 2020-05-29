@@ -2,14 +2,19 @@
 
 # 注意事项
 
-- 在运输和等待过程中加密
-- 对所有的用户输入和从用户那里发来的参数进行处理以防止 XSS 和 SQL 注入。
-- 使用参数化的查询来防止 SQL 注入。
+- 在运输和等待过程中加密    
+
+- 对所有的用户输入和从用户那里发来的参数进行处理以防止 XSS 和 SQL 注入。    
+
+- 使用参数化的查询来防止 SQL 注入。    
+
 - 使用最小权限原则。
 
 
 
-1.xss csrf
+# xss csrf
+
+
 ```
     XSS：跨站脚本（Cross-site scripting，通常简称为XSS）是一种网站应用程序的安全漏洞攻击，是代码注入的一种。
     它允许恶意用户将代码注入到网页上，其他用户在观看网页时就会受到影响。这类攻击通常包含了HTML以及用户端脚本语言。
@@ -24,6 +29,78 @@
     很多同学会搞不明白XSS与CSRF的区别，虽然这两个关键词时常抱团出现，但他们两个是不同维度的东西（或者说他们的目的是不一样的）。
     XSS更偏向于方法论，CSRF更偏向于一种形式，只要是伪造用户发起的请求，都可成为CSRF攻击。
 ```
+
+# DDos攻击 Distributed Denial of Service）
+
+DDoS 的前身是 DoS（Denail of Service），即拒绝服务攻击，指利用大量的合理请求，来占用过多的目标资源，从而使目标服务无法响应正常请求。
+
+DDoS（Distributed Denial of Service） 则是在 DoS 的基础上，采用了分布式架构，利用多台主机同时攻击目标主机。这样，即使目标服务部署了网络防御设备，面对大量网络请求时，还是无力应对。
+
+从攻击的原理上来看，DDoS 可以分为下面几种类型
+
+1。耗尽带宽，
+
+2。耗尽操作系统的资源
+
+3。消耗应用程序的运行资源
+
+
+SYN Flood 正是互联网中最经典的 DDoS 攻击方式。
+原理：即客户端构造大量的 SYN 包，请求建立 TCP 连接；
+而服务器收到包后，会向源 IP 发送 SYN+ACK 报文，并等待三次握手的最后一次 ACK 报文，直到超时。
+这种等待状态的 TCP 连接，通常也称为半开连接。
+由于连接表的大小有限，大量的半开连接就会导致连接表迅速占满，从而无法建立新的 TCP 连接。
+
+## 解决：
+
+找出源 IP 后，要解决 SYN 攻击的问题，只要丢掉相关的包就可以。
+这时，iptables 可以帮你完成这个任务。你可以在终端一中，执行下面的 iptables 命令：
+
+```
+$ iptables -I INPUT -s 192.168.0.2 -p tcp -j REJECT/DROP
+```
+
+限制syn包的速率：
+
+```
+
+# 限制syn并发数为每秒1次
+$ iptables -A INPUT -p tcp --syn -m limit --limit 1/s -j ACCEPT
+
+# 限制单个IP在60秒新建立的连接数为10
+$ iptables -I INPUT -p tcp --dport 80 --syn -m recent --name SYN_FLOOD --update --seconds 60 --hitcount 10 -j REJECT
+```
+
+更改配置sysctl.conf
+
+```
+$ cat /etc/sysctl.conf
+net.ipv4.tcp_syncookies = 1
+net.ipv4.tcp_synack_retries = 1
+net.ipv4.tcp_max_syn_backlog = 1024
+```
+
+需要执行 sysctl -p 命令后，才会动态生效
+
+TCP SYN Cookies 也是一种专门防御 SYN Flood 攻击的方法。
+SYN Cookies 基于连接信息（包括源地址、源端口、目的地址、目的端口等）以及一个加密种子（如系统启动时间），
+计算出一个哈希值（SHA1），这个哈希值称为 cookie。
+然后，这个 cookie 就被用作序列号，来应答 SYN+ACK 包，并释放连接状态。
+当客户端发送完三次握手的最后一次 ACK 后，服务器就会再次计算这个哈希值，
+确认是上次返回的 SYN+ACK 的返回包，才会进入 TCP 的连接状态。
+
+应用程序考虑识别，并尽早拒绝掉这些恶意流量，比如合理利用缓存、增加 WAF（Web Application Firewall）、使用 CDN 等等
+
+## 总结
+
+由于 DDoS 的分布式、大流量、难追踪等特点，目前还没有方法可以完全防御 DDoS 带来的问题，只能设法缓解这个影响。
+
+可以购买专业的流量清洗设备和网络防火墙，在网络入口处阻断恶意流量，只保留正常流量进入数据中心的服务器中。
+
+在 Linux 服务器中，可以通过内核调优、DPDK、XDP 等多种方法，来增大服务器的抗攻击能力，降低 DDoS 对正常服务的影响。
+而在应用程序中，你可以利用各级缓存、 WAF、CDN 等方式，缓解 DDoS 对应用程序的影响。
+
+
 
 
 12.怎么做过载保护的？

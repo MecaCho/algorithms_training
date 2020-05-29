@@ -106,3 +106,61 @@ func flatten(root *TreeNode) {
 }
 
 '''
+
+
+# Definition for singly-linked list.
+class ListNode(object):
+    def __init__(self, x):
+        self.val = x
+        self.next = None
+
+
+class NewListNode(object):
+    def __init__(self, y):
+        super(ListNode).__init__()
+        self.y = y
+
+class Solution(object):
+    def insertionSortList(self, head):
+        """
+        :type head: ListNode
+        :rtype: ListNode
+        """
+        pass
+
+
+class Car(object):
+    def __init__(self, x, y, z):
+        self.x = x
+        self.y = y
+        self.z = z
+
+
+class NewCar(Car):
+    def __init__(self,x, y,z, m, n):
+        super().__init__(x,y,z)
+        self.m = m
+        self.n = n
+
+
+class NewProxy():
+    def __init__(self, obj):
+        self._obj = obj
+
+    # Delegate attribute lookup to internal obj
+    def __getattr__(self, name):
+        return getattr(self._obj, name)
+
+    # Delegate attribute assignment
+    def __setattr__(self, name, value):
+        if name.startswith('_'):
+            super().__setattr__(name, value) # Call original __setattr__
+        else:
+            setattr(self._obj, name, value)
+
+if __name__ == '__main__':
+    demo = NewCar(10, 12, 16, 99, 100)
+    res = demo.x
+    res_x = demo.y
+    print(res, res_x, demo.m, demo.n)
+
