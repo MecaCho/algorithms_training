@@ -14,6 +14,10 @@
 
 # xss csrf
 
+CSRF(Cross-site request forgery)跨站请求伪造
+XSS(Cross Site Scripting)跨站脚本攻击
+
+CSRF重点在请求,XSS重点在脚本
 
 ```
     XSS：跨站脚本（Cross-site scripting，通常简称为XSS）是一种网站应用程序的安全漏洞攻击，是代码注入的一种。
