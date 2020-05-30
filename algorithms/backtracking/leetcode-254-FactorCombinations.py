@@ -86,11 +86,6 @@ Output:
 '''
 
 
-
-
-
-
-
 class Solution(object):
     def getFactors(self, n):
         """
@@ -120,5 +115,43 @@ class Solution(object):
 # golang
 
 '''
+func getFactors(n int) [][]int {
+	res := [][]int{}
+	factors := []int{}
+	for i := 2; i < int(math.Sqrt(float64(n)))+1; i++ {
+		if n%i == 0 {
+			factors = append(factors, i, n/i)
+			item := []int{i, n / i}
+			res = append(res, item)
+		}
+	}
+	sort.Ints(factors)
 
+	if len(factors) == 0 {
+		return res
+	}
+
+	for i := range factors {
+
+		vals := getFactors(factors[i])
+
+		for j := range vals {
+
+			new_item := vals[j]
+			new_item = append(new_item, n/factors[i])
+			sort.Ints(new_item)
+			flag := false
+			for _, v := range res {
+				if reflect.DeepEqual(v, new_item) {
+					flag = true
+				}
+			}
+			if !flag {
+				res = append(res, new_item)
+			}
+		}
+	}
+
+	return res
+}
 '''
