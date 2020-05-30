@@ -154,4 +154,60 @@ func getFactors(n int) [][]int {
 
 	return res
 }
+
+// 执行用时 :
+// 0 ms
+// , 在所有 Go 提交中击败了
+// 100.00%
+// 的用户
+// 内存消耗 :
+// 3.3 MB
+// , 在所有 Go 提交中击败了
+// 100.00%
+// 的用户
+
+func getFactors1(n int) [][]int {
+	res := [][]int{}
+	factors := []int{}
+	for i := 2; i < int(math.Sqrt(float64(n)))+1; i++ {
+		if n%i == 0 {
+			factors = append(factors, i, n/i)
+			item := []int{i, n / i}
+			res = append(res, item)
+		}
+	}
+	sort.Ints(factors)
+
+	if len(factors) == 0 {
+		return res
+	}
+
+	for i := range factors {
+
+		vals := getFactors(factors[i])
+
+		for j := range vals {
+
+			new_item := vals[j]
+
+			if n/factors[i] < new_item[len(new_item)-1] {
+				continue
+			}
+			new_item = append(new_item, n/factors[i])
+			sort.Ints(new_item)
+			flag := false
+			for _, v := range res {
+				if len(v) == len(new_item) && v[len(v)-1] == new_item[len(new_item)-1] && reflect.DeepEqual(v, new_item) {
+					flag = true
+				}
+			}
+			if !flag {
+				res = append(res, new_item)
+			}
+			// res = append(res, new_item)
+		}
+	}
+
+	return res
+}
 '''
