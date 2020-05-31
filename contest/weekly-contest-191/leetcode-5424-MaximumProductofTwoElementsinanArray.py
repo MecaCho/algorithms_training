@@ -63,3 +63,17 @@ class Solution(object):
         """
         new_nums =  sorted(nums)
         return (new_nums[-1]-1)*(new_nums[-2]-1)
+
+
+
+# golang
+
+'''
+func maxProduct(nums []int) int {
+
+    sort.Ints(nums)
+    length := len(nums)
+    return (nums[length-1] - 1) * (nums[length-2] - 1)
+
+}
+'''
