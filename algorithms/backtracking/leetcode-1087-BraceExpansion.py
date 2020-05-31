@@ -61,6 +61,8 @@ All characters inside a pair of consecutive opening and ending curly brackets ar
 '''
 
 
+import re
+
 class Solution(object):
     def expand(self, S):
         """
