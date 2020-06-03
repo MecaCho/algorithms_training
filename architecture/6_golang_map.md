@@ -22,16 +22,199 @@ Golang中map的底层实现是一个散列表，因此实现map的过程实际�
 
 Golang的map中用于存储的结构是bucket数组
 
-低位用于寻找当前key属于hmap中的哪个bucket，而高位用于寻找bucket中的哪个key。
-上文中提到：bucket中有个属性字段是“高位哈希值”数组，这里存的就是蓝色的高位值，
+低位用于寻找当前key属于hmap中的哪个bucket，
+而高位用于寻找bucket中的哪个key。
+bucket中有个属性字段是“高位哈希值”数组，这里存的就是蓝色的高位值，
 用来声明当前bucket中有哪些“key”，便于搜索查找。
 
+## map基本数据结构
+
+map的底层结构是hmap，核心元素是一个由若干个bucket（结构为bmap），
+每个bucket可以存放8个元素，key通过哈希算法被归入不同的bucket；
+当超过8个元素需要存入某个bucket时，hmap会使用extra中的overflow来扩展bucket；
+
+```
+// A header for a Go map.
+type hmap struct {
+	// Note: the format of the hmap is also encoded in cmd/compile/internal/gc/reflect.go.
+	// Make sure this stays in sync with the compiler's definition.
+	count     int // 元素个数；# live cells == size of map.  Must be first (used by len() builtin)
+	flags     uint8
+	B         uint8  // 包含2^B个bucket，log_2 of # of buckets (can hold up to loadFactor * 2^B items)
+	noverflow uint16 // 溢出的bucket个数；approximate number of overflow buckets; see incrnoverflow for details
+	hash0     uint32 // hash种子；hash seed
+
+	buckets    unsafe.Pointer // buckets的数组指针；array of 2^B Buckets. may be nil if count==0.
+	oldbuckets unsafe.Pointer // 结构扩容时用于复制的buckets数组；previous bucket array of half the size, non-nil only when growing
+	nevacuate  uintptr        // 已经搬迁的buckets数量；progress counter for evacuation (buckets less than this have been evacuated)
+
+	extra *mapextra // optional fields
+}
+```
+
+
+extra包括overflow、oldoverflow、nextOverflow
+
+```
+// mapextra holds fields that are not present on all maps.
+type mapextra struct {
+	// If both key and elem do not contain pointers and are inline, then we mark bucket
+	// type as containing no pointers. This avoids scanning such maps.
+	// However, bmap.overflow is a pointer. In order to keep overflow buckets
+	// alive, we store pointers to all overflow buckets in hmap.extra.overflow and hmap.extra.oldoverflow.
+	// overflow and oldoverflow are only used if key and elem do not contain pointers.
+	// overflow contains overflow buckets for hmap.buckets.
+	// oldoverflow contains overflow buckets for hmap.oldbuckets.
+	// The indirection allows to store a pointer to the slice in hiter.
+	overflow    *[]*bmap
+	oldoverflow *[]*bmap
+
+	// nextOverflow holds a pointer to a free overflow bucket.
+	nextOverflow *bmap
+}
+```
+
+bucket结构：
+
+tophash用于记录8个key哈希值的高8位，
+
+kv的存储形式为”key0key1key2key3…key7val1val2val3…val7″
+而不是key/elem/key/elem/...，可以在key和value的长度不同的时候，节省padding空间
+
+```
+// A bucket for a Go map.
+type bmap struct {
+	// tophash generally contains the top byte of the hash value
+	// for each key in this bucket. If tophash[0] < minTopHash,
+	// tophash[0] is a bucket evacuation state instead.
+	tophash [bucketCnt]uint8
+	// Followed by bucketCnt keys and then bucketCnt elems.
+	// NOTE: packing all the keys together and then all the elems together makes the
+	// code a bit more complicated than alternating key/elem/key/elem/... but it allows
+	// us to eliminate padding which would be needed for, e.g., map[int64]int8.
+	// Followed by an overflow pointer.
+}
+```
+
+## map的访问
+
+```
+// mapaccess1 returns a pointer to h[key].  Never returns nil, instead
+// it will return a reference to the zero object for the elem type if
+// the key is not in the map.
+// NOTE: The returned pointer may keep the whole map live, so don't
+// hold onto it for very long.
+func mapaccess1(t *maptype, h *hmap, key unsafe.Pointer) unsafe.Pointer {
+	if raceenabled && h != nil {
+		callerpc := getcallerpc()
+		pc := funcPC(mapaccess1)
+		racereadpc(unsafe.Pointer(h), callerpc, pc)
+		raceReadObjectPC(t.key, key, callerpc, pc)
+	}
+	if msanenabled && h != nil {
+		msanread(key, t.key.size)
+	}
+	if h == nil || h.count == 0 {
+		if t.hashMightPanic() {
+			t.key.alg.hash(key, 0) // see issue 23734
+		}
+		return unsafe.Pointer(&zeroVal[0])
+	}
+	if h.flags&hashWriting != 0 {
+		throw("concurrent map read and map write")
+	}
+	alg := t.key.alg
+	hash := alg.hash(key, uintptr(h.hash0))
+	m := bucketMask(h.B)
+	b := (*bmap)(add(h.buckets, (hash&m)*uintptr(t.bucketsize)))
+	if c := h.oldbuckets; c != nil {
+		if !h.sameSizeGrow() {
+			// There used to be half as many buckets; mask down one more power of two.
+			m >>= 1
+		}
+		oldb := (*bmap)(add(c, (hash&m)*uintptr(t.bucketsize)))
+		if !evacuated(oldb) {
+			b = oldb
+		}
+	}
+	top := tophash(hash)
+bucketloop:
+	for ; b != nil; b = b.overflow(t) {
+		for i := uintptr(0); i < bucketCnt; i++ {
+			if b.tophash[i] != top {
+				if b.tophash[i] == emptyRest {
+					break bucketloop
+				}
+				continue
+			}
+			k := add(unsafe.Pointer(b), dataOffset+i*uintptr(t.keysize))
+			if t.indirectkey() {
+				k = *((*unsafe.Pointer)(k))
+			}
+			if alg.equal(key, k) {
+				e := add(unsafe.Pointer(b), dataOffset+bucketCnt*uintptr(t.keysize)+i*uintptr(t.elemsize))
+				if t.indirectelem() {
+					e = *((*unsafe.Pointer)(e))
+				}
+				return e
+			}
+		}
+	}
+	return unsafe.Pointer(&zeroVal[0])
+}
+```
+
 ## map的扩容    
+
+```
+func hashGrow(t *maptype, h *hmap) {
+	// If we've hit the load factor, get bigger.
+	// Otherwise, there are too many overflow buckets,
+	// so keep the same number of buckets and "grow" laterally.
+	bigger := uint8(1)
+	if !overLoadFactor(h.count+1, h.B) {
+		bigger = 0
+		h.flags |= sameSizeGrow
+	}
+	oldbuckets := h.buckets
+	newbuckets, nextOverflow := makeBucketArray(t, h.B+bigger, nil)
+
+	flags := h.flags &^ (iterator | oldIterator)
+	if h.flags&iterator != 0 {
+		flags |= oldIterator
+	}
+	// commit the grow (atomic wrt gc)
+	h.B += bigger
+	h.flags = flags
+	h.oldbuckets = oldbuckets
+	h.buckets = newbuckets
+	h.nevacuate = 0
+	h.noverflow = 0
+
+	if h.extra != nil && h.extra.overflow != nil {
+		// Promote current overflow buckets to the old generation.
+		if h.extra.oldoverflow != nil {
+			throw("oldoverflow is not nil")
+		}
+		h.extra.oldoverflow = h.extra.overflow
+		h.extra.overflow = nil
+	}
+	if nextOverflow != nil {
+		if h.extra == nil {
+			h.extra = new(mapextra)
+		}
+		h.extra.nextOverflow = nextOverflow
+	}
+
+	// the actual copying of the hash table data is done incrementally
+	// by growWork() and evacuate().
+}
+```
 
 当以上的哈希表增长的时候，Go语言会将bucket数组的数量扩充一倍，
 产生一个新的bucket数组，并将旧数组的数据迁移至新数组
 
-## 加载因子    
+### 加载因子    
 
 判断扩充的条件，就是哈希表中的加载因子(即loadFactor)。
 
@@ -54,12 +237,31 @@ map长度 / 2^B
 
 并不会直接删除旧的bucket，而是把原来的引用去掉，利用GC清除内存。
 
+```
+func growWork(t *maptype, h *hmap, bucket uintptr) {
+	// make sure we evacuate the oldbucket corresponding
+	// to the bucket we're about to use
+	evacuate(t, h, bucket&h.oldbucketmask())
+
+	// evacuate one more oldbucket to make progress on growing
+	if h.growing() {
+		evacuate(t, h, h.nevacuate)
+	}
+}
+```
+
 ## map中数据的删除
 
-1、如果``key``是一个指针类型的，则直接将其置为空，等待GC清除；
+1、如果key是一个指针类型的，则直接将其置为空，等待GC清除；
+
 2、如果是值类型的，则清除相关内存。
-3、同理，对``value``做相同的操作。
+
+3、同理，对value做相同的操作。
+
 4、最后把key对应的高位值对应的数组index置为空。
+
+删除map中的元素不会释放内存，仅将对应的tophash[i]设置为empty，并非释放内存；
+
 
 # sync.Map
 
@@ -73,7 +275,9 @@ Go 1.6之前， 内置的map类型是部分goroutine安全的，并发的读没�
 使用只读数据(read)，避免读写冲突。
 动态调整，miss次数多了之后，将dirty数据提升为read。
 double-checking。
-延迟删除。 删除一个键值只是打标记，只有在提升dirty的时候才清理删除的数据。
+
+延迟删除。 
+删除一个键值只是打标记，只有在提升dirty的时候才清理删除的数据。
 优先从read读取、更新、删除，因为对read的读取不需要锁。
 
 sync.Map是通过冗余的两个数据结构(read、dirty),实现性能的提升。

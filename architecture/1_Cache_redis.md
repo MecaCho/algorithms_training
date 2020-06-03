@@ -245,8 +245,27 @@ a线程：上写锁->写db->删除缓存/改缓存->释放锁；
 Canal 模拟 MySQL 主从复制的交互协议，把自己伪装成一个 MySQL 的从节点，向 MySQL 主节点发送 dump 请求，
 MySQL 收到请求后，就会开始推送 Binlog 给 Canal，Canal 解析 Binlog 字节流之后，转换为便于读取的结构化数据，供下游程序订阅使用。下图是 Canal 的工作原理：
 
+# Redis慢查询
 
+## 配置参数
 
+slowlog-log-slower-than 预设阈值(单位：微秒，1秒=1000毫秒=1000000微秒)
 
+slowlog-max-len 
+
+配置：
+
+```
+config set slowlog-log-slower-than 20000
+config set slowlog-max-len 1000
+config rewrite
+```
+
+获取慢查询日志：
+slowlog get
+
+获取慢查询日志列表当前的长度：slowlog len
+
+慢查询日志重置：slowlog reset
 
 
