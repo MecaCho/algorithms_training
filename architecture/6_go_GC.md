@@ -152,3 +152,20 @@ In the current compilers, if a variable has its address taken, that variable is 
 ```
 
 
+$GODEBUG=schedtrace=1000 godoc -http=:6060
+
+```
+CHED 6016ms: gomaxprocs=4 idleprocs=0 threads=26 spinningthreads=0 idlethreads=20 runqueue=1 [3 4 0 10]
+
+SCHED：调试信息输出标志字符串，代表本行是goroutine scheduler的输出；
+6016ms：即从程序启动到输出这行日志的时间；
+gomaxprocs: P的数量；
+idleprocs: 处于idle状态的P的数量；通过gomaxprocs和idleprocs的差值，我们就可知道执行go代码的P的数量；
+threads: os threads的数量，包含scheduler使用的m数量，加上runtime自用的类似sysmon这样的thread的数量；
+spinningthreads: 处于自旋状态的os thread数量；
+idlethread: 处于idle状态的os thread的数量；
+runqueue=1： go scheduler全局队列中G的数量；
+[3 4 0 10]: 分别为4个P的local queue中的G的数量。
+```
+
+
