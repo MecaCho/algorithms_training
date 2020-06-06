@@ -174,3 +174,5 @@ echo $Name
 . config
 source config
 ```
+
+for ((i=0;i<30;i++)); do curl localhost:8080; sleep 1; done
