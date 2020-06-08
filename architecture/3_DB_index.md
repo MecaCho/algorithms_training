@@ -137,7 +137,7 @@ drop主键索引会导致其他索引失效，但drop普通索引不会。
        select * from tb1 where name like '%cn';
 
 - 使用函数
-       select * from tb1 where reverse(name) = 'wupeiqi';
+       select * from tb1 where reverse(name) = 'qwq';
 
 - or
    select * from tb1 where nid = 1 or email = 'seven@live.com';

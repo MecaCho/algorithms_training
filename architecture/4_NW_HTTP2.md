@@ -45,7 +45,8 @@
 
 因为HTTP/1.x的问题，我们会引入雪碧图、将小图内联、使用多个域名等等的方式来提高性能。
 不过这些优化都绕开了协议，直到2009年，谷歌公开了自行研发的 SPDY 协议，主要解决HTTP/1.1效率不高的问题。
-谷歌推出SPDY，才算是正式改造HTTP协议本身。降低延迟，压缩header等等，SPDY的实践证明了这些优化的效果，也最终带来HTTP/2的诞生。
+谷歌推出SPDY，才算是正式改造HTTP协议本身。降低延迟，压缩header等等，SPDY的实践证明了这些优化的效果，
+也最终带来HTTP/2的诞生。
 
 SPDY 协议在Chrome浏览器上证明可行以后，就被当作 HTTP/2 的基础，主要特性都在 HTTP/2 之中得到继承。
 
@@ -108,7 +109,9 @@ Chrome 浏览器检测 HTTP/2 插件
 • 配置 Chrome 输出 DEBUG 日志
 • 配置环境变量 SSLKEYLOGFILE
 • 在 Wireshark 中配置解析 DEBUG 日志
-• 编辑->首选项->Protocols->TLS/SSL • (Pre)-Master-Secret log filename
+• 编辑->首选项->Protocols->TLS/SSL 
+
+• (Pre)-Master-Secret log filename
 
 ## 二进制格式与可见性    
 

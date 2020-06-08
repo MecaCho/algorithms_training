@@ -81,7 +81,8 @@ GCM
 # 详解AES对称加密算法
 
 AES(Advanced Encryption Standard)加密算法    
-• 为比利时密码学家 Joan Daemen 和 Vincent Rijmen 所设计，又称 Rijndael 加密算法 • 常用填充算法:PKCS7
+• 为比利时密码学家 Joan Daemen 和 Vincent Rijmen 所设计，又称 Rijndael 加密算法 
+• 常用填充算法:PKCS7
 • 常用分组工作模式:GCM   
 
 AES 的三种密钥长度    
@@ -101,8 +102,10 @@ AES 的三种密钥长度
 # 非对称密码与 RSA 算法
 
 非对称密码
-• 每个参与方都有一对密钥 • 公钥
-• 向对方公开 • 私钥
+• 每个参与方都有一对密钥 
+• 公钥
+• 向对方公开 
+• 私钥
 • 仅自己使用
 
 非对称加解密的过程
