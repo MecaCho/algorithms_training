@@ -40,6 +40,7 @@ class Solution(object):
         return None
 
 # 双指针法
+
 class Solution1(object):
     def twoSum(self, nums, target):
         """
