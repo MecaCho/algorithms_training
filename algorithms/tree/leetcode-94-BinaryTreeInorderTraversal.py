@@ -76,15 +76,47 @@ class Solution(object):
         :type root: TreeNode
         :rtype: List[int]
         """
-        self.vals = []
-        def dfs(root):
-            if not root:
-                return
-            dfs(root.left)
-            self.vals.append(root.val)
-            dfs(root.right)
-        dfs(root)
-        return self.vals
+        # self.vals = []
+        # def dfs(root):
+        #     if not root:
+        #         return
+        #     dfs(root.left)
+        #     self.vals.append(root.val)
+        #     dfs(root.right)
+        # dfs(root)
+        # return self.vals
+
+        return self.inorderTraversal(root.left) + [root.val] + self.inorderTraversal(root.right) if root else []
+
+
+# 迭代
+
+# Definition for a binary tree node.
+# class TreeNode(object):
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+
+class Solution1(object):
+    def inorderTraversal(self, root):
+        """
+        :type root: TreeNode
+        :rtype: List[int]
+        """
+        stack_t = [(0, root)]
+        res = []
+        while stack_t:
+            c, node = stack_t.pop()
+            if node:
+                if c == 0:
+                    stack_t.append((0, node.right))
+                    stack_t.append((1, node))
+                    stack_t.append((0, node.left))
+                else:
+                    res.append(node.val)
+        return res
+
 
 
 '''
