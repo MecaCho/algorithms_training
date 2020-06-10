@@ -61,7 +61,40 @@ class Solution(object):
 # golang solutions
 
 '''
+/**
+ * Definition for singly-linked list.
+ * type ListNode struct {
+ *     Val int
+ *     Next *ListNode
+ * }
+ */
+func partition(head *ListNode, x int) *ListNode {
 
+    cur := head
+    low := &ListNode{0, nil}
+    // low.Next = head
+    high := &ListNode{0, nil}
+
+    low_, high_ := low, high
+
+    for cur != nil{
+        if cur.Val >= x{
+            high.Next = cur
+            high = high.Next
+        }else{
+            low.Next = cur
+            low = low.Next
+        }
+        cur = cur.Next
+    }
+    low.Next = nil
+    high.Next = nil
+
+    low.Next = high_.Next
+
+    return low_.Next
+
+}
 '''
 
 # tips
