@@ -94,6 +94,37 @@ class Solution(object):
                 matrix[k][j] = 0
         return matrix
 
+# golang solutions
+
+'''
+func setZeroes(matrix [][]int)  {
+
+    cols := []int{}
+    rows := []int{}
+
+    for i := 0; i < len(matrix); i ++ {
+        for j := 0; j < len(matrix[0]);j++{
+            if matrix[i][j] == 0{
+                cols = append(cols, i)
+                rows = append(rows, j)
+            }
+        }
+    }
+
+    for _, val := range cols{
+        for j := 0; j < len(matrix[0]); j++{
+            matrix[val][j] = 0
+        }
+    }
+
+    for _, val := range rows{
+        for j := 0; j < len(matrix); j++{
+            matrix[j][val] = 0
+        }
+    }
+
+}
+'''
 
 # tips
 
