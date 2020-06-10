@@ -1,8 +1,11 @@
-
 '''
-面试题 02.08. 环路检测
-给定一个有环链表，实现一个算法返回环路的开头节点。
-有环链表的定义：在链表中某个节点的next元素指向在它前面出现过的节点，则表明该链表存在环路。
+142. 环形链表 II
+给定一个链表，返回链表开始入环的第一个节点。 如果链表无环，则返回 null。
+
+为了表示给定链表中的环，我们使用整数 pos 来表示链表尾连接到链表中的位置（索引从 0 开始）。 如果 pos 是 -1，则在该链表中没有环。
+
+说明：不允许修改给定的链表。
+
 
 
 示例 1：
@@ -11,11 +14,13 @@
 输出：tail connects to node index 1
 解释：链表中有一个环，其尾部连接到第二个节点。
 
+
 示例 2：
 
 输入：head = [1,2], pos = 0
 输出：tail connects to node index 0
 解释：链表中有一个环，其尾部连接到第一个节点。
+
 
 示例 3：
 
@@ -23,32 +28,49 @@
 输出：no cycle
 解释：链表中没有环。
 
+
+
+
 进阶：
 你是否可以不用额外空间解决此题？
 
-面试题 02.08. Linked List Cycle LCCI
-Given a circular linked list, implement an algorithm that returns the node at the beginning of the loop.
+142. Linked List Cycle II
+Given a linked list, return the node where the cycle begins. If there is no cycle, return null.
 
-Circular linked list: A (corrupt) linked list in which a node's next pointer points to an earlier node, so as to make a loop in the linked list.
+To represent a cycle in the given linked list, we use an integer pos which represents the position (0-indexed) in the linked list where tail connects to. If pos is -1, then there is no cycle in the linked list.
+
+Note: Do not modify the linked list.
+
+
 
 Example 1:
 
 Input: head = [3,2,0,-4], pos = 1
 Output: tail connects to node index 1
+Explanation: There is a cycle in the linked list, where tail connects to the second node.
+
+
 Example 2:
 
 Input: head = [1,2], pos = 0
 Output: tail connects to node index 0
+Explanation: There is a cycle in the linked list, where tail connects to the first node.
+
+
 Example 3:
 
 Input: head = [1], pos = -1
 Output: no cycle
-Follow Up:
-Can you solve it without using additional space?
+Explanation: There is no cycle in the linked list.
+
+
+
+
+Follow-up:
+Can you solve it without using extra space?
 '''
 
-
-
+# 哈希表
 
 # Definition for singly-linked list.
 # class ListNode(object):
@@ -62,6 +84,25 @@ class Solution(object):
         :type head: ListNode
         :rtype: ListNode
         """
+        node_map = {}
+        while head:
+            if head in node_map:
+                return head
+            else:
+                node_map[head] = head
+            head = head.next
+        return None
+
+
+# 双指针
+
+class Solution1(object):
+    def detectCycle(self, head):
+        """
+        :type head: ListNode
+        :rtype: ListNode
+        """
+
         slow = head
         fast = head
 
@@ -79,6 +120,7 @@ class Solution(object):
         # print(fast)
         return slow
 
+
 # solutions
 
 '''
@@ -89,7 +131,8 @@ class Solution(object):
 
 算法
 
-首先，我们分配一个 Set 去保存所有的列表节点。我们逐一遍历列表，检查当前节点是否出现过，如果节点已经出现过，那么一定形成了环且它是环的入口。否则如果有其他点是环的入口，我们应该先访问到其他节点而不是这个节点。其他情况，没有成环则直接返回 null 。
+首先，我们分配一个 Set 
+去保存所有的列表节点。我们逐一遍历列表，检查当前节点是否出现过，如果节点已经出现过，那么一定形成了环且它是环的入口。否则如果有其他点是环的入口，我们应该先访问到其他节点而不是这个节点。其他情况，没有成环则直接返回 null 。
 
 算法会在遍历有限个节点后终止，这是因为输入列表会被分成两类：成环的和不成环的。一个不成欢的列表在遍历完所有节点后会到达 null - 即链表的最后一个元素后停止。一个成环列表可以想象成是一个不成环列表将最后一个 null 元素换成环的入口。
 
@@ -117,7 +160,8 @@ public class Solution {
 
 时间复杂度：O(n)O(n)
 
-不管是成环还是不成环的输入，算法肯定都只会访问每个节点一次。对于非成环列表这是显而易见的，因为第 nn 个节点指向 null ，这会让循环退出。对于循环列表， if 条件满足时会导致函数的退出，因为它指向了某个已经访问过的节点。两种情况下，访问的节点数最多都是 nn 个，所以运行时间跟节点数目成线性关系。
+不管是成环还是不成环的输入，算法肯定都只会访问每个节点一次。对于非成环列表这是显而易见的，因为第 nn 个节点指向 null ，这会让循环退出。对于循环列表， if 
+条件满足时会导致函数的退出，因为它指向了某个已经访问过的节点。两种情况下，访问的节点数最多都是 nn 个，所以运行时间跟节点数目成线性关系。
 
 空间复杂度：O(n)O(n)
 
@@ -136,22 +180,25 @@ Floyd 的算法被划分成两个不同的 阶段 。在第一阶段，找出列
 
 阶段 1
 
-这里我们初始化两个指针 - 快指针和慢指针。我们每次移动慢指针一步、快指针两步，直到快指针无法继续往前移动。如果在某次移动后，快慢指针指向了同一个节点，我们就返回它。否则，我们继续，直到 while 循环终止且没有返回任何节点，这种情况说明没有成环，我们返回 null 。
+这里我们初始化两个指针 - 快指针和慢指针。我们每次移动慢指针一步、快指针两步，直到快指针无法继续往前移动。如果在某次移动后，快慢指针指向了同一个节点，我们就返回它。否则，我们继续，直到 while 
+循环终止且没有返回任何节点，这种情况说明没有成环，我们返回 null 。
 
 下图说明了这个算法的工作方式：
 
 
 
-环中的节点从 0 到 C-1C−1 编号，其中 CC 是环的长度。非环节点从 -F−F 到 -1−1 编号，其中 FF 是环以外节点的数目。 FF 次迭代以后，慢指针指向了 0 且快指针指向某个节点 hh ，其中 F \equiv h \pmod CF≡h(modC) 。这是因为快指针在 FF 次迭代中遍历了 2F2F 个节点，且恰好有 FF 个在环中。继续迭代 C-hC−h 次，慢指针显然指向第 C-hC−h 号节点，而快指针也会指向相同的节点。原因在于，快指针从 hh 号节点出发遍历了 2(C-h)2(C−h) 个节点。
+环中的节点从 0 到 C-1C−1 编号，其中 CC 是环的长度。非环节点从 -F−F 到 -1−1 编号，其中 FF 是环以外节点的数目。 FF 次迭代以后，慢指针指向了 0 且快指针指向某个节点 hh ，其中 F \equiv h 
+\pmod CF≡h(modC) 。这是因为快指针在 FF 次迭代中遍历了 2F2F 个节点，且恰好有 FF 个在环中。继续迭代 C-hC−h 次，慢指针显然指向第 C-hC−h 号节点，而快指针也会指向相同的节点。原因在于，快指针从 
+hh 号节点出发遍历了 2(C-h)2(C−h) 个节点。
 
 \begin{aligned} h + 2(C-h) &= 2C - h \\ &\equiv C-h \pmod C \end{aligned}
 h+2(C−h)
 ​	
-  
+
 =2C−h
 ≡C−h(modC)
 ​	
- 
+
 
 因此，如果列表是有环的，快指针和慢指针最后会同时指向同一个节点，因此被称为 相遇 。
 
@@ -165,19 +212,20 @@ h+2(C−h)
 
 我们利用已知的条件：慢指针移动 1 步，快指针移动 2 步，来说明它们相遇在环的入口处。（下面证明中的 tortoise 表示慢指针，hare 表示快指针）
 
-\begin{aligned} 2 \cdot distance(tortoise) &= distance(hare) \\ 2(F+a) &= F+a+b+a \\ 2F+2a &= F+2a+b \\ F &= b \\ \end{aligned}
+\begin{aligned} 2 \cdot distance(tortoise) &= distance(hare) \\ 2(F+a) &= F+a+b+a \\ 2F+2a &= F+2a+b \\ F &= b \\ 
+\end{aligned}
 2⋅distance(tortoise)
 2(F+a)
 2F+2a
 F
 ​	
-  
+
 =distance(hare)
 =F+a+b+a
 =F+2a+b
 =b
 ​	
- 
+
 
 因为 F=bF=b ，指针从 hh 点出发和从链表的头出发，最后会遍历相同数目的节点后在环的入口处相遇。
 
@@ -229,7 +277,8 @@ class Solution(object):
 
 时间复杂度：O(n)O(n)
 
-对有环列表，快指针和慢指针在 F+C-hF+C−h 次迭代以后会指向同一个节点，正如上面正确性证明所示， F+C-h \leq F+C = nF+C−h≤F+C=n ，所以阶段 1 运行时间在 O(n)O(n) 时间以内，阶段 2 运行 F < nF<n 次迭代，所以它运行时间也在 O(n)O(n) 以内。
+对有环列表，快指针和慢指针在 F+C-hF+C−h 次迭代以后会指向同一个节点，正如上面正确性证明所示， F+C-h \leq F+C = nF+C−h≤F+C=n ，所以阶段 1 运行时间在 O(n)O(n) 时间以内，阶段 2 
+运行 F < nF<n 次迭代，所以它运行时间也在 O(n)O(n) 以内。
 
 对于无环链表，快指针大约需要迭代 \dfrac{n}{2} 
 2
@@ -262,7 +311,8 @@ Floyd 的快慢指针算法仅需要几个指针，所以只需常数级别的�
 TIPS: 若有环，两指针一定会相遇。因为每走 11 轮，fast 与 slow 的间距 +1+1，fast 终会追上 slow；
 第二种结果： 当fast == slow时， 两指针在环中 第一次相遇 。下面分析此时fast 与 slow走过的 步数关系 ：
 
-设链表共有 a+ba+b 个节点，其中 链表头部到链表入口 有 aa 个节点（不计链表入口节点）， 链表环 有 bb 个节点（这里需要注意，aa 和 bb 是未知数，例如图解上链表 a=4a=4 , b=5b=5）；设两指针分别走了 ff，ss 步，则有：
+设链表共有 a+ba+b 个节点，其中 链表头部到链表入口 有 aa 个节点（不计链表入口节点）， 链表环 有 bb 个节点（这里需要注意，aa 和 bb 是未知数，例如图解上链表 a=4a=4 , b=5b=5）；设两指针分别走了 
+ff，ss 步，则有：
 fast 走的步数是slow步数的 22 倍，即 f = 2sf=2s；（解析： fast 每轮走 22 步）
 fast 比 slow多走了 nn 个环的长度，即 f = s + nbf=s+nb；（ 解析： 双指针都走过 aa 步，然后在环内绕圈直到重合，重合时 fast 比 slow 多走 环的长度整数倍 ）；
 以上两式相减得：f = 2nbf=2nb，s = nbs=nb，即fast和slow 指针分别走了 2n2n，nn 个 环的周长 （注意： nn 是未知数，不同链表的情况不同）。
