@@ -1,5 +1,5 @@
 
-```
+'''
 225. Implement Stack using Queues
 Implement the following operations of a stack using queues.
 
@@ -37,11 +37,13 @@ empty() -- 返回栈是否为空
 ```
 ### 解题思路
 此处撰写解题思路
-
+'''
 
 ### 代码
 
-```python
+# python
+
+
 class MyStack(object):
 
     def __init__(self):
@@ -101,4 +103,107 @@ class MyStack(object):
 # param_2 = obj.pop()
 # param_3 = obj.top()
 # param_4 = obj.empty()
-```
+
+import queue
+
+class MyStack1(object):
+
+    def __init__(self):
+        """
+        Initialize your data structure here.
+        """
+        self.queue = queue.Queue()
+
+
+    def push(self, x):
+        """
+        Push element x onto stack.
+        :type x: int
+        :rtype: None
+        """
+        self.queue.put(x)
+        for _ in range(self.queue.qsize() - 1):
+            self.queue.put(self.queue.get())
+
+
+
+    def pop(self):
+        """
+        Removes the element on top of the stack and returns that element.
+        :rtype: int
+        """
+        return self.queue.get()
+
+
+    def top(self):
+        """
+        Get the top element.
+        :rtype: int
+        """
+        res = self.pop()
+        self.push(res)
+        # self.queue.put(res)
+        # for _ in range(self.queue.qsize() - 1):
+        #     self.queue.put(self.queue.get())
+        return res
+
+
+
+    def empty(self):
+        """
+        Returns whether the stack is empty.
+        :rtype: bool
+        """
+        return self.queue.qsize() == 0
+
+import collections
+
+class MyStack2(object):
+
+    def __init__(self):
+        """
+        Initialize your data structure here.
+        """
+        self.queue = collections.deque()
+
+
+    def push(self, x):
+        """
+        Push element x onto stack.
+        :type x: int
+        :rtype: None
+        """
+        self.queue.append(x)
+        for _ in range(len(self.queue) - 1):
+            self.queue.append(self.queue.pop())
+
+
+
+    def pop(self):
+        """
+        Removes the element on top of the stack and returns that element.
+        :rtype: int
+        """
+        return self.queue.pop()
+
+
+    def top(self):
+        """
+        Get the top element.
+        :rtype: int
+        """
+        res = self.pop()
+        self.push(res)
+        # self.queue.put(res)
+        # for _ in range(self.queue.qsize() - 1):
+        #     self.queue.put(self.queue.get())
+        return res
+
+
+
+    def empty(self):
+        """
+        Returns whether the stack is empty.
+        :rtype: bool
+        """
+        return len(self.queue) == 0
