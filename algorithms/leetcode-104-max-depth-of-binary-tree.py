@@ -70,18 +70,18 @@ class Solution1(object):
         :type root: TreeNode
         :rtype: int
         """
-        # stack = []
-        # if root:
-        #     stack.append((1, root))
-        # deepth = 0
-        # while stack:
-        #     cur, node = stack.pop()
-        #     deepth = max(deepth, cur)
-        #     if node.left:
-        #         stack.append((cur+1, node.left))
-        #     if node.right:
-        #         stack.append((cur+1, node.right))
-        # return deepth
+        stack = []
+        if root:
+            stack.append((1, root))
+        deepth = 0
+        while stack:
+            cur, node = stack.pop()
+            deepth = max(deepth, cur)
+            if node.left:
+                stack.append((cur+1, node.left))
+            if node.right:
+                stack.append((cur+1, node.right))
+        return deepth
 
 
 # solutions

@@ -26,6 +26,7 @@ For example, given n = 3, a solution set is:
 ]
 '''
 
+# 回溯
 
 class Solution(object):
     def generateParenthesis(self, n):
@@ -33,16 +34,45 @@ class Solution(object):
         :type n: int
         :rtype: List[str]
         """
+
+        self.vals = []
+
+        def bk(res, l, r):
+            if l == 0 and r == 0:
+                val = "".join(res)
+                self.vals.append(val)
+            else:
+                new_res = res[:]
+                if l > 0:
+                    bk(new_res+["("], l-1, r)
+                if r > l and r > 0:
+                    bk(new_res + [")"], l, r-1)
+        bk([], n, n)
+        return self.vals
+
+# 递归
+
+class Solution1(object):
+    def generateParenthesis(self, n):
+        """
+        :type n: int
+        :rtype: List[str]
+        """
+
+        if n == 0:
+            return []
+        if n == 1:
+            return ["()"]
+
+        vals = self.generateParenthesis(n-1)
+
         res = []
-        def add(s= "", l=0, r=0):
-            if len(s) == 2 * n:
-                res.append(s)
-            if l < n:
-                add(s + "(", l + 1, r)
-            if r < n and r < l:
-                add(s + ")", l, r + 1)
-            
-        add()
+        for i in range(len(vals)):
+            for j in range(len(vals[i])):
+                new_p = vals[i][:j] + "()" + vals[i][j:]
+                if new_p not in res:
+                    res.append(new_p)
+
         return res
 
 '''
