@@ -45,10 +45,38 @@ class Solution(object):
         """
         hash_map = collections.defaultdict(list)
         for word in strs:
-            key = "".join(sorted(word))
+            # key = "".join(sorted(word))
+            key = tuple(sorted(word))
             hash_map[key].append(word)
         return hash_map.values()
 
+
+# golang
+
+'''
+func groupAnagrams(strs []string) [][]string {
+	hashMap := make(map[string][]string, 0)
+	for _, val := range strs {
+		vals := strings.Split(val, "")
+		sort.Strings(vals)
+		key := strings.Join(vals, "")
+		v, ok := hashMap[key]
+        if ok {
+			v = append(v, val)
+			hashMap[key] = v
+		}else{
+            hashMap[key] = []string{val}
+        }
+	}
+
+	res := [][]string{}
+
+	for _, v := range hashMap {
+		res = append(res, v)
+	}
+	return res
+}
+'''
 
 '''
 方法一：排序数组分类
