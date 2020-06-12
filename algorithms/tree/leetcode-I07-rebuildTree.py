@@ -51,3 +51,25 @@ class Solution(object):
         if right:
             root.right = right
         return root
+
+class Solution1(object):
+    def buildTree(self, inorder, postorder):
+        """
+        :type inorder: List[int]
+        :type postorder: List[int]
+        :rtype: TreeNode
+        """
+        # inorder [左，根，右]
+        # postorder [左，右，根]
+        if not inorder or not postorder:
+            return None
+        root = TreeNode(postorder[-1])
+
+        root_index = inorder.index(root.val)
+
+        left = self.buildTree(inorder[:root_index], postorder[:root_index])
+        right = self.buildTree(inorder[root_index+1:], postorder[root_index:-1])
+
+        root.left = left
+        root.right = right
+        return root
