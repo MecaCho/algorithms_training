@@ -27,9 +27,9 @@ SSL 的握手部分结束，SSL 安全通道的数据通讯开始，客户和服
 
 从上面的流程可以看出（加粗字体），SSL通信在握手阶段使用的是非对称加密，在数据的传输阶段使用的是对成加密。
 
-![https_flow](./img/http_simple_flow.jpeg)
+![https_flow](../img/http_simple_flow.jpeg)
 
-![https_flow0](./img/https_simple_flow)
+![https_flow0](../img/https_simple_flow)
 
 Client发起一个HTTPS（https:/demo.linianhui.dev）的请求，根据RFC2818的规定，Client知道需要连接Server的443（默认）端口。
 Server把事先配置好的公钥证书（public key certificate）返回给客户端。
@@ -40,7 +40,7 @@ Server使用会话密钥加密“明文内容A”，发送给Client。
 Client使用会话密钥解密响应的密文，得到“明文内容A”。
 Client再次发起HTTPS的请求，使用会话密钥加密请求的“明文内容B”，然后Server使用会话密钥解密密文，得到“明文内容B”。
 
-![https_flow1](./img/https_flow1.png)
+![https_flow1](../img/https_flow1.png)
 
 
 # https优化

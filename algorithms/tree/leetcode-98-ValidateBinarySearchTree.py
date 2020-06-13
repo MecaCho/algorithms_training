@@ -63,7 +63,6 @@ Explanation: The root node's value is 5 but its right child's value is 4.
 '''
 
 
-
 # Definition for a binary tree node.
 # class TreeNode(object):
 #     def __init__(self, x):
@@ -72,6 +71,53 @@ Explanation: The root node's value is 5 but its right child's value is 4.
 #         self.right = None
 
 class Solution(object):
+    def isValidBST(self, root):
+        """
+        :type root: TreeNode
+        :rtype: bool
+        """
+        # self.vals = []
+        # def dfs(root):
+        #     if not root:
+        #         return True
+        #     dfs(root.left)
+        #     self.vals.append(root.val)
+        #     dfs(root.right)
+        # dfs(root)
+        # for i in range(1, len(self.vals)):
+        #     if self.vals[i] <= self.vals[i-1]:
+        #         return False
+        # return True
+
+        self.res = True
+        self.pre = None
+
+        def dfs(root):
+            if not root:
+                return True
+            if not dfs(root.left):
+                return False
+
+            if self.pre is not None and root.val <= self.pre:
+                return False
+
+            self.pre = root.val
+            if not dfs(root.right):
+                return False
+            return True
+
+        return dfs(root)
+
+
+
+# Definition for a binary tree node.
+# class TreeNode(object):
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+
+class Solution1(object):
     def isValidBST(self, root):
         """
         :type root: TreeNode
