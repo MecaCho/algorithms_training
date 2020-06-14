@@ -40,6 +40,15 @@ def fun118():
     s1 = Students("qwq", 20)
     print(s1, s1.name, s1.age)
 
+def func119():
+    a = {"a":1, "b": 2}
+    b = {"b": 3, "c": 4}
+    from collections import ChainMap
+    merged = ChainMap(a, b)
+    print(merged["b"])
+    a["b"] = 100
+    print(merged["b"])
+
 if __name__ == '__main__':
     collections.defaultdict()
     ordered_dict = collections.OrderedDict()
