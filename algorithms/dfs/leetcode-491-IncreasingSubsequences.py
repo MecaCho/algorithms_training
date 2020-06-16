@@ -32,6 +32,7 @@ The given array may contain duplicates, and two equal integers should also be co
 
 
 
+# 迭代
 class Solution(object):
     def findSubsequences(self, nums):
         """
@@ -45,3 +46,32 @@ class Solution(object):
 
         return [sub for sub in subs if len(sub) >= 2]
 
+
+
+# 递归
+class Solution1(object):
+    def findSubsequences(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: List[List[int]]
+        """
+        # subs = {()}
+
+        # for i in range(len(nums)):
+        #     subs |= {sub+(nums[i],) for sub in subs if not sub or sub[-1] <= nums[i]}
+
+        # return [sub for sub in subs if len(sub) >=2]
+
+        self.vals = {()}
+
+        def dfs(n, res):
+            if len(res) > 1:
+                self.vals.add(res)
+            if n >= len(nums):
+                return
+            if not res or res[-1] <= nums[n]:
+                dfs(n + 1, res + (nums[n],))
+            dfs(n + 1, res)
+
+        dfs(0, ())
+        return [v for v in self.vals if v]
