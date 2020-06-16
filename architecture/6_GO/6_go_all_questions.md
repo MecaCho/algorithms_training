@@ -5,7 +5,8 @@
 select会随机选择一个可用通道做收发操作
 
 2. Go语言局部变量分配在栈还是堆？    
-Go语言编译器会自动决定把一个变量放在栈还是放在堆，编译器会做逃逸分析，当发现变量的作用域没有跑出函数范围，就可以在栈上，反之则必须分配在堆。
+Go语言编译器会自动决定把一个变量放在栈还是放在堆，编译器会做逃逸分析，
+当发现变量的作用域没有跑出函数范围，就可以在栈上，反之则必须分配在堆。
 一个函数内局部变量，不管是不是动态new出来的，它会被分配在堆还是栈，是由编译器做逃逸分析之后做出的决定。
 
 3. 简述一下你对Go垃圾回收机制的理解?    
@@ -22,9 +23,18 @@ G(goroutine): 调度系统的最基本单位goroutine，存储了goroutine的执
 
 5. 介绍下 golang 的 runtime 机制?    
 
-Runtime 负责管理任务调度，垃圾收集及运行环境。同时，Go提供了一些高级的功能，如goroutine, channel, 以及Garbage collection。这些高级功能需要一个runtime的支持. runtime和用户编译后的代码被linker静态链接起来，形成一个可执行文件。这个文件从操作系统角度来说是一个user space的独立的可执行文件。 从运行的角度来说，这个文件由2部分组成，一部分是用户的代码，另一部分就是runtime。runtime通过接口函数调用来管理goroutine, channel及其他一些高级的功能。从用户代码发起的调用操作系统API的调用都会被runtime拦截并处理。
+Runtime 负责管理任务调度，垃圾收集及运行环境。同时，Go提供了一些高级的功能，
+如goroutine, channel, 以及Garbage collection。这些高级功能需要一个runtime的支持. 
+runtime和用户编译后的代码被linker静态链接起来，形成一个可执行文件。
+这个文件从操作系统角度来说是一个user space的独立的可执行文件。 
 
-Go runtime的一个重要的组成部分是goroutine scheduler。他负责追踪，调度每个goroutine运行，实际上是从应用程序的process所属的thread pool中分配一个thread来执行这个goroutine。因此，和java虚拟机中的Java thread和OS thread映射概念类似，每个goroutine只有分配到一个OS thread才能运行。
+从运行的角度来说，这个文件由2部分组成，一部分是用户的代码，另一部分就是runtime。
+runtime通过接口函数调用来管理goroutine, channel及其他一些高级的功能。
+从用户代码发起的调用操作系统API的调用都会被runtime拦截并处理。
+
+Go runtime的一个重要的组成部分是goroutine scheduler。负责追踪，调度每个goroutine运行，
+实际上是从应用程序的process所属的thread pool中分配一个thread来执行这个goroutine。
+因此，和java虚拟机中的Java thread和OS thread映射概念类似，每个goroutine只有分配到一个OS thread才能运行。
 
 6. 如何获取 go 程序运行时的协程数量, gc 时间, 对象数, 堆栈信息?
 
@@ -38,7 +48,8 @@ https://golang.org/pkg/expvar/
 http://blog.studygolang.com/2017/06/expvar-in-action/
 更深入的用法就是将得到的运行时数据导入到 ES 内部, 然后使用 Kibana 做 golang 的运行时监控, 可以实时获取到运行的信息(堆栈, 对象数, gc 时间, goroutine, 总内存使用等等), 具体信息可以看 ReadMemStats 的那个结构体
 
-7. 介绍下你平时都是怎么调试 golang 的 bug 以及性能问题的?    
+7. 介绍下你平时都是怎么调试 golang 的 bug 以及性能问题的?   
+ 
 panic 调用栈    
 pprof    
 火焰图(配合压测)        
@@ -112,7 +123,9 @@ golang的所有基础类都实现了空接口，所有我们可以用[]interface
 14. Golang的GMP模型?
 
 M(Work Thread) -- 表示操作系统的线程,它是被操作系统管理的线程,与POSIX中的标准线程非常类似
+
 G(Goroutine) -- 表示Goroutine,每一个Goroutine都包含堆栈,指令指针和其他用于调度的重要信息
+
 P(Processor) -- 表示调度的上下文,它可以被看做一个运行于线程M上的本地调度器
 
 三者关系:
