@@ -22,7 +22,23 @@
 
 
 
+# 二分法
+class Solution1(object):
+    def missingNumber(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        # return sum(range(len(nums)+1)) - sum(nums)
 
+        i, j = 0, len(nums) -1
+        while i <= j:
+            mid = (i+j) / 2
+            if nums[mid] == mid:
+                i = mid + 1
+            else:
+                j = mid - 1
+        return i
 
 
 

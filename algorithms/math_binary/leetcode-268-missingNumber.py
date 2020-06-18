@@ -28,22 +28,49 @@ Your algorithm should run in linear runtime complexity. Could you implement it u
 你的算法应具有线性时间复杂度。你能否仅使用额外常数空间来实现?
 '''
 
+
+# 求和
 class Solution(object):
     def missingNumber(self, nums):
         """
         :type nums: List[int]
         :rtype: int
         """
-        return len(nums) *(len(nums)  + 1) / 2 - sum(nums)
+        n = len(nums)
+        return n * (n + 1) / 2 - sum(nums)
 
-#     位运算
-class Solution1:
+# 位运算，异或
+class Solution2:
     def missingNumber(self, nums):
         missing = len(nums)
         for i, num in enumerate(nums):
             missing ^= i ^ num
         return missing
 
+class Solution3(object):
+    def missingNumber(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        import functools
+        import operator
+        return functools.reduce(operator.xor, nums+[i for i in range(len(nums)+1)])
+
+import operator
+import functools
+
+def missingNumber(self, nums):
+    n = len(nums)
+    return functools.reduce(operator.xor, nums) ^ [n, 1, n+1, 0][n % 4]
+
+def missingNumber1(self, nums):
+    return (set(range(len(nums)+1)) - set(nums)).pop()
+
+if __name__ == '__main__':
+    demo = Solution3()
+    res = demo.missingNumber([1,2,3,4,5,6,8,0])
+    print(res)
 
 '''
 方法一：排序
