@@ -28,17 +28,45 @@ class Solution(object):
         i,j = 0,0
         while j < len(nums) and i < len(nums):
             if nums[i] % 2 == 1:
-                # if nums[j] % 2 ==1:
-                j += 1
                 i += 1
             else:
                 if nums[j] % 2 == 1:
                     nums[i], nums[j] = nums[j], nums[i]
                     i += 1
-                    j += 1
-                else:
-                    j += 1
-            # else:
-            #     j += 1
+            j += 1
+
         return nums
 
+class Solution1(object):
+    def exchange(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: List[int]
+        """
+        i, j = 0, 0
+        while j < len(nums):
+            while i < len(nums) and nums[i] % 2 == 1:
+                i += 1
+                j += 1
+
+            if i < len(nums) and j < len(nums) and nums[i] % 2 == 0 and nums[j] % 2 == 1:
+                nums[i], nums[j] = nums[j], nums[i]
+                i += 1
+            j += 1
+        return nums
+
+class Solution2(object):
+    def exchange(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: List[int]
+        """
+        i, j = 0, 0
+        while j < len(nums):
+            while j < len(nums) and nums[j] % 2 == 1:
+                nums[i], nums[j] = nums[j], nums[i]
+                j += 1
+                i += 1
+
+            j += 1
+        return nums
