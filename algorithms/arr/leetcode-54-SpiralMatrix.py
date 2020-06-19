@@ -60,6 +60,33 @@ class Solution(object):
             matrix[:] = list(zip(*matrix))[::-1]
         return res
 
+    # return matrix and list(matrix.pop(0)) + self.spiralOrder(zip(*matrix)[::-1])
+
+# solution
+
+'''
+Take the first row plus the spiral order of the rotated remaining matrix. Inefficient for large matrices, but here I got it accepted in 40 ms, one of the fastest Python submissions.
+
+Python:
+
+def spiralOrder(self, matrix):
+    return matrix and list(matrix.pop(0)) + self.spiralOrder(zip(*matrix)[::-1])
+Python 3:
+
+def spiralOrder(self, matrix):
+    return matrix and [*matrix.pop(0)] + self.spiralOrder([*zip(*matrix)][::-1])
+Ruby:
+
+def spiral_order(matrix)
+  (row = matrix.shift) ? row + spiral_order(matrix.transpose.reverse) : []
+end
+or
+
+def spiral_order(matrix)
+  matrix[0] ? matrix.shift + spiral_order(matrix.transpose.reverse) : []
+end
+'''
+
 '''
 方法一：模拟
 可以模拟打印矩阵的路径。初始位置是矩阵的左上角，初始方向是向右，当路径超出界限或者进入之前访问过的位置时，则顺时针旋转，进入下一个方向。
