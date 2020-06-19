@@ -77,3 +77,35 @@ class Solution(object):
             elif nums[mid] > target:
                 j = mid - 1
         return res
+
+
+class Solution1(object):
+    def searchRange(self, nums, target):
+        """
+        :type nums: List[int]
+        :type target: int
+        :rtype: List[int]
+        """
+
+        left, right = -1, -1
+        i, j = 0, len(nums) - 1
+        while i < j:
+            mid = (i + j) / 2
+            if nums[mid] < target:
+                i = mid + 1
+            else:
+                j = mid
+        if i >= len(nums) or nums[i] != target:
+            return [-1, -1]
+        left = i
+
+        i, j = 0, len(nums) - 1
+        while i <= j:
+            mid = (i + j) / 2
+            if nums[mid] > target:
+                j = mid - 1
+            else:
+                i = mid + 1
+        right = i - 1
+
+        return [left, right]
