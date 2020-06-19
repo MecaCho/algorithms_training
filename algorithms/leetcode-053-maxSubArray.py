@@ -41,3 +41,14 @@ class Solution(object):
             cur_sum = nums[i] if cur_sum < 0 else cur_sum + nums[i]
             max_sum = max(cur_sum, max_sum)
         return max_sum
+
+class Solution1(object):
+    def maxSubArray(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        for i in range(1, len(nums)):
+            nums[i] = max(nums[i], nums[i] + nums[i-1])
+
+        return max(nums)
