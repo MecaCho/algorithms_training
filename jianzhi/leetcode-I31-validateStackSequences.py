@@ -44,3 +44,23 @@ class Solution(object):
                 stack.pop()
                 index += 1
         return index == len(pushed)
+
+
+class Solution1(object):
+    def validateStackSequences(self, pushed, popped):
+        """
+        :type pushed: List[int]
+        :type popped: List[int]
+        :rtype: bool
+        """
+        stack = []
+        k = 0
+        for i in range(len(pushed)):
+            stack.append(pushed[i])
+
+            while stack and stack[-1] == popped[k]:
+                stack.pop()
+                k += 1
+        return k == len(pushed)
+#     Runtime: 52 ms, faster than 95.70% of Python online submissions for Validate Stack Sequences.
+# Memory Usage: 12.8 MB, less than 87.70% of Python online submissions for Validate Stack Sequences.

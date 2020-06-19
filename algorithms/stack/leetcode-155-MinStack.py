@@ -46,6 +46,63 @@ class MinStack(object):
         initialize your data structure here.
         """
         self.items = []
+        self.mins = []
+
+    def push(self, x):
+        """
+        :type x: int
+        :rtype: None
+        """
+        self.items.append(x)
+
+        if not self.mins or x <= self.mins[-1]:
+            self.mins.append(x)
+        # print(self.mins)
+
+    def pop(self):
+        """
+        :rtype: None
+        """
+        if not self.items:
+            return None
+        res = self.items.pop()
+        # self.mins.pop()
+        if self.mins and self.mins[-1] == res:
+            self.mins.pop()
+        return res
+
+    def top(self):
+        """
+        :rtype: int
+        """
+        if not self.items:
+            return None
+        return self.items[-1]
+
+    def getMin(self):
+        """
+        :rtype: int
+        """
+        if self.mins:
+            return self.mins[-1]
+        return None
+
+
+# Your MinStack object will be instantiated and called as such:
+# obj = MinStack()
+# obj.push(x)
+# obj.pop()
+# param_3 = obj.top()
+# param_4 = obj.getMin()
+
+
+class MinStack(object):
+
+    def __init__(self):
+        """
+        initialize your data structure here.
+        """
+        self.items = []
 
 
     def push(self, x):
@@ -82,6 +139,63 @@ class MinStack(object):
         return min(self.items)
 
 
+class MinStack1(object):
+
+    def __init__(self):
+        """
+        initialize your data structure here.
+        """
+        self.items = []
+        self.mins = [float("inf")]
+
+    def push(self, x):
+        """
+        :type x: int
+        :rtype: None
+        """
+        self.mins.append(min(x, self.mins[-1]))
+        self.items.append(x)
+
+        # if not self.mins or x < self.mins[-1]:
+        # self.mins.append(x)
+        # print(self.mins)
+
+    def pop(self):
+        """
+        :rtype: None
+        """
+        if not self.items:
+            return None
+        res = self.items.pop()
+        self.mins.pop()
+        # if self.mins and self.mins[-1] == res:
+        # self.mins.pop()
+        return res
+
+    def top(self):
+        """
+        :rtype: int
+        """
+        if not self.items:
+            return None
+        return self.items[-1]
+
+    def getMin(self):
+        """
+        :rtype: int
+        """
+        if self.mins:
+            return self.mins[-1]
+        return None
+        # return min(self.items)
+
+
+# Your MinStack object will be instantiated and called as such:
+# obj = MinStack()
+# obj.push(x)
+# obj.pop()
+# param_3 = obj.top()
+# param_4 = obj.getMin()
 
 # Your MinStack object will be instantiated and called as such:
 # obj = MinStack()

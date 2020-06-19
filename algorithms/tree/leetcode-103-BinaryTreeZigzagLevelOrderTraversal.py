@@ -36,6 +36,43 @@ return its zigzag level order traversal as:
 ]
 '''
 
+# Definition for a binary tree node.
+# class TreeNode(object):
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+
+class Solution1(object):
+    def zigzagLevelOrder(self, root):
+        """
+        :type root: TreeNode
+        :rtype: List[List[int]]
+        """
+        self.vals = []
+
+        def dfs(root, deepth):
+            if not root:
+                return
+            if not self.vals or len(self.vals) < deepth +1:
+                self.vals.append([root.val])
+            else:
+                if deepth % 2 == 1:
+                    self.vals[deepth] = [root.val] + self.vals[deepth]
+                else:
+                    self.vals[deepth].append(root.val)
+            dfs(root.left, deepth + 1)
+            dfs(root.right, deepth + 1)
+
+        dfs(root, 0)
+
+        # for i in range(len(self.vals)):
+        #     if i % 2 == 1:
+        #         self.vals[i] = self.vals[i][::-1]
+        return self.vals
+
+# Runtime: 20 ms, faster than 74.47% of Python online submissions for Binary Tree Zigzag Level Order Traversal.
+# Memory Usage: 13 MB, less than 82.26% of Python online submissions for Binary Tree Zigzag Level Order Traversal.
 
 # Definition for a binary tree node.
 # class TreeNode(object):

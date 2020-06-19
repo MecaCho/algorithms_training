@@ -37,6 +37,33 @@ return its level order traversal as:
 ]
 '''
 
+# Definition for a binary tree node.
+# class TreeNode(object):
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution(object):
+    def levelOrder(self, root):
+        """
+        :type root: TreeNode
+        :rtype: List[List[int]]
+        """
+        self.vals = []
+
+        def dfs(root, deepth):
+            if not root:
+                return
+            if len(self.vals) < deepth + 1:
+                self.vals.append([root.val])
+            else:
+                self.vals[deepth].append(root.val)
+            dfs(root.left, deepth + 1)
+            dfs(root.right, deepth + 1)
+
+        dfs(root, 0)
+        return self.vals
+
 
 # Definition for a binary tree node.
 # class TreeNode(object):
