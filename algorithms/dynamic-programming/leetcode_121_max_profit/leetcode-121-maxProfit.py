@@ -39,6 +39,8 @@ Explanation: In this case, no transaction is done, i.e. max profit = 0.
 解释: 在这种情况下, 没有交易完成, 所以最大利润为 0。
 '''
 
+# dp[i]=max(dp[i−1],prices[i]−minprice)
+
 '''
 动态规划
 '''

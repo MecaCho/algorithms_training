@@ -61,7 +61,7 @@ class Solution(object):
 
 
 
-class Solution(object):
+class Solution1(object):
     def findContinuousSequence(self, target):
         """
         :type target: int
