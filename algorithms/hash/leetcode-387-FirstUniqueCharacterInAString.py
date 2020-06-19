@@ -28,8 +28,32 @@ Note: You may assume the string contain only lowercase letters.
 
 '''
 
-
 class Solution(object):
+    def firstUniqChar(self, s):
+        """
+        :type s: str
+        :rtype: str
+        """
+        letters='abcdefghijklmnopqrstuvwxyz'
+        indexs = [s.index(l) for l in letters if s.count(l) == 1]
+        return s[min(indexs)] if indexs else " "
+
+class Solution1(object):
+    def firstUniqChar(self, s):
+        """
+        :type s: str
+        :rtype: str
+        """
+        hash_map = {}
+        import collections
+        counter = collections.Counter(s)
+        for c in s:
+            if counter[c] == 1:
+                return c
+        return " "
+
+
+class Solution2(object):
     def firstUniqChar(self, s):
         """
         :type s: str
