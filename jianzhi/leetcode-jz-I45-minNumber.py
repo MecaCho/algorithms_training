@@ -25,6 +25,28 @@
 拼接起来的数字可能会有前导 0，最后结果不需要去掉前导 0
 '''
 
+# golang
+
+'''
+func minNumber(nums []int) string {
+	strs := []string{}
+
+	for i := range nums {
+		strs = append(strs, strconv.Itoa(nums[i]))
+	}
+
+	sort.Slice(strs, func(i, j int) bool {
+
+		x := strs[i]
+		y := strs[j]
+		return x+y < y+x
+	})
+
+	return strings.Join(strs, "")
+}
+'''
+
+
 
 class LargerNumKey(str):
     def __lt__(x, y):
