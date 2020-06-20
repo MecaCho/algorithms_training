@@ -62,6 +62,28 @@ class Solution(object):
         :type target: int
         :rtype: List[List[int]]
         """
+        self.vals = []
+        nums = sorted(candidates)
+        def dfs(path, start, target):
+            if target < 0:
+                return
+            if target == 0:
+                self.vals.append(path)
+                return
+            for i in range(start, len(nums)):
+                dfs(path+[nums[i]], i, target - nums[i])
+        dfs([], 0, target)
+        return self.vals
+
+
+
+class Solution0(object):
+    def combinationSum(self, candidates, target):
+        """
+        :type candidates: List[int]
+        :type target: int
+        :rtype: List[List[int]]
+        """
         self.res = []
 
         # def split_num(target):
