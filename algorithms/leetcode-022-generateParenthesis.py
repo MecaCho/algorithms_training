@@ -50,6 +50,26 @@ class Solution(object):
         bk([], n, n)
         return self.vals
 
+## 简化
+
+class Solution0(object):
+    def generateParenthesis(self, n):
+        """
+        :type n: int
+        :rtype: List[str]
+        """
+        self.vals = []
+        def bk(res, l, r):
+            if len(res) == 2*n:
+                self.vals.append(res)
+                return
+            if l < n:
+                bk(res+"(", l+1, r)
+            if r < l:
+                bk(res+")", l, r+1)
+        bk("", 0, 0)
+        return self.vals
+
 # 递归
 
 class Solution1(object):

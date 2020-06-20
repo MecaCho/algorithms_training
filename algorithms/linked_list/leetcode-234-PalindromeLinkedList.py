@@ -79,3 +79,37 @@ class Solution(object):
 # Runtime: 60 ms, faster than 98.24% of Python online submissions for Palindrome Linked List.
 # Memory Usage: 31.7 MB, less than 85.78% of Python online submissions for Palindrome Linked List.
 
+
+
+# Definition for singly-linked list.
+# class ListNode(object):
+#     def __init__(self, x):
+#         self.val = x
+#         self.next = None
+
+class Solution1(object):
+    def isPalindrome(self, head):
+        """
+        :type head: ListNode
+        :rtype: bool
+        """
+        if not head:
+            return True
+        fast, slow = head, head
+        pre = None
+        while fast and fast.next:
+            fast = fast.next.next
+            pre, pre.next,slow = slow, pre, slow.next
+
+
+        if fast:
+            slow = slow.next
+
+        while slow and pre:
+            if pre.val != slow.val:
+                return False
+            slow = slow.next
+            pre = pre.next
+        return True
+#     Runtime: 48 ms, faster than 100.00% of Python online submissions for Palindrome Linked List.
+#     Memory Usage: 31.7 MB, less than 76.10% of Python online submissions for Palindrome Linked List.
