@@ -147,3 +147,41 @@ class Solution(object):
             return res
 
         return binary_search(peak, length-1, False)
+
+
+def find_peak(arr):
+    i, j = 0, len(arr) - 1
+    while i < j:
+        mid = (i+j) // 2
+        if arr[mid] < arr[mid+1]:
+            i = mid + 1
+        else:
+            j = mid
+    return arr[i]
+
+
+def get_permutations(arr):
+
+    vals = []
+    length = len(arr)
+
+    def bk(nums, res):
+        if len(res) == length:
+            vals.append(res)
+            return
+        if not nums:
+            return
+        val = nums[0]
+        new_nums = nums[1:]
+        for i in range(len(res)+1):
+            bk(new_nums, res[:i]+[val]+res[i:])
+    bk(arr, [])
+    return vals
+
+
+if __name__ == '__main__':
+    res = find_peak([4,5,6,0,1])
+    print(res)
+
+    vals = get_permutations([1,2,3,4])
+    print(vals)

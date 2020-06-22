@@ -40,23 +40,21 @@ class Solution(object):
         :type nums: List[int]
         :rtype: List[List[int]]
         """
+
         self.vals = []
+
         def backtrack(nums, res=None):
             if not nums:
                 self.vals.append(res)
                 return
-            # for i in range(len(nums)):
-                # val = nums.pop()
+
             new_nums = nums[1:]
             val = nums[0]
+
             for i in range(len(res)+1):
-                # print(res, val, res[:i] + [val] + res[i:])
                 backtrack(new_nums, res[:i] + [val] + res[i:])
-            # if not res:
-            # backtrack(nums, [val]+res[:])
 
         backtrack(nums, res=[])
-        # print(len(self.vals))
         return self.vals
 
 

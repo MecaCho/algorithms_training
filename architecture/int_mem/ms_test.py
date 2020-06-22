@@ -77,3 +77,16 @@ if __name__ == '__main__':
 
     res1 = new_sum_of_target(arr, target)
     print(res)
+
+
+    def number_length(a):
+        # your code here
+        count = 0
+        while a:
+            count = count + 1
+            a = int(a/10)
+            # print(a)
+        # print(count)
+        return count
+    res = number_length(988)
+    print(res)
