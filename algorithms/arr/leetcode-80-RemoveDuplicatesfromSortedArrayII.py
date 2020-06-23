@@ -107,3 +107,16 @@ func removeDuplicates(nums []int) int {
 }
 '''
 
+# 扩展
+
+'''
+Just want to confirm, this solution can be easily generalized to "at most K duplicates", right?
+
+int removeDuplicates(vector<int>& nums, int k) {
+    int i = 0;
+    for (int n : nums)
+        if (i < k || n > nums[i-k])
+            nums[i++] = n;
+    return i;
+}
+'''

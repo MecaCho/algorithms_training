@@ -92,3 +92,21 @@ class Solution(object):
                     break
             res = res + len(word) if is_count else res
         return res
+
+
+import collections
+
+
+class Solution1(object):
+    def countCharacters(self, words, chars):
+        """
+        :type words: List[str]
+        :type chars: str
+        :rtype: int
+        """
+        char_count = collections.Counter(chars)
+        res = 0
+        for word in words:
+            if all(v < char_count[k] for k, v in collections.Counter(word)):
+                res += len(word)
+        return res
