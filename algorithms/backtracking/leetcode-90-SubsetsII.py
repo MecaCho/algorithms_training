@@ -63,3 +63,48 @@ class Solution(object):
                 backtrack(i+1, [nums[i]] + new_c, k+1)
         backtrack(0, [], 0)
         return self.vals
+
+
+class Solution1(object):
+    def subsetsWithDup(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: List[List[int]]
+        """
+
+        self.vals = []
+        nums.sort()
+
+        def bk(res, start):
+            self.vals.append(res)
+
+            pre = None
+            for i in range(start, len(nums)):
+                if pre is None or pre != nums[i]:
+                    bk(res + [nums[i]], i + 1)
+                pre = nums[i]
+        bk([], 0)
+        return self.vals
+
+
+class Solution2(object):
+    def subsetsWithDup(self, nums):
+        self.vals = []
+        nums.sort()
+
+        def bk(res, start):
+            self.vals.append(res)
+
+            for i in range(start, len(nums)):
+                if i == start or nums[i - 1] != nums[i]:
+                    bk(res + [nums[i]], i + 1)
+
+        bk([], 0)
+
+        return self.vals
+
+
+if __name__ == '__main__':
+    demo = Solution1()
+    res = demo.subsetsWithDup([1,1,2,3])
+    print(res)

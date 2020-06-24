@@ -27,6 +27,26 @@ Output:
 '''
 
 
+class Solution(object):
+    def permuteUnique(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: List[List[int]]
+        """
+        nums.sort()
+        self.vals = []
+        def bk(nums, res):
+            if not nums:
+                self.vals.append(res)
+            pre = None
+            for i in range(len(nums)):
+                if pre is None or pre != nums[i]:
+                    bk(nums[:i]+nums[i+1:], res+[nums[i]])
+                pre = nums[i]
+        bk(nums, [])
+        return self.vals
+
+
 
 
 class Solution(object):

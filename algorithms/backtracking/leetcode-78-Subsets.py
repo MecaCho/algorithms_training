@@ -41,6 +41,26 @@ Output:
 '''
 
 
+class Solution0(object):
+    def subsets(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: List[List[int]]
+        """
+        self.vals = []
+
+        def bk(res, start):
+            # print(nums, res)
+            self.vals.append(res)
+
+            for i in range(start, len(nums)):
+                bk(res + [nums[i]], i + 1)
+
+        bk([], 0)
+
+        return self.vals
+
+
 class Solution(object):
     def subsets(self, nums):
         """

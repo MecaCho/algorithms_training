@@ -58,6 +58,30 @@ A solution set is:
 '''
 
 
+
+class Solution0(object):
+    def combinationSum2(self, candidates, target):
+        """
+        :type candidates: List[int]
+        :type target: int
+        :rtype: List[List[int]]
+        """
+        self.vals = []
+        nums = sorted(candidates)
+        def dfs(path, start, target):
+            if target < 0:
+                return
+            # print(path, start)
+            if target == 0:
+                self.vals.append(path)
+                return
+            for i in range(start, len(nums)):
+                if i == start or nums[i] != nums[i-1]:
+                    dfs(path+[nums[i]], i+1, target - nums[i])
+        dfs([], 0, target)
+        return self.vals
+
+
 class Solution(object):
     def combinationSum2(self, candidates, target):
         """
@@ -83,7 +107,7 @@ class Solution(object):
         return self.res
 
 
-class Solution0(object):
+class Solution1(object):
     def combinationSum2(self, candidates, target):
         """
         :type candidates: List[int]
