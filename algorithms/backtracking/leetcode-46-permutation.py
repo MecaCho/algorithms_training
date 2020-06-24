@@ -33,8 +33,25 @@ Output:
 '''
 
 
-
 class Solution(object):
+    def permute(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: List[List[int]]
+        """
+        self.vals = []
+
+        def bk(nums, res):
+            if not nums:
+                self.vals.append(res)
+            for i in range(len(nums)):
+                bk(nums[:i]+nums[i+1:], res+[nums[i]])
+        bk(nums, [])
+        return self.vals
+
+
+
+class Solution1(object):
     def permute(self, nums):
         """
         :type nums: List[int]
