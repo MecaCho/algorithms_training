@@ -96,12 +96,48 @@ class Solution(object):
         return dp[-1]
 
 
-if __name__ == '__main__':
-    # s = "applepenapple"
-    # words = ["apple", "pen"]
+class Solution1(object):
+    def wordBreak(self, s, wordDict):
+        """
+        :type s: str
+        :type wordDict: List[str]
+        :rtype: List[str]
+        """
 
-    s = "catsandog"
-    words = ["cats", "dog", "sand", "and", "cat"]
-    demo = Solution()
-    res  = demo.wordBreak(s, words)
+        # res = []
+
+        def dfs(s):
+            res = []
+            for word in wordDict:
+                if len(s) < len(word):
+                    continue
+                if s == word:
+                    res = [[word]]
+                if s.startswith(word):
+                    pre = dfs(s[len(word):])
+                    for p in pre:
+                        res.append([word] + p)
+            return res
+
+        res = dfs(s)
+        return res
+
+if __name__ == '__main__':
+    s = "applepenappleapplepenappleapplep" \
+        "enappleapplepenappleapplepenappleappl" \
+        "epenappleapplepenappleapplepenappleapplepen" \
+        "appleapplepenappleapplepenappleapplepenapplea" \
+        "pplepenappleapplepenappleapplepenappleapplepenapp" \
+        "leapplepenappleapplepenappleapplepenappleapplepen" \
+        "appleapplepenappleapplepenappleapplepenappleapplepenapple"
+    words = ["apple", "pen", "abcdef", "abcdef", "abcdefg"]
+
+    # s = "catsandog"
+    # words = ["cats", "dog", "sand", "and", "cat"]
+    demo = Solution1()
+    import time
+    start = time.time()
+    res = demo.wordBreak(s, words)
+    end = time.time()
+    print(end - start)
     print(res)
