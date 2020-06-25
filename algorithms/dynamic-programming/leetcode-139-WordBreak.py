@@ -80,3 +80,28 @@ func wordBreak(s string, wordDict []string) bool {
 	return dp[len(s)-1] == 1
 }
 '''
+
+
+class Solution(object):
+    def wordBreak(self, s, wordDict):
+        """
+        :type s: str
+        :type wordDict: List[str]
+        :rtype: bool
+        """
+        dp = []
+        for i in range(len(s)):
+            dp.append(any((s[:i+1] == word or (i > len(word) and dp[i-len(word)] and s[i-len(word):i+1]==word)) for word in wordDict))
+
+        return dp[-1]
+
+
+if __name__ == '__main__':
+    # s = "applepenapple"
+    # words = ["apple", "pen"]
+
+    s = "catsandog"
+    words = ["cats", "dog", "sand", "and", "cat"]
+    demo = Solution()
+    res  = demo.wordBreak(s, words)
+    print(res)
