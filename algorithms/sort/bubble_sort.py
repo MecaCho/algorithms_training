@@ -1,3 +1,6 @@
+from algorithms.sort import base
+
+@base.logFunc
 def bubble_sort(arr):
     for i in range(len(arr)):
 
