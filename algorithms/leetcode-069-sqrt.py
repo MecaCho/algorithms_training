@@ -132,7 +132,10 @@ class Solution:
 2
  ≤x 的最大 kk 值，因此我们可以对 kk 进行二分查找，从而得到答案。
 
-二分查找的下界为 00，上界可以粗略地设定为 xx。在二分查找的每一步中，我们只需要比较中间元素 \textit{mid}mid 的平方与 xx 的大小关系，并通过比较的结果调整上下界的范围。由于我们所有的运算都是整数运算，不会存在误差，因此在得到最终的答案 \textit{ans}ans 后，也就不需要再去尝试 \textit{ans} + 1ans+1 了。
+二分查找的下界为 00，上界可以粗略地设定为 xx。
+在二分查找的每一步中，我们只需要比较中间元素 \textit{mid}mid 的平方与 xx 的大小关系，
+并通过比较的结果调整上下界的范围。由于我们所有的运算都是整数运算，不会存在误差，
+因此在得到最终的答案 \textit{ans}ans 后，也就不需要再去尝试 \textit{ans} + 1ans+1 了。
 
 C++JavaPython3Golang
 class Solution:
@@ -391,3 +394,31 @@ class Solution:
 来源：力扣（LeetCode）
 著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
 '''
+
+
+
+class Solution1(object):
+    def mySqrt(self, x):
+        """
+        :type x: int
+        :rtype: int
+        """
+        i = 0
+        j = x
+        res = None
+        while i <= j:
+            mid = (i + j) // 2
+            num = mid**2
+            if num <= x:
+                res = mid
+                i = mid + 1
+            else:
+                j = mid - 1
+        return j
+
+
+if __name__ == '__main__':
+    demo = Solution1()
+    for i in range(100):
+        res = demo.mySqrt(i)
+        print(i, res)

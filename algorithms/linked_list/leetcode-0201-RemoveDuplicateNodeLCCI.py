@@ -54,7 +54,7 @@ class Solution(object):
         :rtype: ListNode
         """
         vals = []
-        res = ListNode()
+        res = ListNode(0)
         res.next = head
         bak = res
         while head:
@@ -73,3 +73,36 @@ class Solution(object):
             bak.next = None
         # print(bak)
         return res.next
+
+
+
+# Definition for singly-linked list.
+class ListNode(object):
+    def __init__(self, x):
+        self.val = x
+        self.next = None
+
+class Solution1(object):
+    def removeDuplicateNodes(self, head):
+        """
+        :type head: ListNode
+        :rtype: ListNode
+        """
+
+        vals = set()
+
+        dummy_node = ListNode(0)
+        dummy_node.next = head
+        pre = None
+        while head:
+            if head.val in vals:
+                # head.next = head.next.next
+                pre.next = head.next
+                head = pre.next
+                continue
+            else:
+                vals.add(head.val)
+
+            pre = head
+            head = head.next
+        return dummy_node.next
