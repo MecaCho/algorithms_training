@@ -57,6 +57,30 @@ class Solution3(object):
         import operator
         return functools.reduce(operator.xor, nums+[i for i in range(len(nums)+1)])
 
+
+class Solution4(object):
+    def missingNumber(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        # return len(nums) *(len(nums)  + 1) / 2 - sum(nums)
+
+        i = 0
+        while i < len(nums):
+            while i != nums[i] and nums[i] < len(nums):
+                nums[nums[i]], nums[i] = nums[i], nums[nums[i]]
+
+            i += 1
+
+
+        # print(nums)
+
+        for i in range(len(nums)):
+            if i != nums[i]:
+                return i
+        return len(nums)
+
 import operator
 import functools
 
