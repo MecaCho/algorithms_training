@@ -113,3 +113,31 @@ class Solution(object):
 
         return min(max_res, max_length)
 
+
+
+# solutions
+
+'''
+class Solution {
+    public int longestSubarray(int[] nums) {
+        int ret = 0;
+        int a = 0;
+        int b = 0;
+        int n = nums.length;
+        for (int i = 0; i < n; ++i) {
+            if (nums[i] == 1) {
+                ++a;
+                ++b;
+                ret = Math.max(ret, a);
+            } else {
+                a = b;
+                b = 0;
+            }
+        }
+        if (ret == n) ret--;
+        return ret;
+    }
+}
+
+链接：https://leetcode-cn.com/problems/longest-subarray-of-1s-after-deleting-one-element/solution/ci-ti-zui-you-suan-fa-bu-jie-shou-fan-bo-by-lao-sa/
+'''

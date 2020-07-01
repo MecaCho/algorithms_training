@@ -99,7 +99,38 @@ class Solution(object):
 
         return self.res[::-1]
 
-"".capitalize()
+
+class Solution1(object):
+    def findOrder(self, numCourses, prerequisites):
+        """
+        :type numCourses: int
+        :type prerequisites: List[List[int]]
+        :rtype: List[int]
+        """
+
+        graph = collections.defaultdict(list)
+        in_degree = [0 for _ in range(numCourses)]
+        for k, v in prerequisites:
+            graph[v].append(k)
+            in_degree[k] += 1
+
+        q = [i for i in range(len(in_degree)) if in_degree[i] == 0]
+
+        count = []
+
+        while q:
+            node = q.pop(0)
+
+            for v in graph[node]:
+                in_degree[v] -= 1
+                if in_degree[v] == 0:
+                    q.append(v)
+            count.append(node)
+
+        return count if len(count) == numCourses else []
+
+import math
+math.ceil()
 # tips
 
 '''

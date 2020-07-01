@@ -57,6 +57,8 @@ You may assume that there are no duplicate edges in the input prerequisites.
 1 <= numCourses <= 10^5
 '''
 
+import collections
+
 
 class Solution(object):
     def canFinish(self, numCourses, prerequisites):
@@ -97,6 +99,34 @@ class Solution(object):
 
         return True
 
+
+class Solution1(object):
+    def canFinish(self, numCourses, prerequisites):
+        """
+        :type numCourses: int
+        :type prerequisites: List[List[int]]
+        :rtype: bool
+        """
+        graph = collections.defaultdict(list)
+        in_degree = [0 for _ in range(numCourses)]
+        for k, v in prerequisites:
+            graph[v].append(k)
+            in_degree[k] += 1
+
+        q = [i for i in range(len(in_degree)) if in_degree[i] == 0]
+
+        count = 0
+
+        while q:
+            node = q.pop(0)
+
+            for v in graph[node]:
+                in_degree[v] -= 1
+                if in_degree[v] == 0:
+                    q.append(v)
+            count += 1
+
+        return count == numCourses
 
 # tips
 
