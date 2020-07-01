@@ -96,7 +96,6 @@ func average(salary []int) float64 {
     }
 
     return float64(res) / float64((len(salary) - 2))
-
 }
 '''
 

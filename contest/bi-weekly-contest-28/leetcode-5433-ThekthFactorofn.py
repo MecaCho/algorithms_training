@@ -80,7 +80,21 @@ Constraints:
 1 <= k <= n <= 1000
 '''
 
-
+class Solution(object):
+    def kthFactor(self, n, k):
+        """
+        :type n: int
+        :type k: int
+        :rtype: int
+        """
+        for i in range(1, n//2+1):
+            if n % i == 0:
+                k -= 1
+            if k == 0:
+                return i
+        if k == 1:
+            return n
+        return -1
 
 
 

@@ -114,6 +114,26 @@ class Solution(object):
         return min(max_res, max_length)
 
 
+class Solution1(object):
+    def longestSubarray(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        a, b = 0, 0
+        res = 0
+        for i in range(len(nums)):
+            if nums[i] == 1:
+                a += 1
+                b += 1
+                res = max(a, res)
+            else:
+                a = b
+                b = 0
+        if res == len(nums):
+            return res - 1
+        return res
+
 
 # solutions
 
