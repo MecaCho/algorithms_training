@@ -110,7 +110,6 @@ class Solution(object):
         while q:
             q_len = len(q)
 
-            tmp = []
             q.sort(key=lambda x: -out_degree[x])
             for i in range(min(q_len, k)):
                 node = q.pop(0)
