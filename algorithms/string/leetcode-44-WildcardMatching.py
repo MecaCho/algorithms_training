@@ -124,3 +124,49 @@ class Solution(object):
         return all(p[k] == "*" for k in range(j, len(p)))
 
 
+# Let's briefly summarize the idea of DP. We define the state P[i][j] to be whether s[0..i) matches p[0..j). The
+# state equations are as follows:
+#
+# P[i][j] = P[i - 1][j - 1] && (s[i - 1] == p[j - 1] || p[j - 1] == '?'), if p[j - 1] != '*';
+# P[i][j] = P[i][j - 1] || P[i - 1][j], if p[j - 1] == '*'.
+
+class Solution1(object):
+    def isMatch(self, s, p):
+        """
+        :type s: str
+        :type p: str
+        :rtype: bool
+        """
+        # dp = [[False for _ in range(len(p))] for _ in range(len(s))]
+        # for i in range(len(s)):
+        #     for j in range(len(p)):
+        #         if p[j] == "*":
+        #             if i > 0 and j > 0:
+        #                 dp[i][j] = dp[i][j-1] or dp[i-1][j]
+        #             if j == 0:
+        #                 dp[i][j] = True
+        #         else:
+        #             if i > 0 and j > 0:
+        #                 dp[i][j] = dp[i-1][j-1] and (p[j] == "?" or (p[j]==s[i]))
+        #             elif j == 0:
+        #                 dp[i][0] = p[j] == "?" or (p[j]==s[i]) if i == 0 else False
+        #             elif i == 0:
+        #                 dp[0][j] = p[j] == "?" or (p[j]==s[i]) if j == 0 else False
+        # print(dp)
+        # return dp[len(s)-1]
+
+
+        m, n = len(s), len(p)
+        dp = [False for _ in range(m+1)]
+        dp[0] = True
+        for j in range(1, n+1):
+            pre = dp[0]
+            dp[0] = dp[0] and p[j-1] == "*"
+            for i in range(1, m+1):
+                tmp = dp[i]
+                if p[j-1] != "*":
+                    dp[i] = pre and (s[i-1]==p[j-1] or p[j-1]=="?")
+                else:
+                    dp[i] = dp[i-1] or dp[i]
+                pre = tmp
+        return dp[m]
