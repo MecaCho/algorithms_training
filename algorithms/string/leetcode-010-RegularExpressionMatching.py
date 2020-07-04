@@ -1,4 +1,3 @@
-
 '''
 10. 正则表达式匹配
 给你一个字符串 s 和一个字符规律 p，请你来实现一个支持 '.' 和 '*' 的正则表达式匹配。
@@ -94,7 +93,6 @@ Output: false
 '''
 
 
-
 class Solution(object):
     def isMatch(self, s, p):
         """
@@ -102,69 +100,32 @@ class Solution(object):
         :type p: str
         :rtype: bool
         """
-        #         解题思路
-        # 1、如果p为空，s为空匹配，s非空不匹配；
-        # 2、s非空，p == s || p == '.'时第一个字符匹配；
-        # 3、(p+1) != ''，则递归判断剩下的是否匹配 first_match && isMatch(++s, ++p)
-        # 4、(p+1) == '*'，则有两种情况匹配：
-        # a: *匹配0个字符，s匹配剩下的，即isMatch(s, p+2)
-        # b: *匹配1个字符，继续用p匹配剩下的s，即first_match && isMatch(s+1, p)
-
-        # 代码
-        # bool isMatch(char * s, char * p){
-        #     if (!*p) return !*s;
-        #     bool first_match = *s && (*s == *p || *p == '.');
-        #     if (*(p+1) == '*') {
-        #         return isMatch(s, p+2) || (first_match && isMatch(++s, p));
-        #     }
-        #     else {
-        #         return first_match && isMatch(++s, ++p);
-        #     }
-        # }
-        #         first_match = bool(text) and pattern[0] in {text[0], '.'}
-
-        # if len(pattern) >= 2 and pattern[1] == '*':
-        #     return (self.isMatch(text, pattern[2:]) or
-        #             first_match and self.isMatch(text[1:], pattern))
-        # else:
-        #     return first_match and self.isMatch(text[1:], pattern[1:])
-        # print(s, p)
         if not p:
             print(not s, s)
             return not s
         first_match = True if s and (s[0] == p[0] or p[0] == ".") else False
-
-        # print(first_match)
 
         if len(p) > 1 and p[1] == "*":
             return self.isMatch(s, p[2:]) or (first_match and self.isMatch(s[1:], p))
         else:
             return first_match and self.isMatch(s[1:], p[1:])
 
-        # 如果 p.charAt(j) == s.charAt(i) : dp[i][j] = dp[i-1][j-1]；
-        # 如果 p.charAt(j) == '.' : dp[i][j] = dp[i-1][j-1]；
-        # 如果 p.charAt(j) == '*'：
-        # 如果 p.charAt(j-1) != s.charAt(i) : dp[i][j] = dp[i][j-2] //in this case, a* only counts as empty
-        # 如果 p.charAt(j-1) == s.charAt(i) or p.charAt(i-1) == '.'：
-        # dp[i][j] = dp[i-1][j] //in this case, a* counts as multiple a
-        # or dp[i][j] = dp[i][j-1] // in this case, a* counts as single a
-        # or dp[i][j] = dp[i][j-2] // in this case, a* counts as empty
 
-        # s_len = len(s)
-        # p_len = len(p)
-        # dp = [[False for _ in range(p_len)] for _ in range(s_len)]
-        # # for i in range(s_len):
-        # dp[0][0] = True
-        # for i in range(s_len):
-        #     for j in range(p_len):
-        #         if i >= 0 and p[j] == s[i] or p[j] == ".":
-        #             print(i, j, dp[i-1][j-1])
-        #             dp[i][j] = dp[i-1][j-1] if i > 0 and j > 0 else True
-        #         elif p[j] == "*":
-        #             if p[j-1] != s[i]:
-        #                 dp[i][j] = dp[i][j-2]
-        #             elif p[j-1] == s[i] or p[j-1] == ".":
-        #                 dp[i][j] = (dp[i-1][j] or dp[i][j-1] or dp[i][j-2])
+# class Solution:
+# # @return a boolean
+# def isMatch(self, s, p):
+#     length = len(s)
+#     if len(p) - p.count('*') > length:
+#         return False
+#     dp = [True] + [False]*length
+#     for i in p:
+#         if i != '*':
+#             for n in reversed(range(length)):
+#                 dp[n+1] = dp[n] and (i == s[n] or i == '?')
+#         else:
+#             for n in range(1, length+1):
+#                 dp[n] = dp[n-1] or dp[n]
+#         dp[0] = dp[0] and i == '*'
+#     return dp[-1]
 
-        # print(dp)
-        # return dp[-1][-1]
+# https://leetcode.com/problems/wildcard-matching/discuss/17845/Python-DP-solution
