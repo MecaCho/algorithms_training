@@ -70,4 +70,76 @@ class Solution(object):
         return self.res
 
 
+# Definition for a binary tree node.
+# class TreeNode(object):
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution1(object):
+    def hasPathSum(self, root, sum):
+        """
+        :type root: TreeNode
+        :type sum: int
+        :rtype: bool
+        """
+        def dfs(root, target):
+            if not root:
+                return
+            if root.val == target:
+                return True
+            dfs(root.left, target - root.val)
+            dfs(root.right, target - root.val)
+        return dfs(root, sum) is True
+        # self.res = False
+        # def dfs(root, target):
+        #     if not root.left and not root.right:
+        #         if root.val == target:
+        #             self.res = True
+        #     if root.left:
+        #         dfs(root.left, target-root.val)
+        #     if root.right:
+        #         dfs(root.right, target-root.val)
+        # if not root:
+        #     return False
+        # dfs(root, sum)
+        # return self.res
 
+
+class Solution2(object):
+    def hasPathSum(self, root, sum):
+        """
+        :type root: TreeNode
+        :type sum: int
+        :rtype: bool
+        """
+        if not root:
+            return False
+        if not root.left and not root.right and root.val == sum:
+            return True
+        return self.hasPathSum(root.left, sum-root.val) or self.hasPathSum(root.right, sum-root.val)
+
+# golang
+
+'''
+/**
+ * Definition for a binary tree node.
+ * type TreeNode struct {
+ *     Val int
+ *     Left *TreeNode
+ *     Right *TreeNode
+ * }
+ */
+func hasPathSum(root *TreeNode, sum int) bool {
+
+    if root == nil{
+        return false
+    }
+    if root.Left == nil && root.Right == nil && root.Val == sum{
+        return true
+    }
+
+    return hasPathSum(root.Left, sum-root.Val) || hasPathSum(root.Right, sum-root.Val)
+
+}
+'''
