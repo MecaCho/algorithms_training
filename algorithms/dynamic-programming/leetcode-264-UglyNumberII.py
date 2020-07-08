@@ -145,6 +145,59 @@ class Solution_(object):
         return ugly_nums[-1]
 
 
+# golang
+
+'''
+package CrackinfInterview
+
+import (
+	"fmt"
+	"math"
+)
+
+
+func getKthMagicNumber(k int) int {
+	aNum, bNum, cNum := 0, 0, 0
+	res := []int{1}
+
+	for i := 0; i < k; i++ {
+		min_num := min(res[aNum]*3, res[bNum]*5, res[cNum]*7)
+
+		if min_num == res[aNum]*3 {
+			aNum++
+		}
+		if  min_num == res[bNum] * 5{
+			bNum++
+		}
+		if min_num == res[cNum] * 7{
+			cNum++
+		}
+		res = append(res, min_num)
+	}
+
+	return res[k-1]
+}
+
+func min(a, b, c int) int {
+	return int(math.Min(float64(a), math.Min(float64(b), float64(c))))
+}
+
+func Switch() {
+
+	a, b := 1, 2
+
+	switch {
+	case 1 == a:
+		fmt.Println("1")
+		fallthrough
+	case 4 == b:
+		fmt.Println("2")
+
+	}
+}
+
+'''
+
 # tips
 
 '''
