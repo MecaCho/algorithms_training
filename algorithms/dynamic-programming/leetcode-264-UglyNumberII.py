@@ -198,6 +198,21 @@ func Switch() {
 
 '''
 
+class Solution1(object):
+
+    ugly = sorted(2**a * 3**b * 5**c
+                  for a in range(32) for b in range(20) for c in range(14))
+
+    def nthUglyNumber(self, n):
+        """
+        :type n: int
+        :rtype: int
+        """
+
+        # return sorted(2**a * 3**b * 5**c
+        #           for a in range(32) for b in range(20) for c in range(14))[n-1]
+        return self.ugly[n-1]
+
 # tips
 
 '''
@@ -209,3 +224,123 @@ The key is how to maintain the order of the ugly numbers. Try a similar approach
 
 Assume you have Uk, the kth ugly number. Then Uk+1 must be Min(L1 * 2, L2 * 3, L3 * 5).
 '''
+
+# solutions
+
+# I love this problem. Came up with a linear time solution almost 13 years ago and now I still correctly remembered
+# that it was problem 136 at the now defunct acm.uva.es :-)
+#
+# Python ... Simple Precompute ... 64 ms
+#
+# It's fastest to precompute and store all possibilities for lookup, and it's simplest to just generate them out of
+# order and then sort them.
+#
+# class Solution:
+#     ugly = sorted(2**a * 3**b * 5**c
+#                   for a in range(32) for b in range(20) for c in range(14))
+#     def nthUglyNumber(self, n):
+#         return self.ugly[n-1]
+# Python ... O(n), generate first n in order ... 308 ms
+#
+# My version of epsilon0's solution. It's nicer than my own old one.
+#
+# This generates the first n ugly numbers, in order from smallest to largest, in O(n) time. For each prime 2,
+# 3 and 5, have an index to the next number that can be multiplied with the prime to produce a new ugly number.
+# Update the three indexes and then add the smallest of the three candidate ugly numbers.
+#
+# def nthUglyNumber(self, n):
+#     ugly = [1]
+#     i2 = i3 = i5 = 0
+#     while len(ugly) < n:
+#         while ugly[i2] * 2 <= ugly[-1]: i2 += 1
+#         while ugly[i3] * 3 <= ugly[-1]: i3 += 1
+#         while ugly[i5] * 5 <= ugly[-1]: i5 += 1
+#         ugly.append(min(ugly[i2] * 2, ugly[i3] * 3, ugly[i5] * 5))
+#     return ugly[-1]
+# Python ... O(n), generate first n in order with heapq.merge ... 416 ms
+#
+# I like using heapq.merge.
+#
+# def nthUglyNumber(self, n):
+#     q2, q3, q5 = [2], [3], [5]
+#     ugly = 1
+#     for u in heapq.merge(q2, q3, q5):
+#         if n == 1:
+#             return ugly
+#         if u > ugly:
+#             ugly = u
+#             n -= 1
+#             q2 += 2 * u,
+#             q3 += 3 * u,
+#             q5 += 5 * u,
+# Works, but might not be totally safe, both because I extend lists while iterating over them and because at the
+# start, q2 becomes empty for a moment, which I think allows heapq.merge to drop it (at least in CPython it just
+# doesn't, as it first yields the value before trying to get the next one from that list, and when it continues,
+# the list isn't empty anymore).
+#
+# C++ ... O(n), generate first n in order ... 12 ms
+#
+# C++ version of the second Python solution, though adding extra variables for the three candidates to prevent
+# re-multiplication.
+#
+# int nthUglyNumber(int n) {
+#     vector<int> ugly(n, 1);
+#     int c2 = 2, c3 = 3, c5 = 5;
+#     int i2 = 0, i3 = 0, i5 = 0;
+#     for (int i=1; i<n; ++i) {
+#         int last = ugly[i] = min(c2, min(c3, c5));
+#         while (c2 <= last) c2 = 2 * ugly[++i2];
+#         while (c3 <= last) c3 = 3 * ugly[++i3];
+#         while (c5 <= last) c5 = 5 * ugly[++i5];
+#     }
+#     return ugly[n-1];
+# }
+# C++ ... O(n), generate on demand and remember ... 4 ms
+#
+# Same as the previous, but I keep everything in static variables and only compute more when needed. It's faster,
+# and I think pretty neat.
+#
+# int nthUglyNumber(int n) {
+#     static vector<int> ugly {1};
+#     static int last(1);
+#     static int c2(2), c3(3), c5(5);
+#     static int i2(0), i3(0), i5(0);
+#     while (ugly.size() < n) {
+#         while (c2 <= last) c2 = 2 * ugly[++i2];
+#         while (c3 <= last) c3 = 3 * ugly[++i3];
+#         while (c5 <= last) c5 = 5 * ugly[++i5];
+#         ugly.push_back(last = min(c2, min(c3, c5)));
+#     }
+#     return ugly[n-1];
+# }
+# C++ ... Simple Precompute ... 4 ms
+#
+# Precompute all possibilities in easy order and sort them.
+#
+# int nthUglyNumber(int n) {
+#     static vector<int> ugly;
+#     long long a, b, c, m = INT_MAX;
+#     if (ugly.empty()) {
+#         for (a=1; a<=m; a*=2)
+#             for (b=a; b<=m; b*=3)
+#                 for (c=b; c<=m; c*=5)
+#                     ugly.push_back(c);
+#         sort(begin(ugly), end(ugly));
+#     }
+#     return ugly[n-1];
+# }
+# My own old one
+#
+# Python version of my own O(n) C++ solution from almost 13 years ago. Good old times...
+# Maybe I'll try to improve it, but mainly I wanted to see how a pretty much direct translation would look.
+#
+# def nthUglyNumber(self, n):
+#     factor = 2, 3, 5
+#     lists = [collections.deque([1]) for _ in range(3)]
+#     for _ in range(n - 1):
+#         next = [lists[i][0] * factor[i] for i in range(3)]
+#         winner = min(range(3), key=lambda j: next[j])
+#         for i in range(winner, 3):
+#             lists[i] += next[winner],
+#         lists[winner].popleft()
+#     return lists[2][-1]
