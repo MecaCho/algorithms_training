@@ -51,6 +51,26 @@ class Merge(object):
         merge(0, len(self.arr))
         return self.arr, self.count
 
+
+def merge_sort(arr):
+    if len(arr) < 2:
+        return arr
+    mid = len(arr) // 2
+
+    left = merge_sort(arr[:mid])
+    right = merge_sort(arr[mid:])
+    new_arr = []
+    while left and right:
+        if left[0] < right[0]:
+            new_arr.append(left.pop(0))
+        else:
+            new_arr.append(right.pop(0))
+    if left:
+        new_arr.extend(left)
+    if right:
+        new_arr.extend(right)
+    return new_arr
+
 # if __name__ == '__main__':
 #     l = [1, 2, 4, 5, 1, 1, 1]
 #     def j(l, step):
@@ -66,66 +86,69 @@ class Merge(object):
 #     res = j(l, 0)
 #     print(res)
 
+
+def merge_sort_indexs(arr):
+    if len(arr) < 2:
+        return arr
+    mid = len(arr) // 2
+    # print(arr[:mid], mid, arr[mid:])
+    left = merge_sort_indexs(arr[:mid])
+    right = merge_sort_indexs(arr[mid:])
+    new_arr = []
+    while left or right:
+        while left and right:
+            if left[0][1] > right[0][1]:
+                larger[left[0][0]] += len(right)
+                new_arr.append(left.pop(0))
+            else:
+                # larger[right[0][0]] += len(left)
+                new_arr.append(right.pop(0))
+        if left:
+            new_arr.extend(left)
+            break
+        if right:
+            new_arr.extend(right)
+            break
+    return new_arr
+
 if __name__ == '__main__':
     # demo = Merge()
     # res = demo.merge_sort([1,2,4,6,9,199,100, 1000, 233,12,19])
     # # merge(0, len(arr))
     # print(res)
 
-    def merge_sort(arr):
-        if len(arr) < 2:
-            return arr
-        mid = len(arr) // 2
-        print(arr[:mid], mid, arr[mid:])
-        left = merge_sort(arr[:mid])
-        right = merge_sort(arr[mid:])
-        new_arr = []
-        while left or right:
-            print(left, right)
-            while left and right:
-                print(left, right)
-                if left[0] < right[0]:
-                    new_arr.append(left.pop(0))
-                else:
-                    new_arr.append(right.pop(0))
-            if left:
-                new_arr.extend(left)
-                break
-            if right:
-                new_arr.extend(right)
-                break
-        return new_arr
+    # def merge_sort(arr):
+    #     if len(arr) < 2:
+    #         return arr
+    #     mid = len(arr) // 2
+    #     print(arr[:mid], mid, arr[mid:])
+    #     left = merge_sort(arr[:mid])
+    #     right = merge_sort(arr[mid:])
+    #     new_arr = []
+    #     while left or right:
+    #         print(left, right)
+    #         while left and right:
+    #             print(left, right)
+    #             if left[0] < right[0]:
+    #                 new_arr.append(left.pop(0))
+    #             else:
+    #                 new_arr.append(right.pop(0))
+    #         if left:
+    #             new_arr.extend(left)
+    #             break
+    #         if right:
+    #             new_arr.extend(right)
+    #             break
+    #     return new_arr
 
-    def merge_sort_indexs(arr):
-        if len(arr) < 2:
-            return arr
-        mid = len(arr) // 2
-        # print(arr[:mid], mid, arr[mid:])
-        left = merge_sort_indexs(arr[:mid])
-        right = merge_sort_indexs(arr[mid:])
-        new_arr = []
-        while left or right:
-            while left and right:
-                if left[0][1] > right[0][1]:
-                    larger[left[0][0]] += len(right)
-                    new_arr.append(left.pop(0))
-                else:
-                    # larger[right[0][0]] += len(left)
-                    new_arr.append(right.pop(0))
-            if left:
-                new_arr.extend(left)
-                break
-            if right:
-                new_arr.extend(right)
-                break
-        return new_arr
-    # arr = [1,2,4,6,9,199,100, 1000, 233,12,19,1,2,2,2,2]
-    arr = [1,3,2,5]
-    larger = [0 for _ in arr]
-    new_arr = []
-    for i, v in enumerate(arr):
-        new_arr.append((i, v))
-    res = merge_sort_indexs(new_arr)
 
-    print(larger)
+    arr = [1,2,4,6,9,199,100, 1000, 233,12,19,1,2,2,2,2]
+    # arr = [1,3,2,5]
+    # larger = [0 for _ in arr]
+    # new_arr = []
+    # for i, v in enumerate(arr):
+    #     new_arr.append((i, v))
+    # res = merge_sort_indexs(new_arr)
+    # print(larger)
+    res = merge_sort(arr)
     print(res)
