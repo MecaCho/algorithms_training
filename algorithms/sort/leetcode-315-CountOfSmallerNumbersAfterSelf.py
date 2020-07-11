@@ -80,6 +80,39 @@ class Solution1(object):
         return res
 
 
+# merge sort
+
+class Solution2(object):
+    def countSmaller(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: List[int]
+        """
+        self.res = [0 for _ in nums]
+        def merge_sort_indexs(arr):
+            if len(arr) < 2:
+                return arr
+            mid = len(arr) // 2
+            left = merge_sort_indexs(arr[:mid])
+            right = merge_sort_indexs(arr[mid:])
+            new_arr = []
+            while left or right:
+                while left and right:
+                    if left[0][1] > right[0][1]:
+                        self.res[left[0][0]] += len(right)
+                        new_arr.append(left.pop(0))
+                    else:
+                        new_arr.append(right.pop(0))
+                if left:
+                    new_arr.extend(left)
+                    break
+                if right:
+                    new_arr.extend(right)
+                    break
+            return new_arr
+        merge_sort_indexs(list(enumerate(nums)))
+        return self.res
+
 '''
 ”计算右侧小于当前元素的个数“的六种方法
 Adam Wong
