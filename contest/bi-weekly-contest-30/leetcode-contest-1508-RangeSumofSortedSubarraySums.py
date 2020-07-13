@@ -63,6 +63,7 @@ nums.length == n
 import heapq
 
 
+# 暴力解法
 class Solution(object):
     def rangeSum(self, nums, n, left, right):
         """
@@ -80,6 +81,11 @@ class Solution(object):
         res = heapq.nsmallest(right, l)
         res1 = heapq.nsmallest(left-1, l)
         return sum(res) - sum(res1)
+
+# 相似题目
+
+# https://leetcode-cn.com/problems/kth-smallest-element-in-a-sorted-matrix/
+# https://leetcode-cn.com/problems/find-k-th-smallest-pair-distance/
 
 
 if __name__ == '__main__':
