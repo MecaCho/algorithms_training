@@ -60,6 +60,9 @@ nums.length == n
 1 <= left <= right <= n * (n + 1) / 2
 '''
 
+import heapq
+
+
 class Solution(object):
     def rangeSum(self, nums, n, left, right):
         """
@@ -74,10 +77,16 @@ class Solution(object):
             for j in range(i+1, n+1):
                 num = sum(nums[i:j])
                 heapq.heappush(l, num)
-        # for i in range(len(left)):
-            # heappush.
-        # heapq.nsmallest(, l)
-        print(l)
+        res = heapq.nsmallest(right, l)
+        res1 = heapq.nsmallest(left-1, l)
+        return sum(res) - sum(res1)
 
-        return sum(l[left-1:right])
 
+if __name__ == '__main__':
+    demo = Solution()
+    nums = [1,2,3,4]
+    n = 4
+    left = 1
+    right = 5
+    res = demo.rangeSum(nums, n, left, right)
+    print(res)

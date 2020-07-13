@@ -88,10 +88,3 @@ class Solution(object):
             self.month_map[dates[1]],
             re.split("th|nd|st|rd", dates[0])[0].rjust(2, "0")]
         )
-
-
-l = []
-import heapq
-heapq.heappush(l, 1)
-heapq.nsmallest(10, l)
-# heapq.h
