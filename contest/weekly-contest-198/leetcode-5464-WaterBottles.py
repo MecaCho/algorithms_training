@@ -82,6 +82,7 @@ Constraints:
 '''
 
 
+
 class Solution(object):
     def numWaterBottles(self, numBottles, numExchange):
         """
@@ -97,6 +98,17 @@ class Solution(object):
             res += numBottles
             null_bottles = numBottles + null_bottles % numExchange
         return res
+
+
+
+class Solution2(object):
+    def numWaterBottles(self, numBottles, numExchange):
+        """
+        :type numBottles: int
+        :type numExchange: int
+        :rtype: int
+        """
+        return numBottles + (numBottles - 1) // (numExchange-1)
 
 
 class Solution1(object):
