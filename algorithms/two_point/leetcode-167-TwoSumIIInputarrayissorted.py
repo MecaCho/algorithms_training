@@ -50,6 +50,28 @@ class Solution(object):
                 i += 1
         return []
 
+
+# golang solution
+
+'''
+func twoSum(numbers []int, target int) []int {
+    
+    i, j := 0, len(numbers) - 1
+    for i < j {
+        tmpSum := numbers[i] + numbers[j]
+        if tmpSum == target{
+            return []int{i+1, j+1}
+        } else if tmpSum < target{
+            i++
+        }else{
+            j--
+        }
+    }
+    return []int{}
+    
+}
+'''
+
 # solution
 
 '''
