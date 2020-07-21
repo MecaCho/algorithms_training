@@ -132,6 +132,38 @@ class Solution1(object):
         return sum_count(root, sum)
 
 
+# golang
+
+'''
+/**
+ * Definition for a binary tree node.
+ * type TreeNode struct {
+ *     Val int
+ *     Left *TreeNode
+ *     Right *TreeNode
+ * }
+ */
+func pathSum(root *TreeNode, sum int) int {
+	if root == nil{
+        return 0
+    }
+    return pathSum(root.Left, sum) + pathSum(root.Right, sum) + pathSumWithRoot(root, sum)
+}
+
+func pathSumWithRoot(root *TreeNode, sum int) int {
+    if root == nil{
+        return 0
+    }
+    res := 0
+    if root.Val == sum{
+        res ++
+    }
+
+    return res+pathSumWithRoot(root.Left, sum-root.Val) + pathSumWithRoot(root.Right, sum - root.Val)
+
+}
+'''
+
 '''
 第一种做法：最容易想到的方法，双递归，先序遍历的变式，把每个遍历到的节点当作root（起点）进行搜索
 
