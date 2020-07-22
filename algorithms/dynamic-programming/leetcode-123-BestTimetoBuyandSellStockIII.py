@@ -101,3 +101,4 @@ class SolutionTemplate(object):
                     dp[j][1][i] = max(dp[j-1][0][i-1]-price, dp[j-1][1][i])
         # print(dp)
         return max(dp[-1][0]) if dp else 0
+

@@ -66,6 +66,7 @@ Constraints:
 0 <= prices[i] <= 10 ^ 4
 '''
 
+
 class Solution(object):
     def maxProfit(self, prices):
         """
@@ -77,6 +78,16 @@ class Solution(object):
             dp[i][0] = max(dp[i-1][0], dp[i-1][1]+prices[i])
             dp[i][1] = max(dp[i-1][1], dp[i-1][0]-prices[i])
         return dp[-1][0]
+
+
+class Solution1(object):
+    def maxProfit(self, prices):
+        """
+        :type prices: List[int]
+        :rtype: int
+        """
+
+        return sum([prices[i] - prices[i-1] for i in range(1, len(prices)) if prices[i] > prices[i-1]])
 
 #  solutions
 
