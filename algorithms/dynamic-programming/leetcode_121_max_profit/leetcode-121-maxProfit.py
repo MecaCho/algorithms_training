@@ -75,6 +75,20 @@ class Solution(object):
 
         return max_profit(prices)
 
+
+class Solution2(object):
+    def maxProfit(self, prices):
+        """
+        :type prices: List[int]
+        :rtype: int
+        """
+        max_profix = 0
+        min_price = float("inf")
+        for price in prices:
+            max_profix = max(max_profix, price - min_price)
+            if price < min_price:
+                min_price = price
+        return max_profix
 '''
 作者：qiuwenqi
 链接：https://leetcode-cn.com/problems/best-time-to-buy-and-sell-stock/solution/python-jian-dan-suan-fa-ji-bai-liao-10000-de-yong-/

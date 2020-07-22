@@ -27,10 +27,6 @@ NOTE: input types have been changed on April 15, 2019. Please reset to default c
 '''
 
 
-
-
-
-
 class Solution(object):
     def minMeetingRooms(self, intervals):
         """
@@ -45,3 +41,5 @@ class Solution(object):
             cur += env[1]
             max_count = max(max_count, cur)
         return max_count
+
+
