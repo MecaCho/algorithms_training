@@ -94,4 +94,12 @@ class Solution(object):
 
         return counter(0, "", 0, k)
 
+# tips
 
+'''
+Use dynamic programming.
+
+The state of the DP can be the current index and the remaining characters to delete.
+
+Having a prefix sum for each character can help you determine for a certain character c in some specific range, how many characters you need to delete to merge all occurrences of c in that range.
+'''
