@@ -96,3 +96,10 @@ class Solution(object):
             dp[i] += (i+1-dp[i-1]) if arr[i] % 2 == 1 else dp[i-1]
         return sum(dp) % (10**9 + 7)
 
+# tips
+
+'''
+Can we use the accumulative sum to keep track of all the odd-sum sub-arrays ?
+
+if the current accu sum is odd, we care only about previous even accu sums and vice versa.
+'''
