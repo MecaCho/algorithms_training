@@ -51,6 +51,27 @@ Constraints:
 Both strings consists only of lowercase characters.
 '''
 
+
+class Solution(object):
+    def isSubsequence(self, s, t):
+        """
+        :type s: str
+        :type t: str
+        :rtype: bool
+        """
+        if not s:
+            return True
+        i, j = 0, 0
+        while i < len(s) and j < len(t):
+            if t[j] == s[i]:
+                i += 1
+            j += 1
+            if i == len(s):
+                return True
+        return i == len(s)
+
+
+
 # golang solutions
 
 '''
