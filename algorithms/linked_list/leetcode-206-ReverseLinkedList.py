@@ -109,3 +109,42 @@ func reverseList(head *ListNode) *ListNode {
 
 }
 '''
+
+
+# reverse linked list k
+
+# 1 2 3 4 5 6 7
+# 7 4 5 6 1 2 3
+
+
+def reverse_linked_list(head):
+    if not head:
+        return head
+    pre, cur = None, head
+    while cur:
+        tmp = cur.next
+        pre, cur.next = cur, pre
+        cur = tmp
+    return pre
+
+
+def reverse_linked_list_k(head, k):
+    i = 0
+    pre = head
+    k_lists = []
+    while head:
+        if i % k == 0:
+            k_lists.append(pre)
+            pre = head
+        i += 1
+        head = head.next
+    res = k_lists[-1]
+    length = len(k_lists)
+
+    for i in range(length - 1, 1, -1):
+        # //k
+        k_lists[i].next.next.next = k_lists[i - 1]  # k
+    return res
+
+
+test_cases = []
