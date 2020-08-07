@@ -12,7 +12,7 @@ class TimeHandler:
     def __init__(self):
         self.log = {}
 
-    def get_time(self):
+    def getCurrtentTime(self):
         return time.ctime()
 
 

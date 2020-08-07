@@ -23,7 +23,7 @@ def main():
     # Connect!
     transport.open()
 
-    ts = client.get_time()
+    ts = client.getCurrtentTime()
     print('Client Received {}'.format(ts))
 
     # Close!
