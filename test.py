@@ -21,20 +21,12 @@ class Solution(object):
 
 
 if __name__ == '__main__':
-    demo = Solution()
-    n = 7
-    ed = [[0,1], [1,2], [2,3], [3,4], [4,5], [5,6]]
-    l = "aaabaaa"
+    n = 4
+    ed = [[0, 2], [0, 3], [1, 2]]
+    l = "aeed"
     res = demo.countSubTrees(n, ed, l)
     print(res)
-    assert res == [6,5,4,1,3,2,1]
-
-    # n = 4
-    # ed = [[0, 2], [0, 3], [1, 2]]
-    # l = "aeed"
-    # res = demo.countSubTrees(n, ed, l)
-    # print(res)
-    # assert res == [1,1,2,1]
+    assert res == [1,1,2,1]
 #     [2,1,1,1,1,1,1]
 # [4,2,1,1]
 # [3,2,1,1,1]
