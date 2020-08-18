@@ -74,16 +74,16 @@ class Solution(object):
             return max(position) - min(position)
 
         n = len(position)
-        def check(diff):
+        def check(distance):
             """检查按照当前值分区的个数是否满足题目要求"""
             count = 0
-            i, j = 0, 0
-            while j < len(position):
-                while j < len(position) and position[j] - position[i] < diff:
-                    j += 1
-                if j < len(position):
+            pre, i = 0, 0
+            while i < len(position):
+                while i < len(position) and position[i] - position[pre] < distance:
+                    i += 1
+                if i < len(position):
                     count += 1
-                i = j
+                pre = i
             return count >= m - 1
 
 
