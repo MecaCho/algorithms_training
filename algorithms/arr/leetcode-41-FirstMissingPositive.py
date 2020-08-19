@@ -62,7 +62,6 @@ class Solution(object):
             if nums[res] != res+1:
                 return res+1
             res += 1
-        # print(res)
         return len(nums) + 1
 
 
