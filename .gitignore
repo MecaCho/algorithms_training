@@ -8,6 +8,7 @@ push.py
 *.swp
 *.ini
 test
+drafts
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
