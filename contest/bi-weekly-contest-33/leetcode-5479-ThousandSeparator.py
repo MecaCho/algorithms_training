@@ -72,3 +72,11 @@ class Solution(object):
             n /= 1000
         return ".".join(nums[::-1]).lstrip("0")
 
+
+class Solution1(object):
+    def thousandSeparator(self, n):
+        """
+        :type n: int
+        :rtype: str
+        """
+        return ".".join(findall(r"\d{1,3}",str(n)[::-1]))[::-1]
