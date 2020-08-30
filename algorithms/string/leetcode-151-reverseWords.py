@@ -75,6 +75,8 @@ class Solution(object):
         return " ".join([i for i in s.strip().split(" ")[::-1] if i])
 
 
+
+
 '''
 方法一：使用语言特性
 思路和算法
