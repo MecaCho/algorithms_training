@@ -68,3 +68,33 @@ class Solution(object):
             return res
         res = deep_traversal(root, 0, res)
         return res[::-1] if res else []
+
+
+
+# Definition for a binary tree node.
+# class TreeNode(object):
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+
+class Solution1(object):
+    def levelOrderBottom(self, root):
+        """
+        :type root: TreeNode
+        :rtype: List[List[int]]
+        """
+        self.vals  = []
+        def dfs(root, deepth):
+            if not root:
+                return
+            if deepth < len(self.vals):
+                self.vals[deepth].append(root.val)
+            else:
+                self.vals.append([root.val])
+            dfs(root.left, deepth+1)
+            dfs(root.right, deepth+1)
+
+        dfs(root, 0)
+
+        return self.vals[::-1]
