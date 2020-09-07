@@ -69,6 +69,24 @@ class Solution(object):
         return self.res
 
 
+class Solution1(object):
+    def combine(self, n, k):
+        """
+        :type n: int
+        :type k: int
+        :rtype: List[List[int]]
+        """
+        self.vals = []
+        def bk(start, nums):
+            if len(nums) == k:
+                self.vals.append(nums)
+            for i in range(start, n):
+                bk(i+1, nums+[i+1])
+
+        bk(0, [])
+        return self.vals
+
+
 
 '''
 方法一 : 回溯法
