@@ -149,3 +149,53 @@ class Solution1(object):
 
         backtrack(0, [], target)
         return self.res
+
+
+class Solution20200910(object):
+    def combinationSum2(self, candidates, target):
+        """
+        :type candidates: List[int]
+        :type target: int
+        :rtype: List[List[int]]
+        """
+        self.vals = []
+        candidates.sort()
+        def bk(nums, sum_, start):
+            if sum_ == target and nums not in self.vals:
+                self.vals.append(nums)
+            if sum_ > target or start >= len(candidates):
+                return
+
+            for i in range(start, len(candidates)):
+                num = candidates[i]
+                bk(nums+[num], sum_+num, i+1)
+
+        bk([], 0, 0)
+        return self.vals
+
+    # 472 ms	12.8 MB	Python
+
+class Solution202009101(object):
+    def combinationSum2(self, candidates, target):
+        """
+        :type candidates: List[int]
+        :type target: int
+        :rtype: List[List[int]]
+        """
+        self.vals = []
+        candidates.sort()
+        def bk(nums, sum_, start):
+            if sum_ == target:
+                self.vals.append(nums)
+            if sum_ > target or start >= len(candidates):
+                return
+
+            for i in range(start, len(candidates)):
+                if i == start or candidates[i] != candidates[i-1]:
+                    num = candidates[i]
+                    bk(nums+[num], sum_+num, i+1)
+
+        bk([], 0, 0)
+        return self.vals
+
+    # 68 ms	12.7 MB	Python
