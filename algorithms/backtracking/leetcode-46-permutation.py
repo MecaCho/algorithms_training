@@ -77,13 +77,35 @@ class Solution1(object):
 
 import itertools
 
-class Solution1(object):
+class Solution0(object):
     def permute(self, nums):
         """
         :type nums: List[int]
         :rtype: List[List[int]]
         """
         return list(itertools.permutations(nums))
+
+
+class Solution20200909(object):
+    def combinationSum(self, candidates, target):
+        """
+        :type candidates: List[int]
+        :type target: int
+        :rtype: List[List[int]]
+        """
+        self.vals = []
+
+        def bk(nums, sum_, start):
+            if sum_ == target:
+                self.vals.append(nums)
+            if sum_ > target:
+                return
+            for i in range(start, len(candidates)):
+                num = candidates[i]
+                bk(nums + [num], sum_ + num, i)
+
+        bk([], 0, 0)
+        return self.vals
 
 
 '''
