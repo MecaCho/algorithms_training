@@ -56,6 +56,29 @@ class Solution(object):
         return self.vals
 
 
+
+class Solution20200911(object):
+    def combinationSum3(self, k, n):
+        """
+        :type k: int
+        :type n: int
+        :rtype: List[List[int]]
+        """
+        self.vals = []
+        def bk(nums, sum_, start):
+            if len(nums) > k or sum_ > n:
+                return
+            if sum_ == n and len(nums) == k:
+                self.vals.append(nums)
+
+            for i in range(start, 10):
+                bk(nums+[i], sum_+i, i+1)
+
+        bk([], 0, 1)
+        return self.vals
+
+
+
 # tips
 
 '''
