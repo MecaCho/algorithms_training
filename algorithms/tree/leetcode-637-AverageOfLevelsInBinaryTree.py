@@ -74,6 +74,37 @@ class Solution(object):
         return res
 
 
+# Definition for a binary tree node.
+# class TreeNode(object):
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+
+class Solution20200912(object):
+    def averageOfLevels(self, root):
+        """
+        :type root: TreeNode
+        :rtype: List[float]
+        """
+        self.vals = []
+        def dfs(root, deepth):
+            if not root:
+                return
+            if deepth < len(self.vals):
+                self.vals[deepth].append(root.val)
+            else:
+                self.vals.append([root.val])
+
+            dfs(root.left, deepth+1)
+            dfs(root.right, deepth+1)
+
+        dfs(root, 0)
+
+        return [sum(i)/ float(len(i)) for i in self.vals]
+
+
+
 '''
 方法一：深度优先搜索
 我们可以使用深度优先搜索遍历整颗二叉树。我们使用两个数组 sum 存放树中每一层的节点数值之和，以及 count 存放树中每一层的节点数量之和。在遍历时，我们需要额外记录当前节点所在的高度，并根据高度 h 更新数组元素 sum[h] 和 count[h]。在遍历结束之后，res = sum / cnt 即为答案。
