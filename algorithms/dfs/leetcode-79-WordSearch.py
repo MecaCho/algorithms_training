@@ -93,3 +93,38 @@ class Solution(object):
                         return True
 
         return False
+
+
+class Solution20200913(object):
+    def exist(self, board, word):
+        """
+        :type board: List[List[str]]
+        :type word: str
+        :rtype: bool
+        """
+        add_list = [(0, 1), (0, -1), (1, 0), (-1, 0)]
+
+        self.res = False
+        col, row = len(board[0]), len(board)
+
+        def dfs(i, j, length):
+            if length == len(word):
+                return True
+
+            if i < 0 or j < 0 or i >= row or j >= col or word[length] != board[i][j] or not board[i][j]:
+                return False
+            tmp = board[i][j]
+            board[i][j] = ""
+            for x, y in add_list:
+                res = dfs(i + x, j + y, length + 1)
+                if res:
+                    return True
+            board[i][j] = tmp
+
+        for i in range(row):
+            for j in range(col):
+                if board[i][j] == word[0]:
+                    res = dfs(i, j, 0)
+                    if res:
+                        return res
+        return False
