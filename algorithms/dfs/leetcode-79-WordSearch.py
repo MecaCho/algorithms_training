@@ -128,3 +128,75 @@ class Solution20200913(object):
                     if res:
                         return res
         return False
+
+
+# solutions
+
+'''
+方法一：深度优先搜索
+思路与算法
+
+设函数 \text{check}(i, j, k)check(i,j,k) 判断以网格的 (i, j)(i,j) 位置出发，能否搜索到单词 \text{word}[k..]word[k..]，其中 \text{word}[k..]word[k..] 表示字符串 \text{word}word 从第 kk 个字符开始的后缀子串。如果能搜索到，则返回 \text{true}true，反之返回 \text{false}false。函数 \text{check}(i, j, k)check(i,j,k) 的执行步骤如下：
+
+如果 \text{board}[i][j] \neq s[k]board[i][j] 
+
+​	
+ =s[k]，当前字符不匹配，直接返回 \text{false}false。
+如果当前已经访问到字符串的末尾，且对应字符依然匹配，此时直接返回 \text{true}true。
+否则，遍历当前位置的所有相邻位置。如果从某个相邻位置出发，能够搜索到子串 \text{word}[k+1..]word[k+1..]，则返回 \text{true}true，否则返回 \text{false}false。
+这样，我们对每一个位置 (i,j)(i,j) 都调用函数 \text{check}(i, j, 0)check(i,j,0) 进行检查：只要有一处返回 \text{true}true，就说明网格中能够找到相应的单词，否则说明不能找到。
+
+为了防止重复遍历相同的位置，需要额外维护一个与 \text{board}board 等大的 \text{visited}visited 数组，用于标识每个位置是否被访问过。每次遍历相邻位置时，需要跳过已经被访问的位置。
+
+代码
+
+C++JavaPython3JavaScriptGolangC
+
+class Solution:
+    def exist(self, board: List[List[str]], word: str) -> bool:
+        directions = [(0, 1), (0, -1), (1, 0), (-1, 0)]
+
+        def check(i: int, j: int, k: int) -> bool:
+            if board[i][j] != word[k]:
+                return False
+            if k == len(word) - 1:
+                return True
+            
+            visited.add((i, j))
+            result = False
+            for di, dj in directions:
+                newi, newj = i + di, j + dj
+                if 0 <= newi < len(board) and 0 <= newj < len(board[0]):
+                    if (newi, newj) not in visited:
+                        if check(newi, newj, k + 1):
+                            result = True
+                            break
+            
+            visited.remove((i, j))
+            return result
+
+        h, w = len(board), len(board[0])
+        visited = set()
+        for i in range(h):
+            for j in range(w):
+                if check(i, j, 0):
+                    return True
+        
+        return False
+复杂度分析
+
+时间复杂度：一个非常宽松的上界为 O(MN \cdot 3^L)O(MN⋅3 
+L
+ )，其中 M, NM,N 为网格的长度与宽度，LL 为字符串 \text{word}word 的长度。在每次调用函数 \text{check}check 时，除了第一次可以进入 44 个分支以外，其余时间我们最多会进入 33 个分支（因为每个位置只能使用一次，所以走过来的分支没法走回去）。由于单词长为 LL，故 \text{check(i, j, 0)}check(i, j, 0) 的时间复杂度为 O(3^L)O(3 
+L
+ )，而我们要执行 O(MN)O(MN) 次检查。然而，由于剪枝的存在，我们在遇到不匹配或已访问的字符时会提前退出，终止递归流程。因此，实际的时间复杂度会远远小于 \Theta(MN \cdot 3^L)Θ(MN⋅3 
+L
+ )。
+
+空间复杂度：O(MN)O(MN)。我们额外开辟了 O(MN)O(MN) 的 \text{visited}visited 数组，同时栈的深度最大为 O(\min(L, MN))O(min(L,MN))。
+
+作者：LeetCode-Solution
+链接：https://leetcode-cn.com/problems/word-search/solution/dan-ci-sou-suo-by-leetcode-solution/
+来源：力扣（LeetCode）
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+'''
