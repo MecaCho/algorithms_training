@@ -118,6 +118,35 @@ class Solution1(object):
         return res
 
 
+# Definition for a binary tree node.
+# class TreeNode(object):
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+
+class Solution20200914(object):
+    def inorderTraversal(self, root):
+        """
+        :type root: TreeNode
+        :rtype: List[int]
+        """
+        # return self.inorderTraversal(root.left) + [root.val] + self.inorderTraversal(root.right) if root else []
+
+        stack = [(0, root)]
+        res = []
+        while stack:
+            c, node = stack.pop()
+            if node:
+                if c == 0:
+                    stack.append((0, node.right))
+                    stack.append((1, node))
+                    stack.append((0, node.left))
+                if c == 1:
+                    res.append(node.val)
+
+        return res
+
 
 '''
 解题思路：
