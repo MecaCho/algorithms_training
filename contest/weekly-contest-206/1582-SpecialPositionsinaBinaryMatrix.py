@@ -105,3 +105,10 @@ class Solution(object):
                 res += 1
 
         return res
+
+
+# tips
+
+'''
+Keep track of 1s in each row and in each column. Then while iterating over matrix, if the current position is 1 and current row as well as current column contains exactly one occurrence of 1.
+'''
