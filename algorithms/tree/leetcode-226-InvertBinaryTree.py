@@ -75,6 +75,30 @@ class Solution(object):
         return root
 
 
+# Definition for a binary tree node.
+# class TreeNode(object):
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+
+
+class Solution20200916(object):
+    def invertTree(self, root):
+        """
+        :type root: TreeNode
+        :rtype: TreeNode
+        """
+
+        if not root:
+            return root
+        left_ = self.invertTree(root.right)
+        right_ = self.invertTree(root.left)
+        root.left = left_
+        root.right = right_
+        return root
+
+
 # solutions
 
 '''
