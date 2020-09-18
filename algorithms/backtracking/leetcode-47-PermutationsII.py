@@ -49,7 +49,7 @@ class Solution(object):
 
 
 
-class Solution(object):
+class Solution1(object):
     def permuteUnique(self, nums):
         """
         :type nums: List[int]
@@ -77,6 +77,35 @@ class Solution(object):
         # print(len(self.vals))
         return self.vals
 
+
+class Solution20200918(object):
+    def permuteUnique(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: List[List[int]]
+        """
+        self.vals = []
+        length = len(nums)
+        nums.sort()
+        # def bk(arr):
+        #     if len(arr) == length:
+        #         self.vals.append(arr)
+        #         return
+        #     for i in range(length):
+        #         if nums[i] != nums[i-1]:
+        #             bk(arr+[nums[i]])
+        # bk([])
+        # return self.vals
+        def bk(nums, temp_pers):
+        # conditions
+            if not nums:
+                self.vals.append(temp_pers)
+            for i in range(len(nums)):
+                # if nums contain duplicates
+                if i == 0 or nums[i] != nums[i-1]:
+                    bk(nums[:i]+nums[i+1:], temp_pers+[nums[i]])
+        bk(nums, [])
+        return self.vals
 
 '''
 class Solution(object):
