@@ -93,6 +93,25 @@ class Solution1(object):
             res += [[i] + num for num in res]
         return res
 
+
+class Solution20200920(object):
+    def subsets(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: List[List[int]]
+        """
+        self.vals = []
+        length = len(nums)
+
+        def bk(res, start):
+            self.vals.append(res)
+            for i in range(start, length):
+                bk(res + [nums[i]], i + 1)
+
+        bk([], 0)
+        return self.vals
+
+
 '''
 解决方案
 观察全排列/组合/子集问题，它们比较相似，且可以使用一些通用策略解决。
