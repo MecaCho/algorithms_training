@@ -61,6 +61,7 @@ Note: The merging process must start from the root nodes of both trees.
 #         self.left = None
 #         self.right = None
 
+
 class Solution(object):
     def mergeTrees(self, t1, t2):
         """
