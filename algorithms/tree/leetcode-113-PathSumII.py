@@ -78,3 +78,34 @@ class Solution(object):
         if root:
             dfs(root, [], sum)
         return self.res
+
+
+# Definition for a binary tree node.
+# class TreeNode(object):
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+
+
+class Solution20200926(object):
+    def pathSum(self, root, sum):
+        """
+        :type root: TreeNode
+        :type sum: int
+        :rtype: List[List[int]]
+        """
+        self.vals = []
+        def dfs(root, path, target):
+            if not root:
+                return
+            else:
+                if root.left is None and root.right is None:
+                    if target == root.val:
+                        self.vals.append(path+[root.val])
+                    return
+            dfs(root.left, path+[root.val], target-root.val)
+            dfs(root.right, path+[root.val], target-root.val)
+        dfs(root, [], sum)
+        return self.vals
+
