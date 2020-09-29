@@ -78,6 +78,39 @@ class Solution1(object):
                     stack_t.append(node.right)
         return res[::-1]
 
+
+# Definition for a binary tree node.
+# class TreeNode(object):
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+
+
+class Solution20200929(object):
+    def postorderTraversal(self, root):
+        """
+        :type root: TreeNode
+        :rtype: List[int]
+        """
+        # return self.postorderTraversal(root.left) + self.postorderTraversal(root.right) + [root.val] if root else []
+
+        stack = []
+        stack.append((0, root))
+        vals = []
+        while stack:
+            flag, node = stack.pop()
+            if node:
+                if flag:
+                    vals.append(node.val)
+                else:
+                    stack.append((1, node))
+                    stack.append((0, node.right))
+                    stack.append((0, node.left))
+
+        return vals
+
+
 # solutions
 
 '''
