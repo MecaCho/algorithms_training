@@ -41,6 +41,21 @@ class Solution(object):
                 return [hash_map[nums[i]], i]
 
 
+class Solution20201003(object):
+    def twoSum(self, nums, target):
+        """
+        :type nums: List[int]
+        :type target: int
+        :rtype: List[int]
+        """
+        t_map = {}
+        for i in range(len(nums)):
+            if nums[i] in t_map:
+                return [t_map[nums[i]], i]
+            t_map[target-nums[i]] = i
+        return []
+
+
 class Solution1(object):
     def twoSum(self, nums, target):
         """
@@ -57,7 +72,7 @@ class Solution1(object):
 
 # 双指针法
 
-class Solution1(object):
+class Solution11(object):
     def twoSum(self, nums, target):
         """
         :type nums: List[int]
