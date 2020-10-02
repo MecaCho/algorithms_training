@@ -97,6 +97,24 @@ class Solution11(object):
             else:
                 return [nums[i], nums[j]]
 
+# golang
+
+'''
+func twoSum(nums []int, target int) []int {
+
+    hashMap := make(map[int]int, len(nums))
+
+    for i, val := range nums{
+        // fmt.Println(hashMap)
+        if v, ok := hashMap[val];ok{
+            return []int{v, i}
+        }
+        hashMap[target-val] = i
+    }
+    return []int{}
+}
+'''
+
 # tips
 '''
 A really brute force way would be to search for all possible pairs of numbers but that would be too slow. Again, it's best to try out brute force solutions for just for completeness. It is from these brute force solutions that you can come up with optimizations.
