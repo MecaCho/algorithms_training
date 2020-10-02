@@ -89,3 +89,50 @@ class Solution3(object):
         return sum(S.count(j) for j in J)
 
 
+# solutions
+
+'''
+方法一：暴力
+思路与算法
+
+暴力法的思路很直观，遍历字符串 SS，对于 SS 中的每个字符，遍历一次字符串 JJ，如果其和 JJ 中的某一个字符相同，则是宝石。
+
+代码
+
+JavaPython3C++JavaScriptGolangC
+
+class Solution:
+    def numJewelsInStones(self, J: str, S: str) -> int:
+        return sum(s in J for s in S)
+复杂度分析
+
+时间复杂度：O(mn)O(mn)，其中 mm 是字符串 JJ 的长度，nn 是字符串 SS 的长度。遍历字符串 SS 的时间复杂度是 O(n)O(n)，对于 SS 中的每个字符，需要遍历字符串 JJ 判断是否是宝石，时间复杂度是 O(m)O(m)，因此总时间复杂度是 O(mn)O(mn)。
+
+空间复杂度：O(1)O(1)。只需要维护常量的额外空间。
+
+方法二：哈希集合
+思路与算法
+
+方法一中，对于字符串 SS 中的每个字符，都需要遍历一次字符串 JJ，导致时间复杂度较高。如果使用哈希集合存储字符串 JJ 中的宝石，则可以降低判断的时间复杂度。
+
+遍历字符串 JJ，使用哈希集合存储其中的字符，然后遍历字符串 SS，对于其中的每个字符，如果其在哈希集合中，则是宝石。
+
+代码
+
+JavaPython3C++JavaScriptGolangC
+
+class Solution:
+    def numJewelsInStones(self, J: str, S: str) -> int:
+        jewelsSet = set(J)
+        return sum(s in jewelsSet for s in S)
+复杂度分析
+
+时间复杂度：O(m+n)O(m+n)，其中 mm 是字符串 JJ 的长度，nn 是字符串 SS 的长度。遍历字符串 JJ 将其中的字符存储到哈希集合中，时间复杂度是 O(m)O(m)，然后遍历字符串 SS，对于 SS 中的每个字符在 O(1)O(1) 的时间内判断当前字符是否是宝石，时间复杂度是 O(n)O(n)，因此总时间复杂度是 O(m+n)O(m+n)。
+
+空间复杂度：O(m)O(m)，其中 mm 是字符串 JJ 的长度。使用哈希集合存储字符串 JJ 中的字符。
+
+作者：LeetCode-Solution
+链接：https://leetcode-cn.com/problems/jewels-and-stones/solution/bao-shi-yu-shi-tou-by-leetcode-solution/
+来源：力扣（LeetCode）
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+'''
