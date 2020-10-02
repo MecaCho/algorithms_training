@@ -74,3 +74,18 @@ class Solution2(object):
         """
         return len([i for i in S if i in J])
 
+
+class Solution3(object):
+    def numJewelsInStones(self, J, S):
+        """
+        :type J: str
+        :type S: str
+        :rtype: int
+        """
+        # import collections
+        # stones = collections.Counter(S)
+        # return sum(stones[j] for j in J)
+
+        return sum(S.count(j) for j in J)
+
+
