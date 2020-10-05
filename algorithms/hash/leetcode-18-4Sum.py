@@ -76,3 +76,32 @@ class Solution(object):
         return res
 
 
+class Solution20201005(object):
+    def fourSum(self, nums, target):
+        """
+        :type nums: List[int]
+        :type target: int
+        :rtype: List[List[int]]
+        """
+        self.vals = []
+        nums.sort()
+        def bk(path, start, sum_):
+            if len(path) > 4:
+                return
+            if len(path) == 4:
+                if sum_ == target:
+                    self.vals.append(path)
+                    return
+                else:
+                    return
+            # print(path, sum_, start)
+            # if start >= len(nums) or nums[start] > target - sum_:
+                # return
+            for i in range(start, len(nums)):
+                if i == start or nums[i] != nums[i-1]:
+                    bk(path+[nums[i]], i+1, sum_+nums[i])
+        bk([], 0, 0)
+        return self.vals
+
+
+
