@@ -65,6 +65,7 @@ This question is the same as 530: https://leetcode.com/problems/minimum-absolute
 #         self.left = None
 #         self.right = None
 
+
 class Solution(object):
     def minDiffInBST(self, root):
         """
