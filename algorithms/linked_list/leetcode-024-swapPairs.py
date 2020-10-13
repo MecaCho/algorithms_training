@@ -171,6 +171,29 @@ class Solution2(object):
 
         return res
 
+
+# Definition for singly-linked list.
+# class ListNode(object):
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+class Solution20201013(object):
+    def swapPairs(self, head):
+        """
+        :type head: ListNode
+        :rtype: ListNode
+        """
+        if not head or not head.next:
+            return head
+
+        res = head.next
+        head.next = self.swapPairs(head.next.next)
+
+        res.next = head
+        return res
+
+
+
 '''
 方法一：递归
 这个题目要求我们从第一个节点开始两两交换链表中的节点，且要真正的交换节点。
