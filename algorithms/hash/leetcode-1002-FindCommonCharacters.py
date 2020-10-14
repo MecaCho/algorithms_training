@@ -68,6 +68,14 @@ class Solution(object):
         return list(res)
 
 
+import collections
+import functools
+
+
+class Solution1(object):
+    def commonChars(self, A):
+        return list(functools.reduce(lambda x, y: x & y, map(collections.Counter, A)).elements())
+
 # solution
 
 '''
