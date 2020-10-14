@@ -72,3 +72,20 @@ class Solution(object):
         # obj = Solution(nums)
         # param_1 = obj.reset()
         # param_2 = obj.shuffle()
+
+
+def move(nums):
+    i = j = 0
+    while j < len(nums):
+        if nums[j] != 0:
+            nums[i], nums[j] = nums[j], nums[i]
+            i += 1
+        j += 1
+    return
+
+
+if __name__ == '__main__':
+    nums1 = [0, 9, 1]
+    nums = [1, 2, 9, 0, 0, 3, 4, 0, 9, 0, 9,0,0,0,8,8,8]
+    move(nums)
+    print(nums)
