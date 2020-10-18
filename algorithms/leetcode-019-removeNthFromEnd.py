@@ -35,10 +35,10 @@ Could you do this in one pass?
 
 
 # Definition for singly-linked list.
-# class ListNode(object):
-#     def __init__(self, x):
-#         self.val = x
-#         self.next = None
+class ListNode(object):
+    def __init__(self, x):
+        self.val = x
+        self.next = None
 
 class Solution(object):
     def removeNthFromEnd(self, head, n):
@@ -61,7 +61,38 @@ class Solution(object):
             first = first.next
         last.next = last.next.next
         return head
-    
+
+
+# Definition for singly-linked list.
+# class ListNode(object):
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+class Solution20201018(object):
+    def removeNthFromEnd(self, head, n):
+        """
+        :type head: ListNode
+        :type n: int
+        :rtype: ListNode
+        """
+        dummy = ListNode(0)
+        dummy.next = head
+        fast = dummy
+        slow = dummy
+
+        for _ in range(n+1):
+            if not fast:
+                return head
+            fast = fast.next
+
+        while fast:
+            fast = fast.next
+            slow = slow.next
+        if slow.next:
+            slow.next = slow.next.next
+
+        return dummy.next
+
     
 '''
 # Definition for singly-linked list.
