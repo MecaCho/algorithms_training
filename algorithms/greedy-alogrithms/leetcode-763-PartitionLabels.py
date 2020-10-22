@@ -62,3 +62,11 @@ class Solution(object):
 
         return partition
 
+
+# tips
+
+'''
+Try to greedily choose the smallest partition that includes the first letter. 
+If you have something like "abaccbdeffed", then you might need to add b. 
+You can use an map like "last['b'] = 5" to help you expand the width of your partition.
+'''
