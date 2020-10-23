@@ -76,6 +76,7 @@ class Solution(object):
             slow = slow.next
             pre = pre.next
         return True
+    
 # Runtime: 60 ms, faster than 98.24% of Python online submissions for Palindrome Linked List.
 # Memory Usage: 31.7 MB, less than 85.78% of Python online submissions for Palindrome Linked List.
 
