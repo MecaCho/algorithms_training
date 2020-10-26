@@ -79,3 +79,12 @@ class Solution(object):
 
         return [sum(num_dict[:num]) for num in nums]
 
+
+
+# tips
+
+'''
+Brute force for each array element.
+
+In order to improve the time complexity, we can sort the array and get the answer for each array element.
+'''
