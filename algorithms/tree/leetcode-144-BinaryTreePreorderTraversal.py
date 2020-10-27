@@ -92,6 +92,37 @@ class Solution20201027(object):
         return [root.val] + self.preorderTraversal(root.left) + self.preorderTraversal(root.right) if root else []
 
 
+# Definition for a binary tree node.
+# class TreeNode(object):
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution202010271(object):
+    def preorderTraversal(self, root):
+        """
+        :type root: TreeNode
+        :rtype: List[int]
+        """
+
+        # return [root.val] + self.preorderTraversal(root.left) + self.preorderTraversal(root.right) if root else []
+
+        stack = [(root, 0)]
+
+        res = []
+        while stack:
+            node, flag = stack.pop()
+            if node:
+                if flag == 1:
+                    res.append(node.val)
+                else:
+                    stack.append((node.right, 0))
+                    stack.append((node.left, 0))
+                    stack.append((node, 1))
+
+        return res
+
+
 # golang solutions
 
 '''
