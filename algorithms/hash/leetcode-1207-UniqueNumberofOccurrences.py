@@ -64,3 +64,11 @@ class Solution(object):
         count_map = collections.Counter(arr)
         return len(count_map.values()) == len(set(count_map.values()))
 
+
+# tips
+
+'''
+Find the number of occurrences of each element in the array using a hash map.
+
+Iterate through the hash map and check if there is a repeated value.
+'''
