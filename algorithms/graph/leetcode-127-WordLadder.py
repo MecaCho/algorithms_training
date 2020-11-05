@@ -72,6 +72,8 @@ Output: 0
 Explanation: The endWord "cog" is not in wordList, therefore no possible transformation.
 '''
 
+import collections
+
 
 class Solution(object):
     def ladderLength(self, beginWord, endWord, wordList):
