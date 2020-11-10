@@ -63,6 +63,30 @@ class Solution(object):
         # return nums
 
 
+class Solution20201110(object):
+    def nextPermutation(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: None Do not return anything, modify nums in-place instead.
+        """
+        if len(nums) < 2:
+            return nums
+        i = len(nums) - 2
+        while i >= 0:
+            if nums[i] < nums[i + 1]:
+                j = i + 1
+                while j < len(nums) and nums[i] < nums[j]:
+                    j += 1
+                nums[i], nums[j - 1] = nums[j - 1], nums[i]
+
+                break
+            i -= 1
+
+        nums[i + 1:] = nums[i + 1:][::-1]
+
+        return nums
+
+
 # solutions
 
 '''
