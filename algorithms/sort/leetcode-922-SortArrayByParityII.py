@@ -62,3 +62,71 @@ class Solution(object):
                 A[i], A[j] = A[j], A[i]
         return A
 
+
+# solution
+
+'''
+方法一： 两次遍历
+思路和算法
+
+遍历一遍数组把所有的偶数放进 ans[0]，ans[2]，ans[4]，依次类推。
+
+再遍历一遍数组把所有的奇数依次放进 ans[1]，ans[3]，ans[5]，依次类推。
+
+C++JavaCJavaScriptGolang
+
+func sortArrayByParityII(a []int) []int {
+    ans := make([]int, len(a))
+    i := 0
+    for _, v := range a {
+        if v%2 == 0 {
+            ans[i] = v
+            i += 2
+        }
+    }
+    i = 1
+    for _, v := range a {
+        if v%2 == 1 {
+            ans[i] = v
+            i += 2
+        }
+    }
+    return ans
+}
+复杂度分析
+
+时间复杂度：O(N)O(N)，其中 NN 是数组 A 的长度。
+
+空间复杂度：O(1)O(1)。注意在这里我们不考虑输出数组的空间占用。
+
+方法二： 双指针
+思路与算法
+
+如果原数组可以修改，则可以使用就地算法求解。
+
+为数组的偶数下标部分和奇数下标部分分别维护指针 i, ji,j。随后，在每一步中，如果 A[i]A[i] 为奇数，则不断地向前移动 jj（每次移动两个单位），直到遇见下一个偶数。此时，可以直接将 A[i]A[i] 与 A[j]A[j] 交换。我们不断进行这样的过程，最终能够将所有的整数放在正确的位置上。
+
+C++JavaCJavaScriptGolang
+
+func sortArrayByParityII(a []int) []int {
+    for i, j := 0, 1; i < len(a); i += 2 {
+        if a[i]%2 == 1 {
+            for a[j]%2 == 1 {
+                j += 2
+            }
+            a[i], a[j] = a[j], a[i]
+        }
+    }
+    return a
+}
+复杂度分析
+
+时间复杂度：O(N)O(N)，其中 NN 是数组 A 的长度。
+
+空间复杂度：O(1)O(1)。
+
+作者：LeetCode-Solution
+链接：https://leetcode-cn.com/problems/sort-array-by-parity-ii/solution/an-qi-ou-pai-xu-shu-zu-ii-by-leetcode-solution/
+来源：力扣（LeetCode）
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+'''
