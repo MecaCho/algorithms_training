@@ -84,3 +84,101 @@ class Solution(object):
         ret.sort(key=lambda x: abs(x[0] - r0) + abs(x[1] - c0))
         return ret
 
+# solution
+
+'''
+方法一：直接排序
+思路及解法
+
+最容易想到的方法是首先存储矩阵内所有的点，然后将其按照哈曼顿距离直接排序。
+
+代码
+
+C++JavaGolangPython3C
+
+class Solution:
+    def allCellsDistOrder(self, R: int, C: int, r0: int, c0: int) -> List[List[int]]:
+        ret = [(i, j) for i in range(R) for j in range(C)]
+        ret.sort(key=lambda x: abs(x[0] - r0) + abs(x[1] - c0))
+        return ret
+复杂度分析
+
+时间复杂度：O(RC \log(RC))O(RClog(RC))，存储所有点时间复杂度 O(RC)O(RC)，排序时间复杂度 O(RC \log(RC))O(RClog(RC))。
+
+空间复杂度：O(\log(RC))O(log(RC))，即为排序需要使用的栈空间，不考虑返回值的空间占用。
+
+方法二：桶排序
+思路及解法
+
+注意到方法一中排序的时间复杂度太高。实际在枚举所有点时，我们可以直接按照哈曼顿距离分桶。这样我们就可以实现线性的桶排序。
+
+代码
+
+C++JavaGolangPython3C
+
+class Solution:
+    def allCellsDistOrder(self, R: int, C: int, r0: int, c0: int) -> List[List[int]]:
+        maxDist = max(r0, R - 1 - r0) + max(c0, C - 1 - c0)
+        bucket = collections.defaultdict(list)
+        dist = lambda r1, c1, r2, c2: abs(r1 - r2) + abs(c1 - c2)
+
+        for i in range(R):
+            for j in range(C):
+                bucket[dist(i, j, r0, c0)].append([i, j])
+
+        ret = list()
+        for i in range(maxDist + 1):
+            ret.extend(bucket[i])
+        
+        return ret
+复杂度分析
+
+时间复杂度：O(RC)O(RC)，存储所有点时间复杂度 O(RC)O(RC)，桶排序时间复杂度 O(RC)O(RC)。
+
+空间复杂度：O(RC)O(RC)，需要存储矩阵内所有点。
+
+方法三：几何法
+思路及解法
+
+我们也可以直接变换枚举矩阵的顺序，直接按照曼哈顿距离遍历该矩形即可。
+
+注意到曼哈顿距离相同的位置恰好构成一个斜着的正方形边框，因此我们可以从小到大枚举曼哈顿距离，并使用循环来直接枚举该距离对应的边框。我们每次从该正方形边框的上顶点出发，依次经过右顶点、下顶点和左顶点，最后回到上顶点。这样即可完成当前层的遍历。
+
+
+
+注意正方形边框中的部分点不一定落在矩阵中，所以我们需要做好边界判断。
+
+代码
+
+C++JavaGolangPython3C
+
+class Solution:
+    def allCellsDistOrder(self, R: int, C: int, r0: int, c0: int) -> List[List[int]]:
+        dirs = [(1, 1), (1, -1), (-1, -1), (-1, 1)]
+        maxDist = max(r0, R - 1 - r0) + max(c0, C - 1 - c0)
+        row, col = r0, c0
+        ret = [[row, col]]
+        for dist in range(1, maxDist + 1):
+            row -= 1
+            for i, (dr, dc) in enumerate(dirs):
+                while (i % 2 == 0 and row != r0) or (i % 2 != 0 and col != c0):
+                    if 0 <= row < R and 0 <= col < C:
+                        ret.append([row, col])
+                    row += dr
+                    col += dc
+        return ret
+复杂度分析
+
+时间复杂度：O\big((R+C)^2\big)O((R+C) 
+2
+ )，我们需要遍历矩阵内所有点，同时也会遍历部分超过矩阵部分的点。在最坏情况下，给定的单元格位于矩阵的一个角，例如 (0,0)(0,0)，此时最大的曼哈顿距离为 R+C-2R+C−2，需要遍历的点数为 2(R+C-2)(R+C-1)+12(R+C−2)(R+C−1)+1，因此时间复杂度为 O\big((R+C)^2\big)O((R+C) 
+2
+ )。
+
+空间复杂度：O(1)O(1)，不考虑返回值的空间占用。
+
+作者：LeetCode-Solution
+链接：https://leetcode-cn.com/problems/matrix-cells-in-distance-order/solution/ju-chi-shun-xu-pai-lie-ju-zhen-dan-yuan-ge-by-leet/
+来源：力扣（LeetCode）
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+'''
