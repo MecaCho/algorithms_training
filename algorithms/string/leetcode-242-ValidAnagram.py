@@ -39,8 +39,6 @@ What if the inputs contain unicode characters? How would you adapt your solution
 
 
 import copy
-copy.deepcopy()
-
 
 class Solution(object):
     def isAnagram(self, s, t):
@@ -73,3 +71,22 @@ class Solution1(object):
             if v != 0:
                 return False
         return True
+
+
+import collections
+
+
+class Solution20201122(object):
+    def isAnagram(self, s, t):
+        """
+        :type s: str
+        :type t: str
+        :rtype: bool
+        """
+        return collections.Counter(s) == collections.Counter(t)
+        # return len(s) == len(t) and set(s) == set(t)
+
+if __name__ == '__main__':
+    demo = Solution20201122()
+    res = demo.isAnagram("aabbb", "bbaaa")
+    print(res)
