@@ -69,3 +69,9 @@ class Solution(object):
                 if key in hash_map:
                     count += hash_map[key]
         return count
+
+
+# solutions
+
+'''
+'''
