@@ -34,3 +34,17 @@ All the numbers in the input array are in the range of 32-bit integer.
 给定数组的长度不会超过50000。
 输入数组中的所有数字都在32位整数的表示范围内。
 '''
+
+
+class Solution(object):
+    def reversePairs(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        import bisect
+        ri, res, n = [], 0, len(nums)
+        for i in reversed(range(0, n)):
+            res += bisect.bisect_left(ri, nums[i])
+            bisect.insort(ri, 2 * nums[i])
+        return res
