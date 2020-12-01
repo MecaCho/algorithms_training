@@ -109,3 +109,50 @@ class Solution1(object):
         right = i - 1
 
         return [left, right]
+
+
+class Solution20201201(object):
+    def searchRange(self, nums, target):
+        """
+        :type nums: List[int]
+        :type target: int
+        :rtype: List[int]
+        """
+
+        def where_left(nums, target):
+            i, j = 0, len(nums) - 1
+            while i < j:
+                mid = (i + j) // 2
+                # if nums[mid] == target:
+                #     return mid
+                if nums[mid] < target:
+                    i = mid + 1
+                else:
+                    j = mid
+            return i
+
+        def where_right(nums, target):
+            i, j = 0, len(nums) - 1
+            while i < j:
+                mid = (i + j+1) // 2
+                # if nums[mid] == target:
+                #     return mid
+                if nums[mid] > target:
+                    j = mid - 1
+                else:
+                    i = mid
+            return j
+
+        left = where_left(nums, target)
+        if left >= len(nums) or nums[left] != target:
+            return [-1, -1]
+        right = where_right(nums, target)
+
+        return [left, right]
+
+
+
+if __name__ == '__main__':
+    demo = Solution20201201()
+    res = demo.searchRange([8,8,8,8,8,8,9], 8)
+    print(res)
