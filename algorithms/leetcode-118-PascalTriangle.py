@@ -55,3 +55,25 @@ class Solution(object):
             val_list = self.generate(numRows - 1)
             val_list.append([1] + [val_list[-1][i] + val_list[-1][i+1] for i in range(len(val_list[-1]) - 1)] + [1])
             return val_list
+
+
+
+class Solution20201206(object):
+    def generate(self, numRows):
+        """
+        :type numRows: int
+        :rtype: List[List[int]]
+        """
+        res = []
+        for i in range(numRows):
+            tmp = [1]
+            if res:
+                pre_row = res[-1]
+                pre_length = len(res[-1])
+                for j in range(1, pre_length):
+                    tmp.append(pre_row[j]+pre_row[j-1])
+                tmp.append(1)
+            res.append(tmp)
+
+        return res
+
