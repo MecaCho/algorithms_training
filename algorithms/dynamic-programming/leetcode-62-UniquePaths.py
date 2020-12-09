@@ -86,6 +86,25 @@ class Solution(object):
         return dp[-1][-1]
 
 
+
+class Solution20201209(object):
+    def uniquePaths(self, m, n):
+        """
+        :type m: int
+        :type n: int
+        :rtype: int
+        """
+        # if m + n < 2:
+        #     return 0
+        dp = [[1 for _ in range(n)] for _ in range(m)]
+        for i in range(1, m):
+            for j in range(1, n):
+                dp[i][j] = (dp[i][j-1] + dp[i-1][j]) % 2000000000
+
+        return dp[-1][-1]
+
+
+
 # tips
 
 '''
