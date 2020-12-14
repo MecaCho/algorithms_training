@@ -51,6 +51,19 @@ class Solution(object):
         return hash_map.values()
 
 
+class Solution20201214(object):
+    def groupAnagrams(self, strs):
+        """
+        :type strs: List[str]
+        :rtype: List[List[str]]
+        """
+        word_dict = collections.defaultdict(list)
+        for i in range(len(strs)):
+            word_dict[tuple(sorted(strs[i]))].append(strs[i])
+
+        return [l for l in word_dict.values()]
+
+
 # golang
 
 '''

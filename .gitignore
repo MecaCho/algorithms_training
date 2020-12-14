@@ -9,6 +9,7 @@ push.py
 *.ini
 test
 drafts
+test.*
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
