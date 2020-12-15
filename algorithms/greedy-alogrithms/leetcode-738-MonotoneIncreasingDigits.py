@@ -1,3 +1,4 @@
+# -*-coding=UTF-8-*-
 '''
 738. Monotone Increasing Digits
 Given a non-negative integer N, find the largest number that is less than or equal to N with monotone increasing digits.
@@ -51,6 +52,72 @@ class Solution(object):
                 res = res/i * i - 1
 
         return res
+
+
+class Solution20201215(object):
+    def monotoneIncreasingDigits(self, N):
+        """
+        :type N: int
+        :rtype: int
+        """
+        nums = list(str(N))
+        i = 1
+        while i < len(nums):
+            if nums[i] >= nums[i - 1]:
+                i += 1
+            else:
+                break
+
+        if i < len(nums):
+            # nums[i] = chr(ord(nums[i]) - 1)
+            # j = i
+            while i > 0 and nums[i] < nums[i - 1]:
+                nums[i - 1] = chr(ord(nums[i - 1]) - 1)
+                i -= 1
+            i += 1
+            while i < len(nums):
+                nums[i] = "9"
+                i += 1
+
+        return int("".join(nums))
+
+
+
+class Solution_(object):
+    def monotoneIncreasingDigits(self, N):
+        """
+        :type N: int
+        :rtype: int
+        """
+        nums = list(str(N))
+        i = 1
+        while i < len(nums):
+            if nums[i] >= nums[i - 1]:
+                i += 1
+            else:
+                break
+
+        if i < len(nums):
+            # nums[i] = chr(ord(nums[i]) - 1)
+            # j = i
+            while i > 0 and nums[i] < nums[i - 1]:
+                nums[i - 1] = chr(ord(nums[i - 1]) - 1)
+                i -= 1
+            i += 1
+            while i < len(nums):
+                nums[i] = "9"
+                i += 1
+
+        return int("".join(nums))
+
+
+
+if __name__ == '__main__':
+    demo = Solution20201215()
+    res = demo.monotoneIncreasingDigits(10)
+    print(res)
+
+
 
 
 # solution
