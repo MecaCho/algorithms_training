@@ -1,3 +1,4 @@
+# encoding=utf-8
 '''
 389. 找不同
 给定两个字符串 s 和 t，它们只包含小写字母。
@@ -42,6 +43,8 @@ Explanation:
 '''
 
 
+import collections
+
 class Solution(object):
     def findTheDifference(self, s, t):
         """
@@ -64,6 +67,27 @@ class Solution(object):
         for i in range(len(new_s)):
             res ^= ord(new_s[i])
         return chr(res)
+
+
+class Solution20201218(object):
+    def findTheDifference(self, s, t):
+        """
+        :type s: str
+        :type t: str
+        :rtype: str
+        """
+        s_counter = collections.Counter(s)
+        t_counter = collections.Counter(t)
+        if len(s_counter.keys()) < len(t_counter.keys()):
+            res = set(t_counter.keys()) - set(s_counter.keys())
+            # print res
+            if res:
+                return list(res)[0]
+        for k, v in t_counter.items():
+            if v > s_counter[k]:
+                return k
+        return ""
+
 
 '''
 类似与找字符串字符个数为奇数的字符
@@ -101,4 +125,88 @@ class Solution:
     def findTheDifference(self, s: str, t: str) -> str:
         return chr(reduce(operator.xor, map(ord, s + t)))
 
+'''
+
+
+# solution
+
+'''
+方法一：计数
+首先遍历字符串 ss，对其中的每个字符都将计数值加 11；然后遍历字符串 tt，对其中的每个字符都将计数值减 11。当发现某个字符计数值为负数时，说明该字符在字符串 tt 中出现的次数大于在字符串 ss 中出现的次数，因此该字符为被添加的字符。
+
+C++JavaGolangJavaScriptC
+
+func findTheDifference(s, t string) byte {
+    cnt := [26]int{}
+    for _, ch := range s {
+        cnt[ch-'a']++
+    }
+    for i := 0; ; i++ {
+        ch := t[i]
+        cnt[ch-'a']--
+        if cnt[ch-'a'] < 0 {
+            return ch
+        }
+    }
+}
+复杂度分析
+
+时间复杂度：O(N)O(N)，其中 NN 为字符串的长度。
+
+空间复杂度：O(N)O(N)。
+
+方法二：求和
+将字符串 ss 中每个字符的 ASCII 码的值求和，得到 A_sA 
+s
+​	
+ ；对字符串 tt 同样的方法得到 A_tA 
+t
+​	
+ 。两者的差值 A_t-A_sA 
+t
+​	
+ −A 
+s
+​	
+  即代表了被添加的字符。
+
+C++JavaGolangJavaScriptC
+
+func findTheDifference(s, t string) byte {
+    sum := 0
+    for _, ch := range s {
+        sum -= int(ch)
+    }
+    for _, ch := range t {
+        sum += int(ch)
+    }
+    return byte(sum)
+}
+复杂度分析
+
+时间复杂度：O(N)O(N)。
+
+空间复杂度：O(1)O(1)。
+
+方法三：位运算
+如果将两个字符串拼接成一个字符串，则问题转换成求字符串中出现奇数次的字符。类似于「136. 只出现一次的数字」，我们使用位运算的技巧解决本题。
+
+C++JavaGolangJavaScriptC
+
+func findTheDifference(s, t string) (diff byte) {
+    for i := range s {
+        diff ^= s[i] ^ t[i]
+    }
+    return diff ^ t[len(t)-1]
+}
+复杂度分析
+
+时间复杂度：O(N)O(N)。
+
+空间复杂度：O(1)O(1)。
+
+作者：LeetCode-Solution
+链接：https://leetcode-cn.com/problems/find-the-difference/solution/zhao-bu-tong-by-leetcode-solution-mtqf/
+来源：力扣（LeetCode）
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
 '''
