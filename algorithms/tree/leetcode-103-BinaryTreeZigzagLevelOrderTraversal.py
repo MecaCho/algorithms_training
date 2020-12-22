@@ -107,6 +107,40 @@ class Solution(object):
         return self.vals
 
 
+
+# Definition for a binary tree node.
+# class TreeNode(object):
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+
+class Solution20201222(object):
+    def zigzagLevelOrder(self, root):
+        """
+        :type root: TreeNode
+        :rtype: List[List[int]]
+        """
+        self.vals = []
+        def travel_root(root, deepth):
+            if not root:
+                return 
+            val = root.val
+            if len(self.vals) <= deepth:
+                self.vals.append([val])
+            else:
+                if deepth % 2 == 0:
+                    self.vals[deepth].append(val)
+                else:
+                    self.vals[deepth] = [val] + self.vals[deepth]
+            travel_root(root.left, deepth+1)
+            travel_root(root.right, deepth+1)
+
+        travel_root(root, 0)
+        return self.vals
+
+
+
 # solutions
 
 
