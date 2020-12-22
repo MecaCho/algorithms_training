@@ -1,3 +1,4 @@
+# encoding=utf-8
 '''
 217. Contains Duplicate
 Given an array of integers, find if the array contains any duplicates.

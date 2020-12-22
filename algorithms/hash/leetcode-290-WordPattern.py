@@ -1,3 +1,4 @@
+# encoding=utf-8s
 '''
 290. 单词规律
 给定一种规律 pattern 和一个字符串 str ，判断 str 是否遵循相同的规律。

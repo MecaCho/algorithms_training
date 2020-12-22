@@ -1,3 +1,4 @@
+# encoding=utf-8
 '''
 746. Min Cost Climbing Stairs
 On a staircase, the i-th step has some non-negative cost cost[i] assigned (0 indexed).
