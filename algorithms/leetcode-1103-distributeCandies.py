@@ -1,3 +1,5 @@
+# encoding=utf8
+'''
 1103. Distribute Candies to People
 We distribute some number of candies, to a row of n = num_people people in the following way:
 
@@ -76,13 +78,18 @@ Constraints:
 
 1 <= candies <= 10^9
 1 <= num_people <= 1000
+'''
 
 ### 解题思路
-此处撰写解题思路
+# 此处撰写解题思路
 
 ### 代码
 
-```python
+
+
+import math
+
+
 class Solution(object):
     def distributeCandies(self, candies, num_people):
         """
@@ -102,4 +109,4 @@ class Solution(object):
             mod -= should
             res.append((i + 1 + i + 1 + num_people * (num -1) ) * num / 2 + last)
         return res
-```
+

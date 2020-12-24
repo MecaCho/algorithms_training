@@ -1,3 +1,5 @@
+# encoding=utf8
+
 '''
 135. 分发糖果
 老师想给孩子们分发糖果，有 N 个孩子站成了一条直线，老师会根据每个孩子的表现，预先给他们评分。
@@ -63,6 +65,28 @@ class Solution(object):
             if ratings[j] > ratings[ j +1] and counts[j] <= counts[ j +1]:
                 counts[j] = counts[ j +1] + 1
         # print(counts)
+        return sum(counts)
+
+
+class Solution20201224(object):
+    def candy(self, ratings):
+        """
+        :type ratings: List[int]
+        :rtype: int
+        """
+        counts = [0] + [1 for i in range(len(ratings))]
+        ratings = [float("inf")] + ratings + [float("inf")]
+        for i in range(1, len(ratings) - 1):
+            if ratings[i] > ratings[i - 1]:
+                counts[i] += counts[i - 1]
+
+            if ratings[i] > ratings[i + 1] and ratings[i] <= ratings[i - 1]:
+                counts[i] += 1
+
+        for j in range(len(ratings) - 2, 0, -1):
+            if ratings[j] > ratings[j + 1] and counts[j] <= counts[j + 1]:
+                counts[j] = counts[j + 1] + 1
+
         return sum(counts)
 
 
