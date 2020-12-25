@@ -85,3 +85,103 @@ class Solution(object):
         return child_index
 
 
+# solution
+
+'''
+方法一：排序 + 贪心算法
+为了尽可能满足最多数量的孩子，从贪心的角度考虑，应该按照孩子的胃口从小到大的顺序依次满足每个孩子，且对于每个孩子，应该选择可以满足这个孩子的胃口且尺寸最小的饼干。证明如下。
+
+假设有 mm 个孩子，胃口值分别是 g_1g 
+1
+​	
+  到 g_mg 
+m
+​	
+ ，有 nn 块饼干，尺寸分别是 s_1s 
+1
+​	
+  到 s_ns 
+n
+​	
+ ，满足 g_i \le g_{i+1}g 
+i
+​	
+ ≤g 
+i+1
+​	
+  和 s_j \le s_{j+1}s 
+j
+​	
+ ≤s 
+j+1
+​	
+ ，其中 1 \le i < m1≤i<m，1 \le j < n1≤j<n。
+
+假设在对前 i-1i−1 个孩子分配饼干之后，可以满足第 ii 个孩子的胃口的最小的饼干是第 jj 块饼干，即 s_js 
+j
+​	
+  是剩下的饼干中满足 g_i \le s_jg 
+i
+​	
+ ≤s 
+j
+​	
+  的最小值，最优解是将第 jj 块饼干分配给第 ii 个孩子。如果不这样分配，考虑如下两种情形：
+
+如果 i<mi<m 且 g_{i+1} \le s_jg 
+i+1
+​	
+ ≤s 
+j
+​	
+  也成立，则如果将第 jj 块饼干分配给第 i+1i+1 个孩子，且还有剩余的饼干，则可以将第 j+1j+1 块饼干分配给第 ii 个孩子，分配的结果不会让更多的孩子被满足；
+
+如果 j<nj<n，则如果将第 j+1j+1 块饼干分配给第 ii 个孩子，当 g_{i+1} \le s_jg 
+i+1
+​	
+ ≤s 
+j
+​	
+  时，可以将第 jj 块饼干分配给第 i+1i+1 个孩子，分配的结果不会让更多的孩子被满足；当 g_{i+1}>s_jg 
+i+1
+​	
+ >s 
+j
+​	
+  时，第 jj 块饼干无法分配给任何孩子，因此剩下的可用的饼干少了一块，因此分配的结果不会让更多的孩子被满足，甚至可能因为少了一块可用的饼干而导致更少的孩子被满足。
+
+基于上述分析，可以使用贪心算法尽可能满足最多数量的孩子。
+
+首先对数组 gg 和 ss 排序，然后从小到大遍历 gg 中的每个元素，对于每个元素找到能满足该元素的 ss 中的最小的元素。具体而言，令 ii 是 gg 的下标，jj 是 ss 的下标，初始时 ii 和 jj 都为 00，进行如下操作。
+
+对于每个元素 g[i]g[i]，找到未被使用的最小的 jj 使得 g[i] \le s[j]g[i]≤s[j]，则 s[j]s[j] 可以满足 g[i]g[i]。由于 gg 和 ss 已经排好序，因此整个过程只需要对数组 gg 和 ss 各遍历一次。当两个数组之一遍历结束时，说明所有的孩子都被分配到了饼干，或者所有的饼干都已经被分配或被尝试分配（可能有些饼干无法分配给任何孩子），此时被分配到饼干的孩子数量即为可以满足的最多数量。
+
+JavaJavaScriptC++GolangPython3C
+
+class Solution:
+    def findContentChildren(self, g: List[int], s: List[int]) -> int:
+        g.sort()
+        s.sort()
+        n, m = len(g), len(s)
+        i = j = count = 0
+
+        while i < n and j < m:
+            while j < m and g[i] > s[j]:
+                j += 1
+            if j < m:
+                count += 1
+            i += 1
+            j += 1
+        
+        return count
+复杂度分析
+
+时间复杂度：O(m \log m + n \log n)O(mlogm+nlogn)，其中 mm 和 nn 分别是数组 gg 和 ss 的长度。对两个数组排序的时间复杂度是 O(m \log m + n \log n)O(mlogm+nlogn)，遍历数组的时间复杂度是 O(m+n)O(m+n)，因此总时间复杂度是 O(m \log m + n \log n)O(mlogm+nlogn)。
+
+空间复杂度：O(\log m + \log n)O(logm+logn)，其中 mm 和 nn 分别是数组 gg 和 ss 的长度。空间复杂度主要是排序的额外空间开销。
+
+作者：LeetCode-Solution
+链接：https://leetcode-cn.com/problems/assign-cookies/solution/fen-fa-bing-gan-by-leetcode-solution-50se/
+来源：力扣（LeetCode）
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+'''
