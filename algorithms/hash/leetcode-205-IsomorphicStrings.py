@@ -1,3 +1,4 @@
+# encoding=utf8
 
 '''
 205. 同构字符串
@@ -81,6 +82,21 @@ class Solution(object):
                 t_indexs.append(i)
             if s_indexs != t_indexs:
                 return False
+        return True
+
+
+
+class Solution20201227(object):
+    def isIsomorphic(self, s, t):
+        """
+        :type s: str
+        :type t: str
+        :rtype: bool
+        """
+        for i in range(len(s)):
+            if s.index(s[i]) != t.index(t[i]):
+                return False
+
         return True
 
 
