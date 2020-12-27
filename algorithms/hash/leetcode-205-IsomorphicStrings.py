@@ -100,3 +100,40 @@ class Solution20201227(object):
         return True
 
 
+# solution
+
+'''
+方法一：哈希表
+此题是「290. 单词规律」的简化版，需要我们判断 ss 和 tt 每个位置上的字符是否都一一对应，即 ss 的任意一个字符被 tt 中唯一的字符对应，同时 tt 的任意一个字符被 ss 中唯一的字符对应。这也被称为「双射」的关系。
+
+以示例 22 为例，tt 中的字符 aa 和 rr 虽然有唯一的映射 oo，但对于 ss 中的字符 oo 来说其存在两个映射 \{a,r\}{a,r}，故不满足条件。
+
+因此，我们维护两张哈希表，第一张哈希表 \textit{s2t}s2t 以 ss 中字符为键，映射至 tt 的字符为值，第二张哈希表 \textit{t2s}t2s 以 tt 中字符为键，映射至 ss 的字符为值。从左至右遍历两个字符串的字符，不断更新两张哈希表，如果出现冲突（即当前下标 \textit{index}index 对应的字符 s[\textit{index}]s[index] 已经存在映射且不为 t[\textit{index}]t[index] 或当前下标 \textit{index}index 对应的字符 t[\textit{index}]t[index] 已经存在映射且不为 s[\textit{index}]s[index]）时说明两个字符串无法构成同构，返回 \rm falsefalse。
+
+如果遍历结束没有出现冲突，则表明两个字符串是同构的，返回 \rm truetrue 即可。
+
+C++JavaJavaScriptGolangC
+
+func isIsomorphic(s, t string) bool {
+    s2t := map[byte]byte{}
+    t2s := map[byte]byte{}
+    for i := range s {
+        x, y := s[i], t[i]
+        if s2t[x] > 0 && s2t[x] != y || t2s[y] > 0 && t2s[y] != x {
+            return false
+        }
+        s2t[x] = y
+        t2s[y] = x
+    }
+    return true
+}
+复杂度分析
+
+时间复杂度：O(n)O(n)，其中 nn 为字符串的长度。我们只需同时遍历一遍字符串 ss 和 tt 即可。
+空间复杂度：O(|\Sigma|)O(∣Σ∣)，其中 \SigmaΣ 是字符串的字符集。哈希表存储字符的空间取决于字符串的字符集大小，最坏情况下每个字符均不相同，需要 O(|\Sigma|)O(∣Σ∣) 的空间。
+
+作者：LeetCode-Solution
+链接：https://leetcode-cn.com/problems/isomorphic-strings/solution/tong-gou-zi-fu-chuan-by-leetcode-solutio-s6fd/
+来源：力扣（LeetCode）
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+'''
