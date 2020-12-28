@@ -85,7 +85,6 @@ class Solution(object):
         return True
 
 
-
 class Solution20201227(object):
     def isIsomorphic(self, s, t):
         """
@@ -96,7 +95,6 @@ class Solution20201227(object):
         for i in range(len(s)):
             if s.index(s[i]) != t.index(t[i]):
                 return False
-
         return True
 
 
