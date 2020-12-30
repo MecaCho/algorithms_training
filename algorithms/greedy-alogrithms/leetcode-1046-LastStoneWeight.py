@@ -72,3 +72,47 @@ class Solution(object):
 
         return stones[-1] if stones else 0
 
+
+# solution
+
+'''
+方法一：最大堆
+将所有石头的重量放入最大堆中。每次依次从队列中取出最重的两块石头 aa 和 bb，必有 a \ge ba≥b。如果 a>ba>b，则将新石头 a-ba−b 放回到最大堆中；如果 a=ba=b，两块石头完全被粉碎，因此不会产生新的石头。重复上述操作，直到剩下的石头少于 22 块。
+
+最终可能剩下 11 块石头，该石头的重量即为最大堆中剩下的元素，返回该元素；也可能没有石头剩下，此时最大堆为空，返回 00。
+
+C++JavaJavaScriptGolangC
+
+type hp struct{ sort.IntSlice }
+
+func (h hp) Less(i, j int) bool  { return h.IntSlice[i] > h.IntSlice[j] }
+func (h *hp) Push(v interface{}) { h.IntSlice = append(h.IntSlice, v.(int)) }
+func (h *hp) Pop() interface{}   { a := h.IntSlice; v := a[len(a)-1]; h.IntSlice = a[:len(a)-1]; return v }
+func (h *hp) push(v int)         { heap.Push(h, v) }
+func (h *hp) pop() int           { return heap.Pop(h).(int) }
+
+func lastStoneWeight(stones []int) int {
+    q := &hp{stones}
+    heap.Init(q)
+    for q.Len() > 1 {
+        x, y := q.pop(), q.pop()
+        if x > y {
+            q.push(x - y)
+        }
+    }
+    if q.Len() > 0 {
+        return q.IntSlice[0]
+    }
+    return 0
+}
+复杂度分析
+
+时间复杂度：O(n\log n)O(nlogn)，其中 nn 是石头数量。每次从队列中取出元素需要花费 O(\log n)O(logn) 的时间，最多共需要粉碎 n - 1n−1 次石头。
+
+空间复杂度：O(n)O(n)。
+
+作者：LeetCode-Solution
+链接：https://leetcode-cn.com/problems/last-stone-weight/solution/zui-hou-yi-kuai-shi-tou-de-zhong-liang-b-xgsx/
+来源：力扣（LeetCode）
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+'''
