@@ -1,3 +1,5 @@
+# encoding=utf8
+
 '''
 861. Score After Flipping Matrix
 We have a two dimensional matrix A where each value is 0 or 1.
