@@ -1,3 +1,5 @@
+# encoding=utf8
+
 '''
 239. 滑动窗口最大值
 给定一个数组 nums，有一个大小为 k 的滑动窗口从数组的最左侧移动到数组的最右侧。你只可以看到在滑动窗口内的 k 个数字。滑动窗口每次只向右移动一位。
@@ -64,6 +66,7 @@ Constraints:
 '''
 
 # 暴力破解
+
 class Solution(object):
     def maxSlidingWindow(self, nums, k):
         """
@@ -79,6 +82,7 @@ class Solution(object):
         return res
 
 # 单调队列
+
 class Solution1(object):
     def maxSlidingWindow(self, nums, k):
         """
@@ -108,6 +112,25 @@ class Solution1(object):
                     maxs.pop(0)
 
         return res
+
+
+class Solution20210102(object):
+    def maxSlidingWindow(self, nums, k):
+        """
+        :type nums: List[int]
+        :type k: int
+        :rtype: List[int]
+        """
+        win, ret = [], []
+        for i, v in enumerate(nums):
+            if i >= k and win[0] <= i - k: win.pop(0)
+            while win and nums[win[-1]] <= v: win.pop()
+            win.append(i)
+            if i >= k - 1: ret.append(nums[win[0]])
+        return ret
+
+
+# solutions
 
 '''
 方法一：暴力法
