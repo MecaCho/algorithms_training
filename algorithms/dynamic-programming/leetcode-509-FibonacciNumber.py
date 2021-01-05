@@ -76,7 +76,7 @@ class Solution(object):
         return dp[N]
 
 
-class Solution20200104(object):
+class Solution20210104(object):
     def fib(self, n):
         """
         :type n: int
@@ -132,3 +132,5 @@ class Solution:
   	return int((golden_ratio ** N + 1) / 5 ** 0.5)
 
 '''
+
+enumerate
