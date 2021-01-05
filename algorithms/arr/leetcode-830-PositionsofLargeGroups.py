@@ -99,3 +99,42 @@ class Solution(object):
             pre = c
         return res
 
+
+# solution
+
+
+'''
+方法一：一次遍历
+思路及解法
+
+我们可以遍历该序列，并记录当前分组的长度。如果下一个字符与当前字符不同，或者已经枚举到字符串尾部，就说明当前字符为当前分组的尾部。每次找到当前分组的尾部时，如果该分组长度达到 33，我们就将其加入答案。
+
+代码
+
+C++JavaGolangCJavaScriptPython3
+
+class Solution:
+    def largeGroupPositions(self, s: str) -> List[List[int]]:
+        ret = list()
+        n, num = len(s), 1
+
+        for i in range(n):
+            if i == n - 1 or s[i] != s[i + 1]:
+                if num >= 3:
+                    ret.append([i - num + 1, i])
+                num = 1
+            else:
+                num += 1
+        
+        return ret
+复杂度分析
+
+时间复杂度：O(n)O(n)，其中 nn 是字符串的长度。我们只需要遍历一次该数组。
+
+空间复杂度：O(1)O(1)。我们只需要常数的空间来保存若干变量，注意返回值不计入空间复杂度。
+
+作者：LeetCode-Solution
+链接：https://leetcode-cn.com/problems/positions-of-large-groups/solution/jiao-da-fen-zu-de-wei-zhi-by-leetcode-so-fi3n/
+来源：力扣（LeetCode）
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+'''
