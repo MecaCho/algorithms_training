@@ -1,3 +1,5 @@
+# encoding=utf8
+
 '''
 123. Best Time to Buy and Sell Stock III
 Say you have an array for which the ith element is the price of a given stock on day i.
@@ -102,3 +104,27 @@ class SolutionTemplate(object):
         # print(dp)
         return max(dp[-1][0]) if dp else 0
 
+
+
+class Solution20210109(object):
+    def maxProfit(self, prices):
+        """
+        :type prices: List[int]
+        :rtype: int
+        """
+        k = 2
+        dp = []
+        if k > len(prices) / 2:
+            return sum([prices[i] - prices[i-1] for i in range(1, len(prices)) if prices[i] > prices[i-1]])
+        for j, price in enumerate(prices):
+            dp.append([[0], [-float("inf")]])
+            for i in range(1, k+1):
+                dp[j][0].append(-float("inf"))
+                dp[j][1].append(-float("inf"))
+                if i == 1:
+                    dp[j][1][1] = -price
+                if j > 0:
+                    dp[j][0][i] = max(dp[j-1][0][i], dp[j-1][1][i]+price)
+                    dp[j][1][i] = max(dp[j-1][0][i-1]-price, dp[j-1][1][i])
+        # print(dp)
+        return max(dp[-1][0]) if dp else 0
