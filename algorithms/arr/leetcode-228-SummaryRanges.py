@@ -126,3 +126,41 @@ class Solution(object):
         return res
 
 
+# solutions
+
+'''
+方法一：一次遍历
+我们从数组的位置 00 出发，向右遍历。每次遇到相邻元素之间的差值大于 11 时，我们就找到了一个区间。遍历完数组之后，就能得到一系列的区间的列表。
+
+在遍历过程中，维护下标 \textit{low}low 和 \textit{high}high 分别记录区间的起点和终点，对于任何区间都有 \textit{low} \le \textit{high}low≤high。当得到一个区间时，根据 \textit{low}low 和 \textit{high}high 的值生成区间的字符串表示。
+
+当 \textit{low}<\textit{high}low<high 时，区间的字符串表示为 ``\textit{low} \rightarrow \textit{high}"‘‘low→high"；
+
+当 \textit{low}=\textit{high}low=high 时，区间的字符串表示为 ``\textit{low}"‘‘low"。
+
+C++JavaGolangCJavaScript
+
+func summaryRanges(nums []int) (ans []string) {
+    for i, n := 0, len(nums); i < n; {
+        left := i
+        for i++; i < n && nums[i-1]+1 == nums[i]; i++ {
+        }
+        s := strconv.Itoa(nums[left])
+        if left < i-1 {
+            s += "->" + strconv.Itoa(nums[i-1])
+        }
+        ans = append(ans, s)
+    }
+    return
+}
+复杂度分析
+
+时间复杂度：O(n)O(n)，其中 nn 为数组的长度。
+
+空间复杂度：O(1)O(1)。除了用于输出的空间外，额外使用的空间为常数。
+
+作者：LeetCode-Solution
+链接：https://leetcode-cn.com/problems/summary-ranges/solution/hui-zong-qu-jian-by-leetcode-solution-6zrs/
+来源：力扣（LeetCode）
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+'''
