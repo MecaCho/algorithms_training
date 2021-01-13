@@ -67,6 +67,37 @@ We have overhauled the problem description + test cases and specified clearly th
 '''
 
 
+class Solution(object):
+    def findRedundantConnection(self, edges):
+        """
+        :type edges: List[List[int]]
+        :rtype: List[int]
+        """
+        length = len(edges)
+        p = [i for i in range(length+1)]
+
+        def find(x):
+            if x != p[x]:
+                p[x] = find(p[x])
+            return p[x]
+
+        def union(x, y):
+            pa = find(x)
+            pb = find(y)
+            if pa != pb:
+                p[pa] = pb
+                return False
+            return True
+
+        res = [0,0]
+        for edge in edges:
+            if union(edge[0], edge[1]):
+                res[0] = edge[0]
+                res[1] = edge[1]
+        return res
+
+
+
 
 # tips
 
