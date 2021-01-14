@@ -84,6 +84,23 @@ class Solution(object):
         return res
 
 
+class Solution20210114(object):
+    def prefixesDivBy5(self, A):
+        """
+        :type A: List[int]
+        :rtype: List[bool]
+        """
+        res = []
+        value = 0
+        for a in A:
+            value = ((value << 1) + a) % 5
+            if value == 0:
+                res.append(True)
+            else:
+                res.append(False)
+        return res
+
+
 
 # solutions
 
