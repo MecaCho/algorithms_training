@@ -83,3 +83,175 @@ class Solution(object):
                 res.append(False)
         return res
 
+
+
+# solutions
+
+'''
+方法一：模拟
+令 N_iN 
+i
+​	
+  为数组 AA 从下标 00 到下标 ii 的前缀表示的二进制数，则有 N_0=A[0]N 
+0
+​	
+ =A[0]。当 i>0i>0 时，有 N_i=N_{i-1} \times 2+A[i]N 
+i
+​	
+ =N 
+i−1
+​	
+ ×2+A[i]。令 nn 为数组 AA 的长度，则对于 0 \le i<n0≤i<n，可以依次计算每个 N_iN 
+i
+​	
+  的值。对于每个 N_iN 
+i
+​	
+  的值，判断其是否可以被 55 整除，即可得到答案。
+
+考虑到数组 AA 可能很长，如果每次都保留 N_iN 
+i
+​	
+  的值，则可能导致溢出。由于只需要知道每个 N_iN 
+i
+​	
+  是否可以被 55 整除，因此在计算过程中只需要保留余数即可。
+
+令 M_iM 
+i
+​	
+  表示计算到下标 ii 时的除以 55 的余数，则有 M_0=A[0]M 
+0
+​	
+ =A[0]（显然 A[0]A[0] 一定小于 55），当 i>0i>0 时，有 M_i=(M_{i-1} \times 2+A[i])\bmod 5M 
+i
+​	
+ =(M 
+i−1
+​	
+ ×2+A[i])mod5，判断每个 M_iM 
+i
+​	
+  是否为 00 即可。由于 M_iM 
+i
+​	
+  一定小于 55，因此不会溢出。
+
+如何证明判断 M_iM 
+i
+​	
+  是否为 00 可以得到正确的结果？可以通过数学归纳法证明。
+
+当 i=0i=0 时，由于 N_0=A[0]<5N 
+0
+​	
+ =A[0]<5，因此 M_0=N_0M 
+0
+​	
+ =N 
+0
+​	
+ ，M_0=N_0\bmod 5M 
+0
+​	
+ =N 
+0
+​	
+ mod5 成立。
+
+当 i>0i>0 时，假设 M_{i-1}=N_{i-1}\bmod 5M 
+i−1
+​	
+ =N 
+i−1
+​	
+ mod5 成立，考虑 N_i\bmod 5N 
+i
+​	
+ mod5 和 M_iM 
+i
+​	
+  的值：
+
+\begin{aligned} N_i\bmod 5=&(N_{i-1} \times 2+A[i])\bmod 5 \\ =&(N_{i-1} \times 2)\bmod 5+A[i]\bmod 5 \\ \\ M_i=&(M_{i-1} \times 2+A[i])\bmod 5 \\ =&(N_{i-1}\bmod 5 \times 2+A[i])\bmod 5 \\ =&(N_{i-1}\bmod 5 \times 2)\bmod 5+A[i]\bmod 5 \\ =&(N_{i-1} \times 2)\bmod 5+A[i]\bmod 5 \end{aligned}
+N 
+i
+​	
+ mod5=
+=
+M 
+i
+​	
+ =
+=
+=
+=
+​	
+  
+(N 
+i−1
+​	
+ ×2+A[i])mod5
+(N 
+i−1
+​	
+ ×2)mod5+A[i]mod5
+(M 
+i−1
+​	
+ ×2+A[i])mod5
+(N 
+i−1
+​	
+ mod5×2+A[i])mod5
+(N 
+i−1
+​	
+ mod5×2)mod5+A[i]mod5
+(N 
+i−1
+​	
+ ×2)mod5+A[i]mod5
+​	
+ 
+
+因此有 M_i=N_i\bmod 5M 
+i
+​	
+ =N 
+i
+​	
+ mod5 成立。
+
+由此可得，对任意 0 \le i<n0≤i<n，都有 M_i=N_i\bmod 5M 
+i
+​	
+ =N 
+i
+​	
+ mod5，因此计算 M_iM 
+i
+​	
+  即可得到正确的结果。
+
+JavaC++JavaScriptPythonGolangC
+
+class Solution:
+    def prefixesDivBy5(self, A: List[int]) -> List[bool]:
+        ans = list()
+        prefix = 0
+        for num in A:
+            prefix = ((prefix << 1) + num) % 5
+            ans.append(prefix == 0)
+        return ans
+复杂度分析
+
+时间复杂度：O(n)O(n)，其中 nn 是数组 AA 的长度。需要遍历数组一次并计算前缀。
+
+空间复杂度：O(1)O(1)。除了返回值以外，额外使用的空间为常数。
+
+作者：LeetCode-Solution
+链接：https://leetcode-cn.com/problems/binary-prefix-divisible-by-5/solution/ke-bei-5-zheng-chu-de-er-jin-zhi-qian-zh-asih/
+来源：力扣（LeetCode）
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+'''
