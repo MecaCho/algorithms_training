@@ -221,3 +221,179 @@ public class Solution {
 著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
 '''
 
+
+# solutions
+
+'''
+方法一：深度优先搜索
+思路及解法
+
+我们将这个二维平面抽象为图，把石子看作「点」，石子间的同行或同列关系看作「边」。如果两个石子同属某一行或某一列，我们就认为这两个石子之间有一条边。由题意可知，对于任意一个点，只要有点和它相连，我们就可以将其删除。
+
+显然，对于任意一个连通图，我们总可以通过调整节点的删除顺序，把这个连通图中删到只剩下一个节点。本题中我们不需要关注如何安排删除顺序，只需要了解这个性质即可。
+
+拓展：对于希望进一步拓展的同学，这里给出一个方法：从连通块中处理出任意一个生成树，该生成树的以任意一点为根节点的后序遍历均为可行解。
+
+这样我们只需要统计整张图中有多少个极大连通子图（也叫做连通块或连通分量）即可。最终能够留下来的点的数量，即为连通块的数量。我们用总点数减去连通块的数量，即可知道我们可以删去的点的最大数量。
+
+在实际代码实现中，我们首先枚举计算任意两点间的连通性，然后使用深度优先搜索的方式计算连通块的数量即可。
+
+代码
+
+C++JavaGolangPython3C
+
+class Solution:
+    def removeStones(self, stones: List[List[int]]) -> int:
+        n = len(stones)
+        edge = collections.defaultdict(list)
+        for i, (x1, y1) in enumerate(stones):
+            for j, (x2, y2) in enumerate(stones):
+                if x1 == x2 or y1 == y2:
+                    edge[i].append(j)
+        
+        def dfs(x: int):
+            vis.add(x)
+            for y in edge[x]:
+                if y not in vis:
+                    dfs(y)
+        
+        vis = set()
+        num = 0
+        for i in range(n):
+            if i not in vis:
+                num += 1
+                dfs(i)
+        
+        return n - num
+复杂度分析
+
+时间复杂度：O(n^2)O(n 
+2
+ )，其中 nn 为石子的数量。我们需要枚举计算任意两个石子是否在同行或同列，建图时间复杂度 O(n^2)O(n 
+2
+ )，同时我们需要通过深度优先搜索计算连通块数量，每一个点和每一条边都被枚举一次，时间复杂度 O(n+m)O(n+m)。其中 mm 是边数，可以保证 m < n^2m<n 
+2
+ 。因此总时间复杂度为 O(n^2)O(n 
+2
+ )。
+
+空间复杂度：O(n^2)O(n 
+2
+ )。最坏情况下任意两点都相连，用来保存连通属性的边集数组将会达到 O(n^2)O(n 
+2
+ ) 的大小。
+
+方法二：优化建图 + 深度优先搜索
+思路及解法
+
+注意到方法一中，建图的效率太过低下，我们考虑对其优化。
+
+注意到任意两点间之间直接相连与间接相连并无影响，即我们只关注两点间的连通性，而不关注具体如何联通。因此考虑对于拥有 kk 个石子的任意一行或一列，我们都恰使用 k-1k−1 条边进行连接。这样我们就可以将边数从 O(n^2)O(n 
+2
+ ) 的数量级降低到 O(n)O(n)。
+
+这样，我们首先利用哈希表存储每一行或每一列所拥有的石子，然后分别处理每一行或每一列的连通属性即可。
+
+注意到每一个石子的横坐标与纵坐标的范围均在 [1,10^4][1,10 
+4
+ ]，因此在实际代码中，我们可以使用同一张哈希表，只需要令纵坐标加 10^410 
+4
+ ，以区别横坐标与纵坐标即可。
+
+代码
+
+C++JavaGolangPython3
+
+class Solution:
+    def removeStones(self, stones: List[List[int]]) -> int:
+        n = len(stones)
+        edge = collections.defaultdict(list)
+        rec = collections.defaultdict(list)
+        for i, (x, y) in enumerate(stones):
+            rec[x].append(i)
+            rec[y + 10000].append(i)
+        
+        for vec in rec.values():
+            k = len(vec)
+            for i in range(1, k):
+                edge[vec[i - 1]].append(vec[i])
+                edge[vec[i]].append(vec[i - 1])
+        
+        def dfs(x: int):
+            vis.add(x)
+            for y in edge[x]:
+                if y not in vis:
+                    dfs(y)
+        
+        vis = set()
+        num = 0
+        for i in range(n):
+            if i not in vis:
+                num += 1
+                dfs(i)
+        
+        return n - num
+复杂度分析
+
+时间复杂度：O(n)O(n)，其中 nn 为石子的数量。任意一个石子至多只有四条边与其相连，且至多被遍历一次。
+
+空间复杂度：O(n)O(n)。任意一个石子至多只有四条边与其相连，用来保存连通属性的边集数组至多只会达到 O(n)O(n) 的大小。
+
+方法三：优化建图 + 并查集
+思路及解法
+
+我们也可以变换思路，在方法一与方法二中，我们维护的是石子，实际上我们也可以直接维护石子所在的行与列。
+
+实际操作时，我们直接将每一个石子的行与列进行合并即可，可以理解为，每一个点不是与其他所有点进行连接，而是连接到自己所在的行与列上，由行与列进行合并。
+
+同时，既然我们只关注连通性本身，我们就可以利用并查集维护连通性。在实际代码中，我们以哈希表为底层数据结构实现父亲数组 ff，最后哈希表中所有的键均为出现过的行与列，我们计算有多少行与列的父亲恰为自己，即可知道连通块的数量。
+
+代码
+
+C++JavaGolangPython3C
+
+class DisjointSetUnion:
+    def __init__(self):
+        self.f = dict()
+        self.rank = dict()
+    
+    def find(self, x: int) -> int:
+        if x not in self.f:
+            self.f[x] = x
+            self.rank[x] = 1
+            return x
+        if self.f[x] == x:
+            return x
+        self.f[x] = self.find(self.f[x])
+        return self.f[x]
+    
+    def unionSet(self, x: int, y: int):
+        fx, fy = self.find(x), self.find(y)
+        if fx == fy:
+            return
+        if self.rank[fx] < self.rank[fy]:
+            fx, fy = fy, fx
+        self.rank[fx] += self.rank[fy]
+        self.f[fy] = fx
+
+    def numberOfConnectedComponent(self) -> int:
+        return sum(1 for x, fa in self.f.items() if x == fa)
+
+
+class Solution:
+    def removeStones(self, stones: List[List[int]]) -> int:
+        dsu = DisjointSetUnion()
+        for x, y in stones:
+            dsu.unionSet(x, y + 10000)
+        return len(stones) - dsu.numberOfConnectedComponent()
+复杂度分析
+
+时间复杂度：O(n\alpha(n))O(nα(n))，其中 nn 为石子的数量。\alphaα 是反 \text{Ackerman}Ackerman 函数。
+
+空间复杂度：O(n)O(n)。空间为并查集和哈希表的开销。
+
+作者：LeetCode-Solution
+链接：https://leetcode-cn.com/problems/most-stones-removed-with-same-row-or-column/solution/yi-chu-zui-duo-de-tong-xing-huo-tong-lie-m50r/
+来源：力扣（LeetCode）
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+'''
