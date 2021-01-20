@@ -1,3 +1,5 @@
+# encoding=utf8
+
 '''
 240. 搜索二维矩阵 II
 编写一个高效的算法来搜索 m x n 矩阵 matrix 中的一个目标值 target。该矩阵具有以下特性：
@@ -113,3 +115,22 @@ class Solution2(object):
                 if num == target:
                     return True
         return False
+
+
+class Solution20210120(object):
+    def searchMatrix(self, matrix, target):
+        """
+        :type matrix: List[List[int]]
+        :type target: int
+        :rtype: bool
+        """
+        l, r = 0, len(matrix[0]) - 1
+        while l < len(matrix) and r >= 0:
+            if target > matrix[l][r]:
+                l += 1
+            elif target < matrix[l][r]:
+                r -= 1
+            else:
+                return True
+        return False
+
