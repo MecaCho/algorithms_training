@@ -1,3 +1,5 @@
+# encoding=utf8
+
 '''
 628. 三个数的最大乘积
 给定一个整型数组，在数组中找出由三个数组成的最大乘积，并输出这个乘积。
@@ -35,6 +37,17 @@ Note:
 The length of the given array will be in range [3,104] and all elements are in the range [-1000, 1000].
 Multiplication of any three numbers in the input won't exceed the range of 32-bit signed integer.
 '''
+
+
+class Solution20210120(object):
+    def maximumProduct(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        nums.sort()
+        return max(nums[-1]*nums[-2]*nums[-3], nums[0]*nums[1]*nums[2], nums[0]*nums[1]*nums[-1])
+
 
 
 class Solution(object):
