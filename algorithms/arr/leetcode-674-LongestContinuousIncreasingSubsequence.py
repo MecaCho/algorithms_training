@@ -1,3 +1,5 @@
+# encoding=utf8
+
 '''
 674. 最长连续递增序列
 给定一个未经排序的整数数组，找到最长且连续的的递增序列。
@@ -44,3 +46,32 @@ class Solution(object):
             if nums[i] > nums[i-1]:
                 dp[i] = max(dp[i-1] + 1, dp[i])
         return max(dp) if dp else 0
+
+
+
+class Solution20210124(object):
+    def findLengthOfLCIS(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        if not nums:
+            return 0
+        max_ = 1
+        cur = 1
+        for i in range(1, len(nums)):
+            if nums[i] > nums[i-1]:
+                cur += 1
+            else:
+                cur = 1
+            if cur > max_:
+                max_ = cur
+
+        return max_
+
+
+
+# solutions
+
+
+
