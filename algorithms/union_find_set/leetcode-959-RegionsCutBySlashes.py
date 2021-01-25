@@ -180,4 +180,123 @@ class Solution(object):
         return res
 
 
+# solutions
+
+'''
+方法一：并查集
+我们沿着一个网格的两条对角线，能够将正方形切分成四个三角形。如果网格上的字符为 /，则右下角的两个三角形会与左上角的两个三角形分隔开；同理，如果字符为 \，则右上角的两个三角形会和左下角的两个三角形分隔开。
+
+不难发现，如果将每个三角形看作为一张图上的节点，则网格中的一个共边区域，就相当于图中的一个连通分量。因此，不难想到利用并查集求解连通分量的数目。
+
+设网格为 n \times nn×n 大小，则图中有 4n^24n 
+2
+  个节点，每个格子对应其中的 44 个节点。对于每个格子而言，考虑当前位置的字符：
+
+如果为空格，则该格子对应的 44 个节点应当同属于同一区域，因此在它们之间各连接一条边；
+
+如果为字符 /，则将左上角的两个格子连接一条边，并将右下角的两个格子连接一条边；
+
+如果为字符 \，则将右上角的两个格子连接一条边，并将左下角的两个格子连接一条边。
+
+到目前位置，我们只考虑了一个格子内部的情况。但同时，不难观察到下面两点：
+
+一个格子中最下方的三角形，必然和下面的格子（如果存在）中最上方的三角形连通；
+
+一个格子中最右方的三角形，必然和右边的格子（如果存在）中最左方的三角形连通。
+
+因此，我们还需要根据上面两条规则，在相邻格子的相应三角形中间，再连接边。
+
+最终，在构造出图后，利用并查集就可以求出连通分量的数目了。
+
+具体实现方面，每个格子的 44 个节点按照上、右、下、左的顺序依次编号 00、11、22、33，每个节点可以根据格子所在的行和列以及节点在格子中的编号唯一地确定。
+
+C++JavaJavaScriptGolangC
+
+type unionFind struct {
+    parent, size []int
+    setCount     int // 当前连通分量数目
+}
+
+func newUnionFind(n int) *unionFind {
+    parent := make([]int, n)
+    size := make([]int, n)
+    for i := range parent {
+        parent[i] = i
+        size[i] = 1
+    }
+    return &unionFind{parent, size, n}
+}
+
+func (uf *unionFind) find(x int) int {
+    if uf.parent[x] != x {
+        uf.parent[x] = uf.find(uf.parent[x])
+    }
+    return uf.parent[x]
+}
+
+func (uf *unionFind) union(x, y int) {
+    fx, fy := uf.find(x), uf.find(y)
+    if fx == fy {
+        return
+    }
+    if uf.size[fx] < uf.size[fy] {
+        fx, fy = fy, fx
+    }
+    uf.size[fx] += uf.size[fy]
+    uf.parent[fy] = fx
+    uf.setCount--
+}
+
+func regionsBySlashes(grid []string) int {
+    n := len(grid)
+    uf := newUnionFind(4 * n * n)
+    for i := 0; i < n; i++ {
+        for j := 0; j < n; j++ {
+            idx := i*n + j
+            if i < n-1 {
+                bottom := idx + n
+                uf.union(idx*4+2, bottom*4)
+            }
+            if j < n-1 {
+                right := idx + 1
+                uf.union(idx*4+1, right*4+3)
+            }
+            if grid[i][j] == '/' {
+                uf.union(idx*4, idx*4+3)
+                uf.union(idx*4+1, idx*4+2)
+            } else if grid[i][j] == '\\' {
+                uf.union(idx*4, idx*4+1)
+                uf.union(idx*4+2, idx*4+3)
+            } else {
+                uf.union(idx*4, idx*4+1)
+                uf.union(idx*4+1, idx*4+2)
+                uf.union(idx*4+2, idx*4+3)
+            }
+        }
+    }
+    return uf.setCount
+}
+复杂度分析
+
+时间复杂度：O(n^2\log n)O(n 
+2
+ logn)，其中 nn 是网格的边长。仅使用路径压缩的并查集的复杂度为 O(n^2\log n^2)=O(n^2\times 2\log n)=O(n^2\log n)O(n 
+2
+ logn 
+2
+ )=O(n 
+2
+ ×2logn)=O(n 
+2
+ logn)。
+
+空间复杂度：O(n^2)O(n 
+2
+ )。
+
+作者：LeetCode-Solution
+链接：https://leetcode-cn.com/problems/regions-cut-by-slashes/solution/you-xie-gang-hua-fen-qu-yu-by-leetcode-s-ztob/
+来源：力扣（LeetCode）
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+'''
 
