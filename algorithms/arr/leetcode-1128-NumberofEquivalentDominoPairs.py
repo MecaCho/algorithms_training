@@ -61,3 +61,39 @@ class Solution(object):
         return res
 
 
+# solutions
+
+'''
+方法一：二元组表示 + 计数
+思路及解法
+
+本题中我们需要统计所有等价的多米诺骨牌，其中多米诺骨牌使用二元对代表，「等价」的定义是，在允许翻转两个二元对的的情况下，使它们的元素一一对应相等。
+
+于是我们不妨直接让每一个二元对都变为指定的格式，即第一维必须不大于第二维。这样两个二元对「等价」当且仅当两个二元对完全相同。
+
+注意到二元对中的元素均不大于 99，因此我们可以将每一个二元对拼接成一个两位的正整数，即 (x, y) \to 10x + y(x,y)→10x+y。这样就无需使用哈希表统计元素数量，而直接使用长度为 100100 的数组即可。
+
+代码
+
+C++JavaJavaScriptGolangCPython3
+
+class Solution:
+    def numEquivDominoPairs(self, dominoes: List[List[int]]) -> int:
+        num = [0] * 100
+        ret = 0
+        for x, y in dominoes:
+            val = (x * 10 + y if x <= y else y * 10 + x)
+            ret += num[val]
+            num[val] += 1
+        return ret
+复杂度分析
+
+时间复杂度：O(n)O(n)，其中 nn 是多米诺骨牌的数量。我们至多只需要遍历一次该数组。
+
+空间复杂度：O(1)O(1)，我们只需要常数的空间存储若干变量。
+
+作者：LeetCode-Solution
+链接：https://leetcode-cn.com/problems/number-of-equivalent-domino-pairs/solution/deng-jie-duo-mi-nuo-gu-pai-dui-de-shu-li-yjlz/
+来源：力扣（LeetCode）
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+'''
