@@ -1,3 +1,5 @@
+# encoding=utf8
+
 '''
 724. 寻找数组的中心索引
 给定一个整数类型的数组 nums，请编写一个能够返回数组“中心索引”的方法。
@@ -57,6 +59,22 @@ Note:
 The length of nums will be in the range [0, 10000].
 Each element nums[i] will be an integer in the range [-1000, 1000].
 '''
+
+
+class Solution20210128(object):
+    def pivotIndex(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        t_sum = sum(nums)
+        sum_ = 0
+        for i in range(len(nums)):
+            if sum_ * 2 == (t_sum - nums[i]):
+                return i
+            sum_ += nums[i]
+
+        return -1
 
 
 class Solution(object):
