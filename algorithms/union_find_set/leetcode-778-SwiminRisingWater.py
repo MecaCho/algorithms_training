@@ -451,3 +451,256 @@ public class Solution {
 来源：力扣（LeetCode）
 著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
 '''
+
+# solutions golang
+
+'''
+方法一：堆（优先队列）
+根据题意，假设在时间 tt 时能够到达方格 (i,j)(i,j)，那么对于一个与之相邻的方格 (i',j')(i 
+′
+ ,j 
+′
+ )：
+
+如果 \textit{grid}[i'][j'] \le \textit{grid}[i][j]grid[i 
+′
+ ][j 
+′
+ ]≤grid[i][j]，说明 (i',j')(i 
+′
+ ,j 
+′
+ ) 处的高度更低，故在时间 tt 也能够到达 (i',j')(i 
+′
+ ,j 
+′
+ )；
+否则，若 \textit{grid}[i'][j'] > \textit{grid}[i][j]grid[i 
+′
+ ][j 
+′
+ ]>grid[i][j]，则需要至少等到 \textit{grid}[i'][j']grid[i 
+′
+ ][j 
+′
+ ] 时刻才能够到达 (i',j')(i 
+′
+ ,j 
+′
+ )。
+因此，我们从原点出发，每一步试图多访问一个方格，并记录访问到该方格的最短时间。当进行下一步时，考虑从已访问方格能到达的所有方格，并选择其中高度最低的那个方格进行下一次访问。这一迭代的步骤类似于利用 \text{Dijkstra}Dijkstra 算法求解最短路径的过程。
+
+为了维护从已访问方格能到达的所有方格，并能从中取出最小值，我们使用堆（优先队列）来维护这些信息。
+
+C++JavaGolang
+
+type entry struct{ i, j, val int }
+type hp []entry
+
+func (h hp) Len() int            { return len(h) }
+func (h hp) Less(i, j int) bool  { return h[i].val < h[j].val }
+func (h hp) Swap(i, j int)       { h[i], h[j] = h[j], h[i] }
+func (h *hp) Push(v interface{}) { *h = append(*h, v.(entry)) }
+func (h *hp) Pop() interface{}   { a := *h; v := a[len(a)-1]; *h = a[:len(a)-1]; return v }
+
+type pair struct{ x, y int }
+var dirs = []pair{{-1, 0}, {1, 0}, {0, -1}, {0, 1}}
+
+func swimInWater(grid [][]int) (ans int) {
+    n := len(grid)
+    vis := make([][]bool, n)
+    for i := range vis {
+        vis[i] = make([]bool, n)
+    }
+    vis[0][0] = true
+    h := &hp{{0, 0, grid[0][0]}}
+    for {
+        e := heap.Pop(h).(entry)
+        ans = max(ans, e.val)
+        if e.i == n-1 && e.j == n-1 {
+            return
+        }
+        for _, d := range dirs {
+            if x, y := e.i+d.x, e.j+d.y; 0 <= x && x < n && 0 <= y && y < n && !vis[x][y] {
+                vis[x][y] = true
+                heap.Push(h, entry{x, y, grid[x][y]})
+            }
+        }
+    }
+}
+
+func max(a, b int) int {
+    if a > b {
+        return a
+    }
+    return b
+}
+复杂度分析
+
+时间复杂度：O(n^2\log n)O(n 
+2
+ logn)，其中 nn 为网格的边长。每个方格至多会被加入优先队列 44 次，故循环执行次数为 O(4n^2)=O(n^2)O(4n 
+2
+ )=O(n 
+2
+ )，同时每次循环要从至多 O(n^2)O(n 
+2
+ ) 的位置中取最小值，故单次循环的代价为 O(\log n^2)=O(2\log n)=O(\log n)O(logn 
+2
+ )=O(2logn)=O(logn)。
+
+空间复杂度：O(n^2)O(n 
+2
+ )。
+
+方法二：二分查找
+考虑这样一个问题：给定一个整数 \textit{threshold}threshold，是否存在一个路径，使得能在 \textit{threshold}threshold 时间内从起点到达终点？
+
+这一问题的解法是很直观的：我们执行广度优先搜索，并只去访问那些高度不超过 \textit{threshold}threshold 的方格。最终，如果能访问到终点，说明存在这样一种路径。
+
+如果能在 \textit{threshold}threshold 时间内从起点到达终点，则一定也能在 \textit{threshold}+1threshold+1 的时间内从起点到达终点。因此，我们可以通过二分查找的方式，寻找最小可能的 \textit{threshold}threshold。
+
+C++JavaGolangCJavaScript
+
+type pair struct{ x, y int }
+var dirs = []pair{{-1, 0}, {1, 0}, {0, -1}, {0, 1}}
+
+func swimInWater(grid [][]int) (ans int) {
+    n := len(grid)
+    return sort.Search(n*n-1, func(threshold int) bool {
+        if threshold < grid[0][0] {
+            return false
+        }
+        vis := make([][]bool, n)
+        for i := range vis {
+            vis[i] = make([]bool, n)
+        }
+        vis[0][0] = true
+        queue := []pair{{}}
+        for len(queue) > 0 {
+            p := queue[0]
+            queue = queue[1:]
+            for _, d := range dirs {
+                if x, y := p.x+d.x, p.y+d.y; 0 <= x && x < n && 0 <= y && y < n && !vis[x][y] && grid[x][y] <= threshold {
+                    vis[x][y] = true
+                    queue = append(queue, pair{x, y})
+                }
+            }
+        }
+        return vis[n-1][n-1]
+    })
+}
+复杂度分析
+
+时间复杂度：O(n^2\log n)O(n 
+2
+ logn)。对于任何一个给定的 \textit{threshold}threshold 而言，需要 O(n^2)O(n 
+2
+ ) 的时间内执行广度优先搜索。同时，二分查找的上下边界分别为 n^2-1n 
+2
+ −1 和 00，故二分查找的次数为 O(\log n^2)=O(2\log n)=O(\log n)O(logn 
+2
+ )=O(2logn)=O(logn)。
+
+空间复杂度：O(n^2)O(n 
+2
+ )。
+
+方法三：并查集
+依然考虑同样的问题：给定一个整数 \textit{threshold}threshold，是否存在一个路径，使得能在 \textit{threshold}threshold 时间内从起点到达终点？
+
+我们将每个方格看做图中的顶点。由于任意时刻都不能到达高度高于 \textit{threshold}threshold 的方格，因此对于两个相邻的方格而言，当且仅当它们的高度都不超过 \textit{threshold}threshold 时，才在这两个顶点之间连接一条边。因此，能否从起点到达终点，就等价于对应的顶点在图中是否连通。
+
+为了判断是否连通，可以使用并查集来维护节点之间的连通关系。
+
+我们当然也能通过二分查找的方式来找到最小可能的 \textit{threshold}threshold。但是如果使用二分查找，每次判断 \textit{threshold}threshold 是否符合条件时，都要耗费大量的时间重新构建并查集，导致复杂度还不如前一种做法。
+
+如果我们是从小到大依次考虑 \textit{threshold}threshold，那么每次考虑一个新值时，只需要在上一个阶段的图中，添加几条新边而已，而无需重新构建整张图。
+
+具体而言，我们维护每个高度值对应的方块位置，当考虑 \textit{threshold}threshold 时，我们首先找出对应的方块位置，然后对于每个与之相邻的方块，如果相邻的方块的高度值不超过 \textit{threshold}threshold，就在两个方块之间连接一条边。当所有相邻方块都被考虑完毕时，再判断起点和终点是否连通。
+
+C++JavaGolangCJavaScript
+
+type unionFind struct {
+    parent, size []int
+}
+
+func newUnionFind(n int) *unionFind {
+    parent := make([]int, n)
+    size := make([]int, n)
+    for i := range parent {
+        parent[i] = i
+        size[i] = 1
+    }
+    return &unionFind{parent, size}
+}
+
+func (uf *unionFind) find(x int) int {
+    if uf.parent[x] != x {
+        uf.parent[x] = uf.find(uf.parent[x])
+    }
+    return uf.parent[x]
+}
+
+func (uf *unionFind) union(x, y int) {
+    fx, fy := uf.find(x), uf.find(y)
+    if fx == fy {
+        return
+    }
+    if uf.size[fx] < uf.size[fy] {
+        fx, fy = fy, fx
+    }
+    uf.size[fx] += uf.size[fy]
+    uf.parent[fy] = fx
+}
+
+func (uf *unionFind) inSameSet(x, y int) bool {
+    return uf.find(x) == uf.find(y)
+}
+
+type pair struct{ x, y int }
+var dirs = []pair{{-1, 0}, {1, 0}, {0, -1}, {0, 1}}
+
+func swimInWater(grid [][]int) (ans int) {
+    n := len(grid)
+    pos := make([]pair, n*n)
+    for i, row := range grid {
+        for j, h := range row {
+            pos[h] = pair{i, j} // 存储每个平台高度对应的位置
+        }
+    }
+
+    uf := newUnionFind(n * n)
+    for threshold := 0; ; threshold++ {
+        p := pos[threshold]
+        for _, d := range dirs {
+            if x, y := p.x+d.x, p.y+d.y; 0 <= x && x < n && 0 <= y && y < n && grid[x][y] <= threshold {
+                uf.union(x*n+y, p.x*n+p.y)
+            }
+        }
+        if uf.inSameSet(0, n*n-1) {
+            return threshold
+        }
+    }
+}
+复杂度分析
+
+时间复杂度：O(n^2\log n)O(n 
+2
+ logn)。外层循环至多执行 O(n^2)O(n 
+2
+ ) 次，每次循环至多添加 44 条边，而添加每条边的代价为 O(\log n^2)=O(2\log n)=O(\log n)O(logn 
+2
+ )=O(2logn)=O(logn)，判断起点和终点是否连通的代价为 O(\log n^2)=O(2\log n)=O(\log n)O(logn 
+2
+ )=O(2logn)=O(logn)。
+
+空间复杂度：O(n^2)O(n 
+2
+ )。
+
+作者：LeetCode-Solution
+链接：https://leetcode-cn.com/problems/swim-in-rising-water/solution/shui-wei-shang-sheng-de-yong-chi-zhong-y-xm9i/
+来源：力扣（LeetCode）
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+'''
