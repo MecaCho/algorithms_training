@@ -93,3 +93,76 @@ class Solution(object):
             if b in B:
                 return [A[i], b]
 
+
+# solutions
+
+
+'''
+方法一：哈希表
+思路及算法
+
+记爱丽丝的糖果棒的总大小为 \textit{sumA}sumA，鲍勃的糖果棒的总大小为 \textit{sumB}sumB。设答案为 \{x,y\}{x,y}，即爱丽丝的大小为 xx 的糖果棒与鲍勃的大小为 yy 的糖果棒交换，则有如下等式：
+
+\textit{sumA} - x + y = \textit{sumB} + x - y
+sumA−x+y=sumB+x−y
+
+化简，得：
+
+x = y + \frac{\textit{sumA} - \textit{sumB}}{2}
+x=y+ 
+2
+sumA−sumB
+​	
+ 
+
+即对于 BB 中的任意一个数 y'y 
+′
+ ，只要 AA 中存在一个数 x'x 
+′
+ ，满足 x' = y' + \dfrac{\textit{sumA} - \textit{sumB}}{2}x 
+′
+ =y 
+′
+ + 
+2
+sumA−sumB
+​	
+ ，那么 \{x',y'\}{x 
+′
+ ,y 
+′
+ } 即为一组可行解。
+
+为了快速查询 AA 中是否存在某个数，我们可以先将 AA 中的数字存入哈希表中。然后遍历 BB 序列中的数 y'y 
+′
+ ，在哈希表中查询是否有对应的 x'x 
+′
+ 。
+
+代码
+
+C++JavaJavaScriptPython3GolangC
+
+class Solution:
+    def fairCandySwap(self, A: List[int], B: List[int]) -> List[int]:
+        sumA, sumB = sum(A), sum(B)
+        delta = (sumA - sumB) // 2
+        rec = set(A)
+        ans = None
+        for y in B:
+            x = y + delta
+            if x in rec:
+                ans = [x, y]
+                break
+        return ans
+复杂度分析
+
+时间复杂度：O(n + m)O(n+m)，其中 nn 是序列 AA 的长度，mm 是序列 BB 的长度。
+
+空间复杂度：O(n)O(n)，其中 nn 是序列 AA 的长度。我们需要建立一个和序列 AA 等大的哈希表。
+
+作者：LeetCode-Solution
+链接：https://leetcode-cn.com/problems/fair-candy-swap/solution/gong-ping-de-tang-guo-jiao-huan-by-leetc-tlam/
+来源：力扣（LeetCode）
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+'''
