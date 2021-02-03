@@ -122,3 +122,34 @@ class Solution:
 来源：力扣（LeetCode）
 著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
 '''
+
+# coding=utf-8
+import sys
+
+# nums = raw_input()
+# print nums
+print 'Hello,World!'
+
+
+def get_max_seq(nums):
+    dp = [1] * len(nums)
+    for i in range(len(nums)):
+        for j in range(i):
+            if nums[i] > nums[j]:
+                dp[i] = max(dp[i], dp[j] + 1)
+
+    return max(dp) if dp else 0
+
+
+
+
+if __name__ == '__main__':
+    test_cases = [
+        [],
+        [10, 9, 2, 5, 3, 7, 101, 18]
+        ]
+    for case in test_cases:
+        res = get_max_seq(case)
+        print(res)
+
+

@@ -1,3 +1,5 @@
+# encoding=utf8
+
 '''
 
 300. Longest Increasing Subsequence
@@ -77,3 +79,4 @@ class Solution(object):
                         break
                 cur_nums[l] = nums[i]
         return len(cur_nums)
+
