@@ -111,3 +111,45 @@ class Solution(object):
         return sum(cardPoints) - res
 
 
+# solutions
+
+'''
+方法一：滑动窗口
+思路
+
+记数组 \textit{cardPoints}cardPoints 的长度为 nn，由于只能从开头和末尾拿 kk 张卡牌，所以最后剩下的必然是连续的 n-kn−k 张卡牌。
+
+我们可以通过求出剩余卡牌点数之和的最小值，来求出拿走卡牌点数之和的最大值。
+
+算法
+
+由于剩余卡牌是连续的，使用一个固定长度为 n-kn−k 的滑动窗口对数组 \textit{cardPoints}cardPoints 进行遍历，求出滑动窗口最小值，然后用所有卡牌的点数之和减去该最小值，即得到了拿走卡牌点数之和的最大值。
+
+代码
+
+C++Python3JavaGolangJavaScriptC
+
+class Solution:
+    def maxScore(self, cardPoints: List[int], k: int) -> int:
+        n = len(cardPoints)
+        # 滑动窗口大小为 n-k
+        windowSize = n - k
+        # 选前 n-k 个作为初始值
+        s = sum(cardPoints[:windowSize])
+        minSum = s
+        for i in range(windowSize, n):
+            # 滑动窗口每向右移动一格，增加从右侧进入窗口的元素值，并减少从左侧离开窗口的元素值
+            s += cardPoints[i] - cardPoints[i - windowSize]
+            minSum = min(minSum, s)
+        return sum(cardPoints) - minSum
+复杂度分析
+
+时间复杂度：O(n)O(n)，其中 nn 是数组 \textit{cardPoints}cardPoints 的长度。
+
+空间复杂度：O(1)O(1)。
+
+作者：LeetCode-Solution
+链接：https://leetcode-cn.com/problems/maximum-points-you-can-obtain-from-cards/solution/ke-huo-de-de-zui-da-dian-shu-by-leetcode-7je9/
+来源：力扣（LeetCode）
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+'''
