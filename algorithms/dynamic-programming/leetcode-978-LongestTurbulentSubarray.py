@@ -1,6 +1,5 @@
 # encoding=utf8
 
-
 '''
 978. Longest Turbulent Subarray
 Given an integer array arr, return the length of a maximum size turbulent subarray of arr.
@@ -69,9 +68,32 @@ Constraints:
 
 1 <= A.length <= 40000
 0 <= A[i] <= 10^9
-
-
 '''
+
+
+
+class Solution(object):
+    def maxTurbulenceSize(self, arr):
+        """
+        :type arr: List[int]
+        :rtype: int
+        """
+        length = len(arr)
+        up, down = 1, 1
+        res = 1
+        for i in range(1, length):
+            if arr[i] > arr[i-1]:
+                up = down + 1
+                down = 1
+            elif arr[i] < arr[i-1]:
+                down = up + 1
+                up = 1
+            else:
+                up = down = 1
+            res = max(res, max(up, down))
+
+        return res
+
 
 # solutions
 
