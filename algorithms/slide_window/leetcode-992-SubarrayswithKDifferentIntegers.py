@@ -193,3 +193,112 @@ public class Solution {
 来源：力扣（LeetCode）
 著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
 '''
+
+
+# sokutions1
+
+'''
+方法一：滑动窗口
+思路及算法
+
+我们容易发现，对于任意一个右端点，可能存在一系列左端点与其对应，满足两端点所指区间对应的子数组内恰有 KK 个不同整数。因此可能有 O(n^2)O(n 
+2
+ ) 个子数组满足条件。因此无法暴力解决该题。
+
+分析这些左端点，我们可以证明：对于任意一个右端点，能够与其对应的左端点们必然相邻。
+
+证明非常直观，假设区间 [l_1,r][l 
+1
+​	
+ ,r] 和 [l_2,r][l 
+2
+​	
+ ,r] 为满足条件的数组（不失一般性，设 l_1\leq l_2l 
+1
+​	
+ ≤l 
+2
+​	
+ ）。现在我们设存在一个 ll 满足 l_1 \leq l \leq l_2l 
+1
+​	
+ ≤l≤l 
+2
+​	
+ ，那么区间 [l,r][l,r] 作为 [l_1,r][l 
+1
+​	
+ ,r] 的子数组，其中的不同整数数量必然不超过 KK。同理，区间 [l,r][l,r] 作为 [l_2,r][l 
+2
+​	
+ ,r] 的父数组，其中的不同整数数量必然不少于 KK。那么可知区间 [l,r][l,r] 中的不同整数数量即为 KK。
+
+这样我们就可以用一个区间 [l_1,l_2][l 
+1
+​	
+ ,l 
+2
+​	
+ ] 来代表能够与右端点 rr 对应的左端点们。
+
+同时，我们可以发现：当右端点向右移动时，左端点区间也同样向右移动。因为当我们在原有区间的右侧添加元素时，区间中的不同整数数量不会减少而只会不变或增加，因此我们需要在区间左侧删除一定元素，以保证区间内整数数量仍然为 KK。
+
+于是我们可以用滑动窗口解决本题，和普通的滑动窗口解法的不同之处在于，我们需要记录两个左指针 \textit{left}_1left 
+1
+​	
+  与 \textit{left}_2left 
+2
+​	
+  来表示左端点区间 [\textit{left}_1,\textit{left}_2)[left 
+1
+​	
+ ,left 
+2
+​	
+ )。第一个左指针表示极大的包含 KK 个不同整数的区间的左端点，第二个左指针则表示极大的包含 K-1K−1 个不同整数的区间的左端点。
+
+代码
+
+C++JavaJavaScriptPython3GolangC
+
+class Solution:
+    def subarraysWithKDistinct(self, A: List[int], K: int) -> int:
+        n = len(A)
+        num1, num2 = collections.Counter(), collections.Counter()
+        tot1 = tot2 = 0
+        left1 = left2 = right = 0
+        ret = 0
+
+        for right, num in enumerate(A):
+            if num1[num] == 0:
+                tot1 += 1
+            num1[num] += 1
+            if num2[num] == 0:
+                tot2 += 1
+            num2[num] += 1
+            
+            while tot1 > K:
+                num1[A[left1]] -= 1
+                if num1[A[left1]] == 0:
+                    tot1 -= 1
+                left1 += 1
+            while tot2 > K - 1:
+                num2[A[left2]] -= 1
+                if num2[A[left2]] == 0:
+                    tot2 -= 1
+                left2 += 1
+            
+            ret += left2 - left1
+        
+        return ret
+复杂度分析
+
+时间复杂度：O(n)O(n)，其中 nn 是数组长度。我们至多只需要遍历该数组三次（右指针和两个左指针各一次）。
+
+空间复杂度：O(n)O(n)，其中 nn 是数组长度。我们需要记录每一个数的出现次数，本题中数的大小不超过数组长度。
+
+作者：LeetCode-Solution
+链接：https://leetcode-cn.com/problems/subarrays-with-k-different-integers/solution/k-ge-bu-tong-zheng-shu-de-zi-shu-zu-by-l-9ylo/
+来源：力扣（LeetCode）
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+'''
