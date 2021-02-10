@@ -48,6 +48,24 @@ The length of both given strings is in range [1, 10,000].
 '''
 
 
+# tips
+
+
+'''
+Obviously, brute force will result in TLE. Think of something else.
+
+How will you check whether one string is a permutation of another string?
+
+One way is to sort the string and then compare. But, Is there a better way?
+
+If one string is a permutation of another string then they must one common metric. What is that?
+
+Both strings must have same character frequencies, if one is permutation of another. Which data structure should be used to store frequencies?
+
+What about hash table? An array of size 26?
+'''
+
+
 
 
 class Solution(object):
@@ -79,6 +97,7 @@ class Solution(object):
             i += 1
 
         return False
+
 
 # golang solution
 
