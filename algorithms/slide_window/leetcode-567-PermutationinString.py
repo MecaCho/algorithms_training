@@ -80,6 +80,38 @@ class Solution(object):
 
         return False
 
+# golang solution
+
+
+'''
+func checkInclusion(s1 string, s2 string) bool {
+
+	counter1, counter2 := [26]int{}, [26]int{}
+
+	i := 0
+	length1, length2 := len(s1), len(s2)
+	if length1 > length2{
+		return false
+	}
+	for i, ch := range s1 {
+		counter1[ch - 'a'] += 1
+		counter2[s2[i] - 'a'] += 1
+	}
+
+	if counter2 == counter1{
+		return true
+	}
+
+	for i = length1; i < length2; i++{
+		counter2[s2[i] - 'a'] += 1
+		counter2[s2[i-length1] - 'a'] -= 1
+		if counter2 == counter1{
+			return true
+		}
+	}
+	return false
+}
+'''
 
 # solutions
 
