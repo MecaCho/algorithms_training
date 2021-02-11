@@ -121,3 +121,43 @@ func (kl *KthLargest) Add(val int) int {
 
 空间复杂度：O(k)O(k)。需要使用优先队列存储前 kk 大的元素。
 '''
+
+# solutions1
+
+'''
+方法一：直接降序排序，然后取第k个元素返回，add时每次都再排序一次，这样时间复杂度为O(k*logk)
+
+# 1.直接排序
+class KthLargest:
+    def __init__(self, k: int, nums: List[int]):
+        self.nums = nums
+        self.k = k
+        self.nums.sort(reverse = True)
+        while len(self.nums) > k:
+            self.nums.pop()
+
+    def add(self, val: int) -> int:
+        self.nums.append(val)
+        self.nums.sort(reverse = True)
+        if len(self.nums) > self.k:
+            self.nums.pop()
+        return self.nums[-1]
+方法二：使用小顶堆实现的优先队列，Python 中标准库 heapq 就是小顶堆，时间复杂度降低为O(k)
+
+# 2.小顶堆
+import heapq
+class KthLargest:
+    def __init__(self, k: int, nums: List[int]):
+        self.pool = nums
+        heapq.heapify(self.pool)
+        self.k = k
+        while len(self.pool) > k:
+            heapq.heappop(self.pool)
+
+    def add(self, val: int) -> int:
+        if len(self.pool) < self.k:
+            heapq.heappush(self.pool, val)
+        elif val > self.pool[0]:
+            heapq.heapreplace(self.pool, val)
+        return self.pool[0]
+'''
