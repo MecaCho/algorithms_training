@@ -69,3 +69,55 @@ class KthLargest(object):
 # Your KthLargest object will be instantiated and called as such:
 # obj = KthLargest(k, nums)
 # param_1 = obj.add(val)
+
+# solutions
+
+'''
+方法一：优先队列
+我们可以使用一个大小为 kk 的优先队列来存储前 kk 大的元素，其中优先队列的队头为队列中最小的元素，也就是第 kk 大的元素。
+
+在单次插入的操作中，我们首先将元素 \textit{val}val 加入到优先队列中。如果此时优先队列的大小大于 kk，我们需要将优先队列的队头元素弹出，以保证优先队列的大小为 kk。
+
+C++JavaGolangCJavaScript
+
+type KthLargest struct {
+    sort.IntSlice
+    k int
+}
+
+func Constructor(k int, nums []int) KthLargest {
+    kl := KthLargest{k: k}
+    for _, val := range nums {
+        kl.Add(val)
+    }
+    return kl
+}
+
+func (kl *KthLargest) Push(v interface{}) {
+    kl.IntSlice = append(kl.IntSlice, v.(int))
+}
+
+func (kl *KthLargest) Pop() interface{} {
+    a := kl.IntSlice
+    v := a[len(a)-1]
+    kl.IntSlice = a[:len(a)-1]
+    return v
+}
+
+func (kl *KthLargest) Add(val int) int {
+    heap.Push(kl, val)
+    if kl.Len() > kl.k {
+        heap.Pop(kl)
+    }
+    return kl.IntSlice[0]
+}
+复杂度分析
+
+时间复杂度：
+
+初始化时间复杂度为：O(n \log k)O(nlogk) ，其中 nn 为初始化时 \textit{nums}nums 的长度；
+
+单次插入时间复杂度为：O(\log k)O(logk)。
+
+空间复杂度：O(k)O(k)。需要使用优先队列存储前 kk 大的元素。
+'''
