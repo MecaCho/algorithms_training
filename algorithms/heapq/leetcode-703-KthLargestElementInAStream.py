@@ -69,3 +69,95 @@ class KthLargest(object):
 # Your KthLargest object will be instantiated and called as such:
 # obj = KthLargest(k, nums)
 # param_1 = obj.add(val)
+
+# solutions
+
+'''
+方法一：优先队列
+我们可以使用一个大小为 kk 的优先队列来存储前 kk 大的元素，其中优先队列的队头为队列中最小的元素，也就是第 kk 大的元素。
+
+在单次插入的操作中，我们首先将元素 \textit{val}val 加入到优先队列中。如果此时优先队列的大小大于 kk，我们需要将优先队列的队头元素弹出，以保证优先队列的大小为 kk。
+
+C++JavaGolangCJavaScript
+
+type KthLargest struct {
+    sort.IntSlice
+    k int
+}
+
+func Constructor(k int, nums []int) KthLargest {
+    kl := KthLargest{k: k}
+    for _, val := range nums {
+        kl.Add(val)
+    }
+    return kl
+}
+
+func (kl *KthLargest) Push(v interface{}) {
+    kl.IntSlice = append(kl.IntSlice, v.(int))
+}
+
+func (kl *KthLargest) Pop() interface{} {
+    a := kl.IntSlice
+    v := a[len(a)-1]
+    kl.IntSlice = a[:len(a)-1]
+    return v
+}
+
+func (kl *KthLargest) Add(val int) int {
+    heap.Push(kl, val)
+    if kl.Len() > kl.k {
+        heap.Pop(kl)
+    }
+    return kl.IntSlice[0]
+}
+复杂度分析
+
+时间复杂度：
+
+初始化时间复杂度为：O(n \log k)O(nlogk) ，其中 nn 为初始化时 \textit{nums}nums 的长度；
+
+单次插入时间复杂度为：O(\log k)O(logk)。
+
+空间复杂度：O(k)O(k)。需要使用优先队列存储前 kk 大的元素。
+'''
+
+# solutions1
+
+'''
+方法一：直接降序排序，然后取第k个元素返回，add时每次都再排序一次，这样时间复杂度为O(k*logk)
+
+# 1.直接排序
+class KthLargest:
+    def __init__(self, k: int, nums: List[int]):
+        self.nums = nums
+        self.k = k
+        self.nums.sort(reverse = True)
+        while len(self.nums) > k:
+            self.nums.pop()
+
+    def add(self, val: int) -> int:
+        self.nums.append(val)
+        self.nums.sort(reverse = True)
+        if len(self.nums) > self.k:
+            self.nums.pop()
+        return self.nums[-1]
+方法二：使用小顶堆实现的优先队列，Python 中标准库 heapq 就是小顶堆，时间复杂度降低为O(k)
+
+# 2.小顶堆
+import heapq
+class KthLargest:
+    def __init__(self, k: int, nums: List[int]):
+        self.pool = nums
+        heapq.heapify(self.pool)
+        self.k = k
+        while len(self.pool) > k:
+            heapq.heappop(self.pool)
+
+    def add(self, val: int) -> int:
+        if len(self.pool) < self.k:
+            heapq.heappush(self.pool, val)
+        elif val > self.pool[0]:
+            heapq.heapreplace(self.pool, val)
+        return self.pool[0]
+'''
