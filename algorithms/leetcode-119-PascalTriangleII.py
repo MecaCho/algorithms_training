@@ -1,3 +1,5 @@
+# encoding=utf8
+
 '''
 
 119. 杨辉三角 II
@@ -45,3 +47,19 @@ class Solution(object):
         else:
             val_list = [0] + self.getRow(rowIndex - 1) + [0]
             return [val_list[i] + val_list[i+1] for i in range(len(val_list) - 1)]
+
+
+
+class Solution1(object):
+    def getRow(self, rowIndex):
+        """
+        :type rowIndex: int
+        :rtype: List[int]
+        """
+        if rowIndex < 2:
+            return [1]*(rowIndex+1)
+
+        pre = self.getRow(rowIndex - 1)
+        return [1] + [pre[i] + pre[i-1] for i in range(1, rowIndex)] + [1]
+
+
