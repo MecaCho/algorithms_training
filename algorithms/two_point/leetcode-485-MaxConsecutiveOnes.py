@@ -1,3 +1,6 @@
+# encoding=utf8
+
+
 '''
 485. 最大连续1的个数
 给定一个二进制数组， 计算其中最大连续1的个数。
@@ -41,6 +44,17 @@ class Solution(object):
                 i = j
             j += 1
         return max_length
+
+
+
+class Solution20210215(object):
+    def findMaxConsecutiveOnes(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+
+        return max(len(substr) for substr in ''.join([str(x) for x in nums]).split("0"))
 
 
 # tips
