@@ -101,4 +101,76 @@ class Solution(object):
         return res
 
 
+# solutions
+
+'''
+方法一：二维数组的一维表示
+思路与算法
+
+对于一个行数为 mm，列数为 nn，行列下标都从 00 开始编号的二维数组，我们可以通过下面的方式，将其中的每个元素 (i, j)(i,j) 映射到整数域内，并且它们按照行优先的顺序一一对应着 [0, mn)[0,mn) 中的每一个整数。形象化地来说，我们把这个二维数组「排扁」成了一个一维数组。如果读者对机器学习有一定了解，可以知道这就是 \texttt{flatten}flatten 操作。
+
+这样的映射即为：
+
+(i, j) \to i \times n+j
+(i,j)→i×n+j
+
+同样地，我们可以将整数 xx 映射回其在矩阵中的下标，即
+
+\begin{cases} i = x ~/~ n \\ j = x ~\%~ n \end{cases}
+{ 
+i=x / n
+j=x % n
+​	
+ 
+
+其中 // 表示整数除法，\%% 表示取模运算。
+
+那么题目需要我们做的事情相当于：
+
+将二维数组 \textit{nums}nums 映射成一个一维数组；
+
+将这个一维数组映射回 rr 行 cc 列的二维数组。
+
+我们当然可以直接使用一个一维数组进行过渡，但我们也可以直接从二维数组 \textit{nums}nums 得到 rr 行 cc 列的重塑矩阵：
+
+设 \textit{nums}nums 本身为 mm 行 nn 列，如果 mn \neq rcmn 
+
+​	
+ =rc，那么二者包含的元素个数不相同，因此无法进行重塑；
+
+否则，对于 x \in [0, mn)x∈[0,mn)，第 xx 个元素在 \textit{nums}nums 中对应的下标为 (x ~/~ n, x~\%~ n)(x / n,x % n)，而在新的重塑矩阵中对应的下标为 (x ~/~ c, x~\%~ c)(x / c,x % c)。我们直接进行赋值即可。
+
+代码
+
+C++JavaPython3JavaScriptGolangC
+
+func matrixReshape(nums [][]int, r int, c int) [][]int {
+    n, m := len(nums), len(nums[0])
+    if n*m != r*c {
+        return nums
+    }
+    ans := make([][]int, r)
+    for i := range ans {
+        ans[i] = make([]int, c)
+    }
+    for i := 0; i < n*m; i++ {
+        ans[i/c][i%c] = nums[i/m][i%m]
+    }
+    return ans
+}
+复杂度分析
+
+时间复杂度：O(rc)O(rc)。这里的时间复杂度是在重塑矩阵成功的前提下的时间复杂度，否则当 mn \neq rcmn 
+
+​	
+ =rc 时，\texttt{C++}C++ 语言中返回的是原数组的一份拷贝，本质上需要的时间复杂度为 O(mn)O(mn)，而其余语言可以直接返回原数组的对象，需要的时间复杂度仅为 O(1)O(1)。
+
+空间复杂度：O(1)O(1)。这里的空间复杂度不包含返回的重塑矩阵需要的空间。
+
+作者：LeetCode-Solution
+链接：https://leetcode-cn.com/problems/reshape-the-matrix/solution/zhong-su-ju-zhen-by-leetcode-solution-gt0g/
+来源：力扣（LeetCode）
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+'''
+
 
