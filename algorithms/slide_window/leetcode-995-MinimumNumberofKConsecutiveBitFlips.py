@@ -95,6 +95,29 @@ class Solution(object):
         return ans
 
 
+import collections
+
+
+class Solution1(object):
+    def minKBitFlips(self, A, K):
+        """
+        :type A: List[int]
+        :type K: int
+        :rtype: int
+        """
+        N = len(A)
+        que = collections.deque()
+        res = 0
+        for i in range(N):
+            if que and i >= que[0] + K:
+                que.popleft()
+            if len(que) % 2 == A[i]:
+                if i +  K > N:
+                    return -1
+                que.append(i)
+                res += 1
+        return res
+
 
 # solutions
 
@@ -134,7 +157,9 @@ class Solution(object):
 方法二：滑动窗口
 上面方法超时的主要原因是我们真实地进行了翻转。根据结论二，位置 ii 现在的状态，和它被前面 K - 1K−1 个元素翻转的次数（奇偶性）有关。
 
-我们使用队列模拟滑动窗口，该滑动窗口的含义是前面 K - 1K−1 个元素中，以哪些位置起始的 子区间进行了翻转。该滑动窗口从左向右滑动，如果当前位置 i 需要翻转，则把该位置存储到队列中。遍历到新位置 j (j < i + K)j(j<i+K) 时，队列中元素的个数代表了 ii 被前面 K - 1K−1 个元素翻转的次数。
+我们使用队列模拟滑动窗口，该滑动窗口的含义是前面 K - 1K−1 个元素中，以哪些位置起始的 子区间进行了翻转。该滑动窗口从左向右滑动，
+如果当前位置 i 需要翻转，则把该位置存储到队列中。
+遍历到新位置 j (j < i + K)j(j<i+K) 时，队列中元素的个数代表了 ii 被前面 K - 1K−1 个元素翻转的次数。
 
 当 ii 位置被翻转了偶数次，如果 A[i]A[i] 为 0，那么翻转后仍是 0，当前元素需要翻转；
 当 ii 位置被翻转了奇数次，如果 A[i]A[i] 为 1，那么翻转后是 0，当前元素需要翻转。
@@ -166,10 +191,12 @@ class Solution(object):
             if que and i >= que[0] + K:
                 que.popleft()
             if len(que) % 2 == A[i]:
-                if i +  K > N: return -1
+                if i +  K > N: 
+                    return -1
                 que.append(i)
                 res += 1
         return res
+        
 时间复杂度：O(N)O(N)。
 空间复杂度：O(K)O(K)。
 
