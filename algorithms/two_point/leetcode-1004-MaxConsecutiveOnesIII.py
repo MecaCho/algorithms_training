@@ -1,3 +1,6 @@
+# encoding=utf8
+
+
 '''
 1004. 最大连续1的个数 III
 给定一个由若干 0 和 1 组成的数组 A，我们最多可以将 K 个值从 0 变成 1 。
@@ -117,3 +120,31 @@ We don't have a fixed size window in this case. The window size can grow and shr
 The way to shrink or expand a window would be based on the number of zeros that can still be flipped and so on.
 
 '''
+
+# solution
+
+
+class Solution(object):
+    def longestOnes(self, A, K):
+        """
+        :type A: List[int]
+        :type K: int
+        :rtype: int
+        """
+        l, r = 0, 0
+        res = 0
+        while r < len(A):
+            if A[r] == 0:
+                if K == 0:
+                    while A[l] == 1:
+                        l += 1
+                    l += 1
+                else:
+                    K -= 1
+
+            r += 1
+            res = max(res, r - l)
+
+        return res
+
+
