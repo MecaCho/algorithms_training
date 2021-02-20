@@ -83,6 +83,32 @@ class Solution(object):
         return res
 
 
+class Solution1(object):
+    def findShortestSubArray(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        if not nums:
+            return 0
+
+        counter = {}
+        max_count = 0
+        for i in range(len(nums)):
+            if nums[i] in counter:
+                counter[nums[i]][0] += 1
+                counter[nums[i]][2] = i
+            else:
+                counter[nums[i]] = [1, i, i]
+            max_count = max(counter[nums[i]][0], max_count)
+
+        res = len(nums)
+        for key, value in counter.items():
+            count, start, end = value
+            if count == max_count:
+                res = min(res, end - start + 1)
+        return res
+
 
 # solutions
 
