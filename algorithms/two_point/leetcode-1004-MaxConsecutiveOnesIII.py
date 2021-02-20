@@ -147,8 +147,6 @@ class Solution(object):
 
         return res
 
-
-
 # solutions
 
 
