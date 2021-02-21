@@ -1,3 +1,6 @@
+# encoding=utf8
+
+
 '''
 1438. 绝对差不超过限制的最长连续子数组
 给你一个整数数组 nums ，和一个表示限制的整数 limit，请你返回最长连续子数组的长度，该子数组中的任意两个元素之间的绝对差必须小于或者等于 limit 。
@@ -284,6 +287,38 @@ class Solution1(object):
         #         # print(max_length, len(cur), max(cur), min(cur), cur)
         # # print(len(nums), max(nums), min(nums))
         return max_length
+
+
+
+class Solution20210221(object):
+    def longestSubarray(self, nums, limit):
+        """
+        :type nums: List[int]
+        :type limit: int
+        :rtype: int
+        """
+        l, r = 0, 0
+        max_len = 1
+        max_, min_ = nums[0], nums[0]
+        length = len(nums)
+        res = 1
+        while r < length:
+            if nums[r] > max_:
+                max_ = nums[r]
+
+            if nums[r] < min_:
+                min_ = nums[r]
+
+            while l < r and max_ - min_ > limit:
+                l += 1
+                max_ = max(nums[l:r + 1])
+                min_ = min(nums[l:r + 1])
+
+            r += 1
+            res = max(res, r - l)
+
+        return res
+
 
 
 '''
