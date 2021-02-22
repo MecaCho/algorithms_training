@@ -320,6 +320,102 @@ class Solution20210221(object):
         return res
 
 
+# solutions
+
+'''
+方法一：滑动窗口 + 有序集合
+思路和解法
+
+我们可以枚举每一个位置作为右端点，找到其对应的最靠左的左端点，满足区间中最大值与最小值的差不超过 \textit{limit}limit。
+
+注意到随着右端点向右移动，左端点也将向右移动，于是我们可以使用滑动窗口解决本题。
+
+为了方便统计当前窗口内的最大值与最小值，我们可以使用平衡树：
+
+语言自带的红黑树，例如 \texttt{C++}C++ 中的 \texttt{std::multiset}std::multiset，\texttt{Java}Java 中的 \texttt{TreeMap}TreeMap；
+
+第三方的平衡树库，例如 \texttt{Python}Python 中的 \texttt{sortedcontainers}sortedcontainers（事实上，这个库的底层实现并不是平衡树，但各种操作的时间复杂度仍然很优秀）；
+
+手写 \texttt{Treap}Treap 一类的平衡树，例如下面的 \texttt{Golang}Golang 代码。
+
+来维护窗口内元素构成的有序集合。
+
+代码
+
+对于 \texttt{Python}Python 语言，力扣平台支持 \texttt{sortedcontainers}sortedcontainers，但其没有默认被导入（import）。读者可以参考 Python Sorted Containers 了解该第三方库的使用方法。
+
+C++JavaPython3Golang
+
+class Solution:
+    def longestSubarray(self, nums: List[int], limit: int) -> int:
+        s = SortedList()
+        n = len(nums)
+        left = right = ret = 0
+
+        while right < n:
+            s.add(nums[right])
+            while s[-1] - s[0] > limit:
+                s.remove(nums[left])
+                left += 1
+            ret = max(ret, right - left + 1)
+            right += 1
+        
+        return ret
+复杂度分析
+
+时间复杂度：O(n \log n)O(nlogn)，其中 nn 是数组长度。向有序集合中添加或删除元素都是 O(\log n)O(logn) 的时间复杂度。每个元素最多被添加与删除一次。
+
+空间复杂度：O(n)O(n)，其中 nn 是数组长度。最坏情况下有序集合将和原数组等大。
+
+方法二：滑动窗口 + 单调队列
+思路和解法
+
+在方法一中，我们仅需要统计当前窗口内的最大值与最小值，因此我们也可以分别使用两个单调队列解决本题。
+
+在实际代码中，我们使用一个单调递增的队列 \textit{queMin}queMin 维护最小值，一个单调递减的队列 \textit{queMax}queMax 维护最大值。这样我们只需要计算两个队列的队首的差值，即可知道当前窗口是否满足条件。
+
+代码
+
+C++JavaJavaScriptPython3GolangC
+
+class Solution:
+    def longestSubarray(self, nums: List[int], limit: int) -> int:
+        n = len(nums)
+        queMax, queMin = deque(), deque()
+        left = right = ret = 0
+
+        while right < n:
+            while queMax and queMax[-1] < nums[right]:
+                queMax.pop()
+            while queMin and queMin[-1] > nums[right]:
+                queMin.pop()
+            
+            queMax.append(nums[right])
+            queMin.append(nums[right])
+
+            while queMax and queMin and queMax[0] - queMin[0] > limit:
+                if nums[left] == queMin[0]:
+                    queMin.popleft()
+                if nums[left] == queMax[0]:
+                    queMax.popleft()
+                left += 1
+            
+            ret = max(ret, right - left + 1)
+            right += 1
+        
+        return ret
+复杂度分析
+
+时间复杂度：O(n)O(n)，其中 nn 是数组长度。我们最多遍历该数组两次，两个单调队列入队出队次数也均为 O(n)O(n)。
+
+空间复杂度：O(n)O(n)，其中 nn 是数组长度。最坏情况下单调队列将和原数组等大。
+
+作者：LeetCode-Solution
+链接：https://leetcode-cn.com/problems/longest-continuous-subarray-with-absolute-diff-less-than-or-equal-to-limit/solution/jue-dui-chai-bu-chao-guo-xian-zhi-de-zui-5bki/
+来源：力扣（LeetCode）
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+'''
+
 
 '''
 方法一 滑动窗口
