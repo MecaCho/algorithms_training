@@ -63,3 +63,14 @@ class Solution(object):
 
         return A
 
+
+class Solution1(object):
+    def flipAndInvertImage(self, A):
+        """
+        :type A: List[List[int]]
+        :rtype: List[List[int]]
+        """
+
+        return [[1-j for j in A[i][::-1]] for i in range(len(A))]
+
+    
