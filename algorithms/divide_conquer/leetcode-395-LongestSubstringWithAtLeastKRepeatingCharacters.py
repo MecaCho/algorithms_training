@@ -1,3 +1,6 @@
+# encoding=utf8
+
+
 '''
 395. 至少有K个重复字符的最长子串
 找到给定字符串（由小写字符组成）中的最长子串 T ， 要求 T 中的每一字符出现次数都不少于 k 。输出 T 的长度。
@@ -60,3 +63,20 @@ class Solution(object):
             return len(s)
         # print(min_count_char)
         return max([self.longestSubstring(split_s, k) for split_s in s.split(min_count_char)])
+
+
+
+class Solution20210227(object):
+    def longestSubstring(self, s, k):
+        """
+        :type s: str
+        :type k: int
+        :rtype: int
+        """
+        if not s:
+            return 0
+
+        for c in set(s):
+            if s.count(c) < k:
+                return max(self.longestSubstring(sub_s, k) for sub_s in s.split(c))
+        return len(s)
