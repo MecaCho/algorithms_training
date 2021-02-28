@@ -103,3 +103,59 @@ class Solution20210228(object):
         """
         return A == sorted(A) or A == sorted(A, reverse=True)
 
+
+# solutions
+
+
+
+'''
+方法一：两次遍历
+遍历两次数组，分别判断其是否为单调递增或单调递减。
+
+代码
+
+C++JavaGolangJavaScriptC
+
+func isMonotonic(A []int) bool {
+    return sort.IntsAreSorted(A) || sort.IsSorted(sort.Reverse(sort.IntSlice(A)))
+}
+复杂度分析
+
+时间复杂度：O(n)O(n)，其中 nn 是数组 AA 的长度。
+
+空间复杂度：O(1)O(1)。
+
+方法二：一次遍历
+遍历数组 AA，若既遇到了 A[i]>A[i+1]A[i]>A[i+1] 又遇到了 A[i']<A[i'+1]A[i 
+′
+ ]<A[i 
+′
+ +1]，则说明 AA 既不是单调递增的，也不是单调递减的。
+
+代码
+
+C++JavaGolangJavaScriptC
+
+func isMonotonic(A []int) bool {
+    inc, dec := true, true
+    for i := 0; i < len(A)-1; i++ {
+        if A[i] > A[i+1] {
+            inc = false
+        }
+        if A[i] < A[i+1] {
+            dec = false
+        }
+    }
+    return inc || dec
+}
+复杂度分析
+
+时间复杂度：O(n)O(n)，其中 nn 是数组 AA 的长度。
+
+空间复杂度：O(1)O(1)。
+
+作者：LeetCode-Solution
+链接：https://leetcode-cn.com/problems/monotonic-array/solution/dan-diao-shu-lie-by-leetcode-solution-ysex/
+来源：力扣（LeetCode）
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+'''
