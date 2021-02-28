@@ -95,6 +95,23 @@ class Solution(object):
         return not inc or not dec
 
 
+class Solution1(object):
+    def isMonotonic(self, A):
+        """
+        :type A: List[int]
+        :rtype: bool
+        """
+        inc, dec = True, True
+        for i in range(1, len(A)):
+            if A[i] > A[i-1]:
+                inc = False
+            elif A[i] < A[i-1]:
+                dec = False
+            if not inc and not dec:
+                return False
+
+        return inc or dec
+
 class Solution20210228(object):
     def isMonotonic(self, A):
         """
