@@ -1,5 +1,5 @@
 import os
-i = 300
+i = 30
 while i:
     i -= 1
     import time

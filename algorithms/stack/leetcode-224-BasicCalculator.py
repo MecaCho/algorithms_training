@@ -55,6 +55,44 @@ s 表示一个有效的表达式
 '''
 
 
+class Solution(object):
+    def calculate(self, s):
+        """
+        :type s: str
+        :rtype: int
+        """
+        op = [1]
+        sign = 1
+        n = len(s)
+        i = 0
+        res = 0
+        while i < n:
+            if s[i] == " ":
+                # print(i)
+                i += 1
+            elif s[i] == "+":
+                sign = op[-1]
+                i += 1
+            elif s[i] == "-":
+                sign = -op[-1]
+                i += 1
+            elif s[i] == "(":
+                op.append(sign)
+                i += 1
+            elif s[i] == ")":
+                op.pop()
+                i += 1
+            else:
+                num = 0
+                while i < n and '0' <= s[i] <= '9':
+                    num = num * 10 + int(s[i])
+                    i += 1
+                # print(sign * num, op)
+                res += sign * num
+
+        return res
+
+
 # golang solution
 
 '''
