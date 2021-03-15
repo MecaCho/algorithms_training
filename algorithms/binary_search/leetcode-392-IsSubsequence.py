@@ -1,3 +1,6 @@
+# encoding=utf8
+
+
 '''
 392. 判断子序列
 给定字符串 s 和 t ，判断 s 是否为 t 的子序列。
@@ -69,7 +72,6 @@ class Solution(object):
             if i == len(s):
                 return True
         return i == len(s)
-
 
 
 # golang solutions
