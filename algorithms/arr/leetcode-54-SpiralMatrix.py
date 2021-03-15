@@ -1,3 +1,4 @@
+#encoding=utf8
 
 '''
 54. 螺旋矩阵
@@ -62,7 +63,25 @@ class Solution(object):
 
     # return matrix and list(matrix.pop(0)) + self.spiralOrder(zip(*matrix)[::-1])
 
-# solution
+
+class Solution20210315(object):
+    def spiralOrder(self, matrix):
+        """
+        :type matrix: List[List[int]]
+        :rtype: List[int]
+        """
+        # return matrix and list(matrix.pop(0)) + self.spiralOrder(zip(*matrix)[::-1])
+
+        res = []
+        while matrix:
+            res.extend(matrix.pop(0))
+            matrix = zip(*matrix)[::-1]
+
+        return res
+
+
+
+# solutions
 
 '''
 Take the first row plus the spiral order of the rotated remaining matrix. Inefficient for large matrices, but here I got it accepted in 40 ms, one of the fastest Python submissions.
