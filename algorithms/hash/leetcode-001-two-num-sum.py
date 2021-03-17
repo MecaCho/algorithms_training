@@ -1,3 +1,5 @@
+# encoding=utf8
+
 '''
 1. 两数之和
 给定一个整数数组 nums 和一个目标值 target，请你在该数组中找出和为目标值的那 两个 整数，并返回他们的数组下标。
@@ -96,6 +98,37 @@ class Solution11(object):
                 i += 1
             else:
                 return [nums[i], nums[j]]
+
+
+def two_sum(w1, w2):
+    length1 = len(w1)
+    length2 = len(w2)
+    pre = 0
+    res = []
+    i, j = length1 - 1, length2 - 1
+    while i >= 0 or j >= 0 or pre:
+        num1 = int(w1[i]) if i >= 0 else 0
+        num2 = int(w2[j]) if j >= 0 else 0
+        num = (num1 + num2 + pre) % 10
+        pre = (num1 + num2 + pre) / 10
+        res.append(num)
+        i -= 1
+        j -= 1
+
+    return "".join(str(i) for i in res[::-1])
+
+if __name__ == '__main__':
+    a = "999"
+    b = "123"
+    res = two_sum(a, b)
+    print(res)
+    test_cases = [("123", "9", "132")]
+    for case in test_cases:
+        w1, w2 = case[0], case[1]
+        res = two_sum(w1, w2)
+        print res
+        assert res == case[2]
+
 
 # golang
 
