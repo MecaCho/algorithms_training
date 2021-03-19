@@ -45,6 +45,28 @@ class Solution(object):
         return ret
 
 
+
+class Solution20210319(object):
+    def nextGreaterElements(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: List[int]
+        """
+        n = len(nums)
+        res = [-1] * n
+        stack = []
+
+        for i in range(n*2):
+            while stack and nums[stack[-1]] < nums[i%n]:
+                res[stack.pop()] = nums[i%n]
+
+            stack.append(i%n)
+
+        return res
+
+
+
+
 # solutions
 
 
