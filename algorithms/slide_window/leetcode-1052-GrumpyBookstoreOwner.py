@@ -78,6 +78,35 @@ class Solution(object):
 
 
 
+# golang solution
+
+'''
+func maxSatisfied(customers []int, grumpy []int, X int) int {
+	total := 0
+	for k, v := range customers{
+		if k < X{
+			total += v
+		}else{
+			total += v * (1-grumpy[k])
+		}
+
+	}
+
+	res := total
+	for i := X; i < len(grumpy); i++{
+		add := customers[i] * grumpy[i] - customers[i-X] * grumpy[i-X]
+		total += add
+		if total > res{
+			res = total
+		}
+	}
+
+	return res
+}
+'''
+
+
+
 # solutions
 
 '''
