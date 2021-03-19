@@ -96,3 +96,44 @@ class ParkingSystem(object):
 # obj = ParkingSystem(big, medium, small)
 # param_1 = obj.addCar(carType)
 
+
+
+# solutions
+
+
+'''
+方法一：模拟
+思路与算法
+
+为每种车维护一个计数器，初始值为车位的数目。此后，每来一辆车，就将对应类型的计数器减 11。当计数器为 00 时，说明车位已满。
+
+代码
+
+C++JavaJavaScriptGolangC
+
+type ParkingSystem struct {
+    left [4]int
+}
+
+func Constructor(big, medium, small int) ParkingSystem {
+    return ParkingSystem{[4]int{0, big, medium, small}}
+}
+
+func (s *ParkingSystem) AddCar(carType int) bool {
+    if s.left[carType] > 0 {
+        s.left[carType]--
+        return true
+    }
+    return false
+}
+时间复杂度
+
+时间复杂度：单次操作为 O(1)O(1)。
+
+空间复杂度：O(1)O(1)。
+
+作者：LeetCode-Solution
+链接：https://leetcode-cn.com/problems/design-parking-system/solution/she-ji-ting-che-xi-tong-by-leetcode-solu-p52h/
+来源：力扣（LeetCode）
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+'''
