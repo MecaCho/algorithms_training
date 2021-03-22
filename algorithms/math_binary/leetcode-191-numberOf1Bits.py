@@ -1,3 +1,6 @@
+# encoding=utf8
+
+
 '''
 191. Number of 1 Bits
 Write a function that takes an unsigned integer and return the number of '1' bits it has (also known as the Hamming weight).
@@ -76,6 +79,24 @@ class Solution(object):
             res += 1
             n = n & (n-1)
         return res
+
+
+
+
+class Solution20210322(object):
+    def hammingWeight(self, n):
+        """
+        :type n: int
+        :rtype: int
+        """
+        res = 0
+        while n:
+            n &= n -1
+            res += 1
+
+        return res
+
+
 
 # solutions
 
