@@ -1,4 +1,25 @@
+# encoding=utf8
+
 '''
+
+341. Flatten Nested List Iterator
+Given a nested list of integers, implement an iterator to flatten it.
+
+Each element is either an integer, or a list -- whose elements may also be integers or other lists.
+
+Example 1:
+
+Input: [[1,1],2,[1,1]]
+Output: [1,1,2,1,1]
+Explanation: By calling next repeatedly until hasNext returns false,
+             the order of elements returned by next should be: [1,1,2,1,1].
+Example 2:
+
+Input: [1,[4,[6]]]
+Output: [1,4,6]
+Explanation: By calling next repeatedly until hasNext returns false,
+             the order of elements returned by next should be: [1,4,6].
+
 341. 扁平化嵌套列表迭代器
 给你一个嵌套的整型列表。请你设计一个迭代器，使其能够遍历这个整型列表中的所有整数。
 
@@ -17,23 +38,6 @@
 输出: [1,4,6]
 解释: 通过重复调用 next 直到 hasNext 返回 false，next 返回的元素的顺序应该是: [1,4,6]。
 
-341. Flatten Nested List Iterator
-Given a nested list of integers, implement an iterator to flatten it.
-
-Each element is either an integer, or a list -- whose elements may also be integers or other lists.
-
-Example 1:
-
-Input: [[1,1],2,[1,1]]
-Output: [1,1,2,1,1]
-Explanation: By calling next repeatedly until hasNext returns false, 
-             the order of elements returned by next should be: [1,1,2,1,1].
-Example 2:
-
-Input: [1,[4,[6]]]
-Output: [1,4,6]
-Explanation: By calling next repeatedly until hasNext returns false, 
-             the order of elements returned by next should be: [1,4,6].
 '''
 
 
@@ -121,6 +125,65 @@ def travelsal(arr, res=None):
         elif isinstance(ar, list):
             res = res + travelsal(ar, res)
     return res
+
+
+# """
+# This is the interface that allows for creating nested lists.
+# You should not implement it, or speculate about its implementation
+# """
+# class NestedInteger(object):
+#    def isInteger(self):
+#        """
+#        @return True if this NestedInteger holds a single integer, rather than a nested list.
+#        :rtype bool
+#        """
+#
+#    def getInteger(self):
+#        """
+#        @return the single integer that this NestedInteger holds, if it holds a single integer
+#        Return None if this NestedInteger holds a nested list
+#        :rtype int
+#        """
+#
+#    def getList(self):
+#        """
+#        @return the nested list that this NestedInteger holds, if it holds a nested list
+#        Return None if this NestedInteger holds a single integer
+#        :rtype List[NestedInteger]
+#        """
+
+
+class NestedIterator20210323(object):
+
+    def __init__(self, nestedList):
+        """
+        Initialize your data structure here.
+        :type nestedList: List[NestedInteger]
+        """
+        self.vals = nestedList
+
+    def next(self):
+        """
+        :rtype: int
+        """
+        if self.hasNext:
+            return self.vals.pop(0).getInteger()
+        return None
+
+    def hasNext(self):
+        """
+        :rtype: bool
+        """
+        while self.vals and not self.vals[0].isInteger():
+            self.vals = self.vals.pop(0).getList() + self.vals
+        return len(self.vals) > 0
+
+
+# Your NestedIterator object will be instantiated and called as such:
+# i, v = NestedIterator(nestedList), []
+# while i.hasNext(): v.append(i.next())
+
+
 
 if __name__ == '__main__':
     res = travelsal([1,2,3, [1,2,3]], [])
