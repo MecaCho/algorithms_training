@@ -1,3 +1,6 @@
+# encoding=utf8
+
+
 '''
 82. 删除排序链表中的重复元素 II
 给定一个排序链表，删除所有含有重复数字的节点，只保留原始链表中 没有重复出现 的数字。
@@ -84,5 +87,62 @@ class Solution1(object):
             else:
                 head = head.next
         return res.next
+
+
+
+# Definition for singly-linked list.
+# class ListNode(object):
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+class Solution20210325(object):
+    def deleteDuplicates(self, head):
+        """
+        :type head: ListNode
+        :rtype: ListNode
+        """
+        dummy_node = ListNode(0)
+        dummy_node.next = head
+        head = dummy_node
+
+        while head.next and head.next.next:
+            flag = False
+            while head.next and head.next.next and head.next.val == head.next.next.val:
+                head.next.next = head.next.next.next
+                flag = True
+            if flag:
+                head.next = head.next.next
+            else:
+                head = head.next
+        return dummy_node.next
+
+
+
+# Definition for singly-linked list.
+# class ListNode(object):
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+class Solution20210325_1(object):
+    def deleteDuplicates(self, head):
+        """
+        :type head: ListNode
+        :rtype: ListNode
+        """
+        pre = ListNode(0)
+        dummy_node = pre
+        pre.next = head
+
+        while pre.next and pre.next.next:
+            flag = False
+            while pre.next and pre.next.next and pre.next.val == pre.next.next.val:
+                pre.next.next = pre.next.next.next
+                flag = True
+            if flag:
+                pre.next = pre.next.next
+            else:
+                pre = pre.next
+        return dummy_node.next
+
 
 
