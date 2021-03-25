@@ -1,3 +1,6 @@
+# encoding=utf8
+
+
 '''
 
 15. 3Sum

@@ -1,3 +1,6 @@
+# encoding=utf8
+
+'''
 14. 最长公共前缀
 编写一个函数来查找字符串数组中的最长公共前缀。
 
@@ -33,7 +36,9 @@ Explanation: There is no common prefix among the input strings.
 Note:
 
 All given inputs are in lowercase letters a-z.
-```
+'''
+
+
 class Solution(object):
     def longestCommonPrefix(self, strs):
         """
@@ -49,4 +54,3 @@ class Solution(object):
                 if item[i] != shortestStr[i]:
                     return shortestStr[:i]
         return shortestStr
- ```

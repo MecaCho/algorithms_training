@@ -1,3 +1,8 @@
+# encoding=utf8
+
+
+'''
+
 16. 3Sum Closest
 Given an array nums of n integers and an integer target, find three integers in nums such that the sum is closest to target. Return the sum of the three integers. You may assume that each input would have exactly one solution.
 
@@ -14,7 +19,9 @@ The sum that is closest to the target is 2. (-1 + 2 + 1 = 2).
 
 与 target 最接近的三个数的和为 2. (-1 + 2 + 1 = 2).
 
-```
+'''
+
+
 class Solution(object):
     def threeSumClosest(self, nums, target):
         """
@@ -52,4 +59,4 @@ class Solution(object):
 
 
         return sum(result_list)
-```
+
