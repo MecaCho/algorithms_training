@@ -79,6 +79,32 @@ class Solution1(object):
         return res.next
 
 
+
+# Definition for singly-linked list.
+# class ListNode(object):
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+class Solution20210326(object):
+    def deleteDuplicates(self, head):
+        """
+        :type head: ListNode
+        :rtype: ListNode
+        """
+        res = ListNode(0)
+        res.next = head
+        head = res
+
+        while head.next and head.next.next:
+            if head.next.val == head.next.next.val:
+                head.next = head.next.next
+            else:
+                head =head.next
+
+        return res.next
+
+
+
 # solutions
 
 '''
