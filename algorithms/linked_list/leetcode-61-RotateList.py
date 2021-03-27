@@ -43,6 +43,42 @@ rotate 3 steps to the right: 0->1->2->NULL
 rotate 4 steps to the right: 2->0->1->NULL
 '''
 
+
+
+# Definition for singly-linked list.
+# class ListNode(object):
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+class Solution(object):
+    def rotateRight(self, head, k):
+        """
+        :type head: ListNode
+        :type k: int
+        :rtype: ListNode
+        """
+
+        count = 1
+        res = head
+        while head and head.next:
+            head = head.next
+            count += 1
+
+        if k % count == 0:
+            return res
+        head.next = res
+
+        k = (count - (k % count)) % count
+        while k > 1:
+            res = res.next
+            k -= 1
+
+        tmp = res.next
+        res.next = None
+        return tmp
+
+
+
 # golang
 
 '''
