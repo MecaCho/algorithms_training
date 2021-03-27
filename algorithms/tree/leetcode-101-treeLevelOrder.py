@@ -1,3 +1,6 @@
+# encoding=utf8
+
+
 '''
 
 102. Binary Tree Level Order Traversal
@@ -72,7 +75,7 @@ class Solution(object):
 #         self.left = None
 #         self.right = None
 
-class Solution(object):
+class Solution1(object):
     def levelOrder(self, root):
         """
         :type root: TreeNode
