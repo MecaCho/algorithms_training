@@ -1,3 +1,5 @@
+# encoding=utf8
+
 '''
 
 Fizz Buzz
