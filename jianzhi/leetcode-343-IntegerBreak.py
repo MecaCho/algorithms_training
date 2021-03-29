@@ -1,3 +1,4 @@
+# encoding=utf8
 
 '''
 343. 整数拆分
@@ -45,6 +46,7 @@ class Solution(object):
                 dp[i] = max(dp[i], dp[i-j]*j, (i-j)*j)
         # print(dp)
         return dp[-1]
+
 
 class Solution2(object):
     def cuttingRope(self, n):

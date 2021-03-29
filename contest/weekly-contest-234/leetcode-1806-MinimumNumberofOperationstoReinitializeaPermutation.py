@@ -31,6 +31,3 @@ if __name__ == '__main__':
     demo = Solution()
     res = demo.reinitializePermutation(6)
     print res
-
-    "".replace()
-    "".format()
