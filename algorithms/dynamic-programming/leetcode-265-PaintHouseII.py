@@ -1,3 +1,5 @@
+# encoding=utf8
+
 
 '''
 265. 粉刷房子 II
@@ -37,11 +39,27 @@ Explanation: Paint house 0 into color 0, paint house 1 into color 2. Minimum cos
 Follow up:
 Could you solve it in O(nk) runtime?
 '''
+
+
+class Solution1(object):
+    def numDifferentIntegers(self, word):
+        """
+        :type word: str
+        :rtype: int
+        """
+        return len(set(int(i) for i in re.split(r"[a-z]", word) if i))
+
+
+
 if __name__ == '__main__':
 
     import re
     print(re.split(r"[a-zA-Z]", "ab123abc"))
     print(re.split(r"[0-9]", "ab123abc"))
+
+    demo = Solution1()
+    res = demo.numDifferentIntegers("123ghgg2565hjd63565gff6545")
+    print res
 
 class Solution(object):
     def minCostII(self, costs):
