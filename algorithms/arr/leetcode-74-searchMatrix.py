@@ -1,3 +1,6 @@
+# encoding=utf8
+
+
 '''
 
 74. Search a 2D Matrix
@@ -89,3 +92,33 @@ class Solution(object):
             elif matrix[i][cow_len-1] == target:
                 return True
         return False
+
+
+
+class Solution20210320(object):
+    def searchMatrix(self, matrix, target):
+        """
+        :type matrix: List[List[int]]
+        :type target: int
+        :rtype: bool
+        """
+        if not matrix:
+            return False
+        m, n = len(matrix), len(matrix[0])
+        loc_i, loc_j = 0, n - 1
+        while loc_i < m and loc_j >= 0:
+            loc_value = matrix[loc_i][loc_j]
+            if loc_value == target:
+                return True
+            elif loc_value > target:
+                loc_j -= 1
+            else:
+                loc_i += 1
+        return False
+
+
+# solutions
+
+'''
+
+'''
