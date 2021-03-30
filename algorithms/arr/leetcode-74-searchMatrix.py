@@ -117,6 +117,29 @@ class Solution20210320(object):
         return False
 
 
+class Solution20210320_1(object):
+    def searchMatrix(self, matrix, target):
+        """
+        :type matrix: List[List[int]]
+        :type target: int
+        :rtype: bool
+        """
+        if not matrix:
+            return False
+        m, n = len(matrix), len(matrix[0])
+        i, j = 0, m * n - 1
+        while i <= j:
+            mid = (i  + j)/2
+            loc_value = matrix[mid/n][mid%n]
+            if loc_value == target:
+                return True
+            elif loc_value > target:
+                j = mid - 1
+            else:
+                i = mid + 1
+        return False
+
+
 # solutions
 
 '''
