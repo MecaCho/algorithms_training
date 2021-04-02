@@ -79,6 +79,34 @@ class Solution20210402(object):
         return res
 
 
+
+class Solution1(object):
+    def trap(self, height):
+        """
+        :type height: List[int]
+        :rtype: int
+        """
+        # 双指针
+        length = len(height)
+        i, j = 0, length - 1
+
+        left_max = height[0]
+        right_max = height[-1]
+
+        res = 0
+        while i < j:
+            left_max = max(height[i], left_max)
+            right_max = max(height[j], right_max)
+            if height[i] < height[j]:
+                res += left_max - height[i]
+                i += 1
+            else:
+                res += right_max - height[j]
+                j -= 1
+        return res
+
+
+
 # solutions
 
 

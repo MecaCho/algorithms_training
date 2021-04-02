@@ -34,22 +34,48 @@ class Solution(object):
         :type height: List[int]
         :rtype: int
         """
+        # 动态规划
         if not height:
             return 0
         length = len(height)
 
         max_left = [height[0]]
-        max_right = [0 for _ in range(length - 1)] + [height[-1]]
+        max_right = [0 for _ in range(length-1)] + [height[-1]]
 
         for i in range(1, length):
             j = length - i - 1
-            max_left.append(max(max_left[i - 1], height[i - 1]))
-            max_right[j] = max(height[j + 1], max_right[j + 1])
-
-        # print(max_left, max_right)
+            max_left.append(max(max_left[i-1], height[i-1]))
+            max_right[j] = max(height[j+1], max_right[j+1])
 
         res = 0
         for i in range(length):
-            res += max(0, min(max_right[i] - height[i], max_left[i] - height[i]))
+            res += max(0, min(max_right[i]-height[i], max_left[i] - height[i]))
 
         return res
+
+
+class Solution1(object):
+    def trap(self, height):
+        """
+        :type height: List[int]
+        :rtype: int
+        """
+        # 双指针
+        length = len(height)
+        i, j = 0, length - 1
+
+        left_max = height[0]
+        right_max = height[-1]
+
+        res = 0
+        while i < j:
+            left_max = max(height[i], left_max)
+            right_max = max(height[j], right_max)
+            if height[i] < height[j]:
+                res += left_max - height[i]
+                i += 1
+            else:
+                res += right_max - height[j]
+                j -= 1
+        return res
+
