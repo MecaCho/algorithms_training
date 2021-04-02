@@ -1,3 +1,6 @@
+# encoding=utf8
+
+
 
 '''
 42. Trapping Rain Water
@@ -46,5 +49,32 @@ class Solution(object):
         for i in range(1, length - 1):
 
             res += max(min(max_left[i], max_right[i]) - height[i], 0)
+        return res
+
+
+class Solution20210402(object):
+    def trap(self, height):
+        """
+        :type height: List[int]
+        :rtype: int
+        """
+        if not height:
+            return 0
+        length = len(height)
+
+        max_left = [height[0]]
+        max_right = [0 for _ in range(length - 1)] + [height[-1]]
+
+        for i in range(1, length):
+            j = length - i - 1
+            max_left.append(max(max_left[i - 1], height[i - 1]))
+            max_right[j] = max(height[j + 1], max_right[j + 1])
+
+        print(max_left, max_right)
+
+        res = 0
+        for i in range(length):
+            res += max(0, min(max_right[i] - height[i], max_left[i] - height[i]))
+
         return res
 
