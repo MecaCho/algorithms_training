@@ -1,3 +1,6 @@
+# encoding=utf8
+
+
 '''
 
 198. House Robber

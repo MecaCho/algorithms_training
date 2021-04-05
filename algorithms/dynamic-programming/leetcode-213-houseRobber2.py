@@ -1,3 +1,6 @@
+# encoding=utf8
+
+
 '''
 
 213. 打家劫舍 II

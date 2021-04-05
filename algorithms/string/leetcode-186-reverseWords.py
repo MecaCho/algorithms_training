@@ -1,3 +1,6 @@
+# encoding=utf8
+
+
 '''
 
 186. Reverse Words in a String II
@@ -40,3 +43,4 @@ class Solution(object):
 
         s[:] = list(" ".join("".join(s).split(" ")[::-1]))
         return s
+

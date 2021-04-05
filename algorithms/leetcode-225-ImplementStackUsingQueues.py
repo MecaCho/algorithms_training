@@ -1,3 +1,5 @@
+# encoding=utf8
+
 
 '''
 225. Implement Stack using Queues
