@@ -1,3 +1,7 @@
+# encoding=utf8
+
+
+'''
 273. Integer to English Words
 Convert a non-negative integer to its english words representation. Given input is guaranteed to be less than 231 - 1.
 
@@ -39,7 +43,9 @@ Output: "One Billion Two Hundred Thirty Four Million Five Hundred Sixty Seven Th
 输出: "One Billion Two Hundred Thirty Four Million Five Hundred Sixty Seven Thousand Eight Hundred Ninety One"
 
 
-```
+'''
+
+
 class Solution(object):
     def numberToWords(self, num):
         """
@@ -76,4 +82,5 @@ class Solution(object):
                 res = convert(mod) + " " + hash_map[n] + " " + res
             n += 1
         return res.strip()
- ```
+
+

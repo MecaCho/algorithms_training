@@ -1,3 +1,6 @@
+# encoding=utf8
+
+
 '''
 
 244. Shortest Word Distance II
