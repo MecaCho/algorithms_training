@@ -1,3 +1,5 @@
+# encoding=utf8
+
 '''
 26. 删除排序数组中的重复项
 给定一个排序数组，你需要在 原地 删除重复出现的元素，使得每个元素只出现一次，返回移除后数组的新长度。
@@ -90,6 +92,22 @@ class Solution(object):
                 nums.pop(i)
             else:
                 i += 1
+
+
+class Solution20210406(object):
+    def removeDuplicates(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        i = 0
+        for j in range(len(nums)):
+            if i < 1 or nums[j] != nums[i-1]:
+                nums[i] = nums[j]
+                i += 1
+            j += 1
+
+        return i
 
 
 # golang solution
