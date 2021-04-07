@@ -130,3 +130,42 @@ func removeDuplicates(nums []int) int {
 '''
 
 '''
+
+
+# solutions
+
+'''
+方法：双指针法
+算法
+
+数组完成排序后，我们可以放置两个指针 ii 和 jj，其中 ii 是慢指针，而 jj 是快指针。只要 nums[i] = nums[j]nums[i]=nums[j]，我们就增加 jj 以跳过重复项。
+
+当我们遇到 nums[j] \neq nums[i]nums[j] 
+
+​	
+ =nums[i] 时，跳过重复项的运行已经结束，因此我们必须把它（nums[j]nums[j]）的值复制到 nums[i + 1]nums[i+1]。然后递增 ii，接着我们将再次重复相同的过程，直到 jj 到达数组的末尾为止。
+
+Java
+
+public int removeDuplicates(int[] nums) {
+    if (nums.length == 0) return 0;
+    int i = 0;
+    for (int j = 1; j < nums.length; j++) {
+        if (nums[j] != nums[i]) {
+            i++;
+            nums[i] = nums[j];
+        }
+    }
+    return i + 1;
+}
+复杂度分析
+
+时间复杂度：O(n)O(n)，假设数组的长度是 nn，那么 ii 和 jj 分别最多遍历 nn 步。
+
+空间复杂度：O(1)O(1)。
+
+作者：LeetCode
+链接：https://leetcode-cn.com/problems/remove-duplicates-from-sorted-array/solution/shan-chu-pai-xu-shu-zu-zhong-de-zhong-fu-xiang-by-/
+来源：力扣（LeetCode）
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+'''
