@@ -1,3 +1,5 @@
+# encoding=utf8
+
 '''
 153. 寻找旋转排序数组中的最小值
 假设按照升序排序的数组在预先未知的某个点上进行了旋转。
@@ -55,6 +57,27 @@ class Solution(object):
                 j = mid
         # print(i, j)
         return nums[i]
+
+
+
+class Solution20210408(object):
+    def findMin(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        l, r = 0, len(nums) - 1
+        while l < r:
+            mid = (l + r) / 2
+            num = nums[mid]
+            if num > nums[r]:
+                l = mid + 1
+            else:
+                r = mid
+
+        return nums[l]
+
+
 
 # solution
 
