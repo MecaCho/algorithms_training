@@ -1,3 +1,5 @@
+# encoding=utf8
+
 '''
 154. 寻找旋转排序数组中的最小值 II
 假设按照升序排序的数组在预先未知的某个点上进行了旋转。
@@ -55,6 +57,7 @@ Would allow duplicates affect the run-time complexity? How and why?
 # 33.33%
 # 的用户
 # 双指针
+
 class Solution(object):
     def minArray(self, nums):
         """
@@ -75,7 +78,11 @@ class Solution(object):
 
         return nums[0] if nums else None
 
+
+
 # 二分法
+
+
 class Solution1_(object):
     def minArray(self, nums):
         """
@@ -124,3 +131,29 @@ class Solution1(object):
             else:
                 j -= 1
         return nums[i] if nums else None
+
+
+
+class Solution20210409(object):
+    def findMin(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        l, r = 0, len(nums) - 1
+        while l < r:
+            mid = (l + r)/2
+            num = nums[mid]
+            if num > nums[r]:
+                l = mid + 1
+            elif num == nums[r]:
+                r -= 1
+            else:
+                r = mid
+        return nums[l]
+
+
+if __name__ == '__main__':
+    demo = Solution20210409()
+    res = demo.findMin([2,2,2,2,3,0,1,2,2,2])
+    print res
