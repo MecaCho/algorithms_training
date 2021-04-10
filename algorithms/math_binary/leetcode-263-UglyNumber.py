@@ -1,3 +1,5 @@
+# encoding=utf8
+
 
 '''
 263. 丑数
@@ -71,4 +73,29 @@ class Solution(object):
             if not count:
                 return False
         return True
+
+
+
+class Solution20210410(object):
+    def isUgly(self, n):
+        """
+        :type n: int
+        :rtype: bool
+        """
+        flag = True
+        while flag and n:
+            if n % 2 == 0:
+                flag = True
+                n /= 2
+            elif n % 3 == 0:
+                flag = True
+                n /= 3
+            elif n % 5 == 0:
+                flag = True
+                n /= 5
+            else:
+                flag = False
+        return n == 1
+
+
 
