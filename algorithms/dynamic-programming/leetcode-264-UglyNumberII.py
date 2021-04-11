@@ -40,8 +40,10 @@ n does not exceed 1690.
 '''
 k[1] = min( k[0]x2, k[0]x3, k[0]x5). The answer is k[0]x2. So we move 2's pointer to 1. Then we test:
 
-k[2] = min( k[1]x2, k[0]x3, k[0]x5). And so on. Be careful about the cases such as 6, in which we need to forward both pointers of 2 and 3.
+k[2] = min( k[1]x2, k[0]x3, k[0]x5). And so on. Be careful about the cases such as 6, in which we need to forward 
+both pointers of 2 and 3.
 '''
+
 
 # # 不难发现，一个丑数总是由前面的某一个丑数 x3 / x5 / x7 得到。
 # # 反过来说也是一样的，一个丑数 x3 / x5 / x7 就会得到某一个更大的丑数。
@@ -80,19 +82,18 @@ class Solution(object):
         :rtype: int
         """
         res = [1]
-        i2 ,i3 ,i5 = 0 ,0 ,0
+        i2, i3, i5 = 0, 0, 0
         for i in range(1691):
-
-            num = min(res[i2 ] *2, res[i3 ] *3, res[i5 ] *5)
+            num = min(res[i2] * 2, res[i3] * 3, res[i5] * 5)
 
             if len(res) == n:
                 break
 
-            if num == res[i2 ] *2:
+            if num == res[i2] * 2:
                 i2 += 1
-            if num == res[i3 ] *3:
+            if num == res[i3] * 3:
                 i3 += 1
-            if num == res[i5 ] *5:
+            if num == res[i5] * 5:
                 i5 += 1
             # print(num, i2, i3, i5,res)
             res.append(num)
@@ -199,9 +200,9 @@ func Switch() {
 
 '''
 
-class Solution1(object):
 
-    ugly = sorted(2**a * 3**b * 5**c
+class Solution1(object):
+    ugly = sorted(2 ** a * 3 ** b * 5 ** c
                   for a in range(32) for b in range(20) for c in range(14))
 
     def nthUglyNumber(self, n):
@@ -212,29 +213,31 @@ class Solution1(object):
 
         # return sorted(2**a * 3**b * 5**c
         #           for a in range(32) for b in range(20) for c in range(14))[n-1]
-        return self.ugly[n-1]
-
+        return self.ugly[n - 1]
 
 
 class Solution20210411(object):
-    ugly = sorted(2**a * 3**b * 5**c
+    ugly = sorted(2 ** a * 3 ** b * 5 ** c
                   for a in range(32) for b in range(20) for c in range(14))
+
     def nthUglyNumber(self, n):
         """
         :type n: int
         :rtype: int
         """
-        return self.ugly[n-1]
+        return self.ugly[n - 1]
 
 
 # tips
 
 '''
-The naive approach is to call isUgly for every number until you reach the nth one. Most numbers are not ugly. Try to focus your effort on generating only the ugly ones.
+The naive approach is to call isUgly for every number until you reach the nth one. Most numbers are not ugly. Try to 
+focus your effort on generating only the ugly ones.
 
 An ugly number must be multiplied by either 2, 3, or 5 from a smaller ugly number.
 
-The key is how to maintain the order of the ugly numbers. Try a similar approach of merging from three sorted lists: L1, L2, and L3.
+The key is how to maintain the order of the ugly numbers. Try a similar approach of merging from three sorted lists: 
+L1, L2, and L3.
 
 Assume you have Uk, the kth ugly number. Then Uk+1 must be Min(L1 * 2, L2 * 3, L3 * 5).
 '''
@@ -358,3 +361,165 @@ Assume you have Uk, the kth ugly number. Then Uk+1 must be Min(L1 * 2, L2 * 3, L
 #             lists[i] += next[winner],
 #         lists[winner].popleft()
 #     return lists[2][-1]
+
+
+# solutions
+
+
+'''
+方法一：最小堆
+要得到从小到大的第 nn 个丑数，可以使用最小堆实现。
+
+初始时堆为空。首先将最小的丑数 11 加入堆。
+
+每次取出堆顶元素 xx，则 xx 是堆中最小的丑数，由于 2x, 3x, 5x2x,3x,5x 也是丑数，因此将 2x, 3x, 5x2x,3x,5x 加入堆。
+
+上述做法会导致堆中出现重复元素的情况。为了避免重复元素，可以使用哈希集合去重，避免相同元素多次加入堆。
+
+在排除重复元素的情况下，第 nn 次从最小堆中取出的元素即为第 nn 个丑数。
+
+
+1 / 12
+
+JavaGolangPython3JavaScriptC++C
+
+class Solution:
+    def nthUglyNumber(self, n: int) -> int:
+        factors = [2, 3, 5]
+        seen = {1}
+        heap = [1]
+
+        for i in range(n - 1):
+            curr = heapq.heappop(heap)
+            for factor in factors:
+                if (nxt := curr * factor) not in seen:
+                    seen.add(nxt)
+                    heapq.heappush(heap, nxt)
+
+        return heapq.heappop(heap)
+复杂度分析
+
+时间复杂度：O(n \log n)O(nlogn)。得到第 nn 个丑数需要进行 nn 次循环，每次循环都要从最小堆中取出 11 个元素以及向最小堆中加入最多 33 个元素，因此每次循环的时间复杂度是 O(\log n+\log 3n)=O(\log n)O(logn+log3n)=O(logn)，总时间复杂度是 O(n \log n)O(nlogn)。
+
+空间复杂度：O(n)O(n)。空间复杂度主要取决于最小堆和哈希集合的大小，最小堆和哈希集合的大小都不会超过 3n3n。
+
+方法二：动态规划
+方法一使用最小堆，会预先存储较多的丑数，导致空间复杂度较高，维护最小堆的过程也导致时间复杂度较高。可以使用动态规划的方法进行优化。
+
+定义数组 \textit{dp}dp，其中 \textit{dp}[i]dp[i] 表示第 ii 个丑数，第 nn 个丑数即为 \textit{dp}[n]dp[n]。
+
+由于最小的丑数是 11，因此 \textit{dp}[1]=1dp[1]=1。
+
+如何得到其余的丑数呢？定义三个指针 p_2,p_3,p_5p 
+2
+​	
+ ,p 
+3
+​	
+ ,p 
+5
+​	
+ ，表示下一个丑数是当前指针指向的丑数乘以对应的质因数。初始时，三个指针的值都是 11。
+
+当 2 \le i \le n2≤i≤n 时，令 \textit{dp}[i]=\min(\textit{dp}[p_2] \times 2, \textit{dp}[p_3] \times 3, \textit{dp}[p_5] \times 5)dp[i]=min(dp[p 
+2
+​	
+ ]×2,dp[p 
+3
+​	
+ ]×3,dp[p 
+5
+​	
+ ]×5)，然后分别比较 \textit{dp}[i]dp[i] 和 \textit{dp}[p_2],\textit{dp}[p_3],\textit{dp}[p_5]dp[p 
+2
+​	
+ ],dp[p 
+3
+​	
+ ],dp[p 
+5
+​	
+ ] 是否相等，如果相等则将对应的指针加 11。
+
+正确性证明
+
+对于 i>1i>1，在计算 \textit{dp}[i]dp[i] 时，指针 p_x(x \in \{2,3,5\})p 
+x
+​	
+ (x∈{2,3,5}) 的含义是使得 \textit{dp}[j] \times x>\textit{dp}[i-1]dp[j]×x>dp[i−1] 的最小的下标 jj，即当 j \ge p_xj≥p 
+x
+​	
+  时 \textit{dp}[j] \times x>\textit{dp}[i-1]dp[j]×x>dp[i−1]，当 j<p_xj<p 
+x
+​	
+  时 \textit{dp}[j] \times x \le \textit{dp}[i-1]dp[j]×x≤dp[i−1]。
+
+因此，对于 i>1i>1，在计算 \textit{dp}[i]dp[i] 时，\textit{dp}[p_2] \times 2,\textit{dp}[p_3] \times 3,\textit{dp}[p_5] \times 5dp[p 
+2
+​	
+ ]×2,dp[p 
+3
+​	
+ ]×3,dp[p 
+5
+​	
+ ]×5 都大于 \textit{dp}[i-1]dp[i−1]，\textit{dp}[p_2-1] \times 2,\textit{dp}[p_3-1] \times 3,\textit{dp}[p_5-1] \times 5dp[p 
+2
+​	
+ −1]×2,dp[p 
+3
+​	
+ −1]×3,dp[p 
+5
+​	
+ −1]×5 都小于或等于 \textit{dp}[i-1]dp[i−1]。令 \textit{dp}[i]=\min(\textit{dp}[p_2] \times 2, \textit{dp}[p_3] \times 3, \textit{dp}[p_5] \times 5)dp[i]=min(dp[p 
+2
+​	
+ ]×2,dp[p 
+3
+​	
+ ]×3,dp[p 
+5
+​	
+ ]×5)，则 \textit{dp}[i]>\textit{dp}[i-1]dp[i]>dp[i−1] 且 \textit{dp}[i]dp[i] 是大于 \textit{dp}[i-1]dp[i−1] 的最小的丑数。
+
+在计算 \textit{dp}[i]dp[i] 之后，会更新三个指针 p_2,p_3,p_5p 
+2
+​	
+ ,p 
+3
+​	
+ ,p 
+5
+​	
+ ，更新之后的指针将用于计算 \textit{dp}[i+1]dp[i+1]，同样满足 \textit{dp}[i+1]>\textit{dp}[i]dp[i+1]>dp[i] 且 \textit{dp}[i+1]dp[i+1] 是大于 \textit{dp}[i]dp[i] 的最小的丑数。
+
+
+1 / 5
+
+JavaJavaScriptGolangPython3C++C
+
+class Solution:
+    def nthUglyNumber(self, n: int) -> int:
+        dp = [0] * (n + 1)
+        dp[1] = 1
+        p2 = p3 = p5 = 1
+
+        for i in range(2, n + 1):
+            num2, num3, num5 = dp[p2] * 2, dp[p3] * 3, dp[p5] * 5
+            dp[i] = min(num2, num3, num5)
+            if dp[i] == num2:
+                p2 += 1
+            if dp[i] == num3:
+                p3 += 1
+            if dp[i] == num5:
+                p5 += 1
+        
+        return dp[n]
+复杂度分析
+
+时间复杂度：O(n)O(n)。需要计算数组 \textit{dp}dp 中的 nn 个元素，每个元素的计算都可以在 O(1)O(1) 的时间内完成。
+
+空间复杂度：O(n)O(n)。空间复杂度主要取决于数组 \textit{dp}dp 的大小。
+
+'''
