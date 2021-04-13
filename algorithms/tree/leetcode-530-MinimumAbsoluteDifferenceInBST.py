@@ -1,3 +1,5 @@
+# encoding=utf8
+
 
 '''
 530. 二叉搜索树的最小绝对差
@@ -83,6 +85,39 @@ class Solution(object):
             # self.min_int = min(self.min_int, self.vals[i]- self.vals[i-1])
         return self.min_int
 
+
+
+# Definition for a binary tree node.
+# class TreeNode(object):
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+
+
+class Solution20210413(object):
+    def getMinimumDifference(self, root):
+        """
+        :type root: TreeNode
+        :rtype: int
+        """
+        stack = [(0, root)]
+
+        res = float("inf")
+        pre = None
+
+        while stack:
+            flag, node = stack.pop()
+            if node:
+                if flag == 0:
+                    stack.append((0, node.right))
+                    stack.append((1, node))
+                    stack.append((0, node.left))
+                elif flag == 1:
+                    res = min(res, node.val - pre) if pre is not None else res
+                    pre = node.val
+
+        return res
 
 
 
