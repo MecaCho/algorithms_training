@@ -1,3 +1,5 @@
+# encoding=utf8
+
 
 '''
 783. 二叉搜索树节点最小距离
@@ -85,6 +87,41 @@ class Solution(object):
         for i in range(1, len(self.vals)):
             self.min_int = min(self.min_int, self.vals[i]- self.vals[i-1])
         return self.min_int
+
+
+
+# Definition for a binary tree node.
+# class TreeNode(object):
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+
+class Solution20210413(object):
+    def minDiffInBST(self, root):
+        """
+        :type root: TreeNode
+        :rtype: int
+        """
+        stack = [(0, root)]
+
+        res = float("inf")
+        pre = None
+
+        while stack:
+            flag, node = stack.pop()
+            if node:
+                if flag == 0:
+                    stack.append((0, node.right))
+                    stack.append((1, node))
+                    stack.append((0, node.left))
+                elif flag == 1:
+                    res = min(res, node.val - pre) if pre is not None else res
+                    pre = node.val
+
+        return res
+
+
 
 
 '''

@@ -61,6 +61,11 @@ class Solution1(object):
 
 
 
+if __name__ == '__main__':
+    demo = Solution1()
+    res = demo.largestNumber([1,2,3,10,9])
+    print res
+
 # solutions
 
 
