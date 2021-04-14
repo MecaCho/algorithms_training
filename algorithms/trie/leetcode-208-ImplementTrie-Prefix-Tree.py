@@ -1,3 +1,6 @@
+# encoding=utf8
+
+
 '''
 208. 实现 Trie (前缀树)
 实现一个 Trie (前缀树)，包含 insert, search, 和 startsWith 这三个操作。
@@ -68,8 +71,8 @@ class Trie(object):
             tree = tree.get(w)
             if tree is None:
                 print(tree)
-                tree = tree.items()
-                # return False
+                # tree = tree.items()
+                return False
         return True if tree.get("end") else False
 
 
@@ -170,6 +173,64 @@ class Trie1(object):
                 return False
         return True
 
+
+
+class Trie20210414(object):
+
+    def __init__(self):
+        """
+        Initialize your data structure here.
+        """
+        self.root = {}
+
+    def insert(self, word):
+        """
+        Inserts a word into the trie.
+        :type word: str
+        :rtype: None
+        """
+        tree = self.root
+        for w in word:
+            if tree.get(w) is None:
+                tree[w] = {}
+            tree = tree.get(w)
+        tree["#"] = 1
+
+    def search(self, word):
+        """
+        Returns if the word is in the trie.
+        :type word: str
+        :rtype: bool
+        """
+        tree = self.root
+        for w in word:
+            tree = tree.get(w)
+            if tree is None:
+                return False
+        return tree.get("#") == 1
+
+    def startsWith(self, prefix):
+        """
+        Returns if there is any word in the trie that starts with the given prefix.
+        :type prefix: str
+        :rtype: bool
+        """
+        tree = self.root
+        for w in prefix:
+            tree = tree.get(w)
+            if tree is None:
+                return False
+        return True
+
+
+# Your Trie object will be instantiated and called as such:
+# obj = Trie()
+# obj.insert(word)
+# param_2 = obj.search(word)
+# param_3 = obj.startsWith(prefix)
+
+
+
 if __name__ == '__main__':
     trie = Trie()
 
@@ -194,7 +255,7 @@ Trie (发音为 "try") 或前缀树是一种树数据结构，用于检索字符
 1. 自动补全
 
 
-图 1. 谷歌的搜索建议
+1. 谷歌的搜索建议
 
 2. 拼写检查
 
@@ -204,17 +265,17 @@ Trie (发音为 "try") 或前缀树是一种树数据结构，用于检索字符
 3. IP 路由 (最长前缀匹配)
 
 
-图 3. 使用Trie树的最长前缀匹配算法，Internet 协议（IP）路由中利用转发表选择路径。
+3. 使用Trie树的最长前缀匹配算法，Internet 协议（IP）路由中利用转发表选择路径。
 
 4. T9 (九宫格) 打字预测
 
 
-图 4. T9（九宫格输入），在 20 世纪 90 年代常用于手机输入
+4. T9（九宫格输入），在 20 世纪 90 年代常用于手机输入
 
 5. 单词游戏
 
 
-图 5. Trie 树可通过剪枝搜索空间来高效解决 Boggle 单词游戏
+5. Trie 树可通过剪枝搜索空间来高效解决 Boggle 单词游戏
 
 还有其他的数据结构，如平衡树和哈希表，使我们能够在字符串数据集中搜索单词。为什么我们还需要 Trie 树呢？尽管哈希表可以在 O(1)O(1) 时间内寻找键值，却无法高效的完成以下操作：
 
@@ -230,7 +291,7 @@ Trie 树是一个有根的树，其结点具有以下字段：。
 布尔字段，以指定节点是对应键的结尾还是只是键前缀。
 
 
-图 6. 单词 "leet" 在 Trie 树中的表示
+6. 单词 "leet" 在 Trie 树中的表示
 
 Java
 class TrieNode {
@@ -273,7 +334,7 @@ Trie 树中最常见的两个操作是键的插入和查找。
 
 
 
-图 7. 向 Trie 树中插入键
+7. 向 Trie 树中插入键
 
 Java
 class Trie {
@@ -311,7 +372,7 @@ class Trie {
 没有键字符剩余，但当前结点没有标记为 isEnd。也就是说，待查找键只是Trie树中另一个键的前缀。
 
 
-图 8. 在 Trie 树中查找键
+8. 在 Trie 树中查找键
 
 Java
 class Trie {
@@ -347,7 +408,7 @@ class Trie {
 
 
 
-图 9. 查找 Trie 树中的键前缀
+9. 查找 Trie 树中的键前缀
 
 Java
 class Trie {
