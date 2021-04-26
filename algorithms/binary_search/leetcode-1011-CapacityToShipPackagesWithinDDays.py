@@ -157,3 +157,87 @@ class Solution(object):
             else:
                 min_ = mid + 1
         return min_
+
+       
+       
+# solutions
+       
+'''
+方法一：二分查找转化为判定问题
+思路与算法
+
+假设当船的运载能力为 xx 时，我们可以在 DD 天内运送完所有包裹，那么只要运载能力大于 xx，我们同样可以在 DD 天内运送完所有包裹：我们只需要使用运载能力为 xx 时的运送方法即可。
+
+这样一来，我们就得到了一个非常重要的结论：
+
+存在一个运载能力的「下限」x_\textit{ans}x 
+ans
+​	
+ ，使得当 x \geq x_\textit{ans}x≥x 
+ans
+​	
+  时，我们可以在 DD 天内运送完所有包裹；当 x < x_\textit{ans}x<x 
+ans
+​	
+  时，我们无法在 DD 天内运送完所有包裹。
+
+同时，x_\textit{ans}x 
+ans
+​	
+  即为我们需要求出的答案。因此，我们就可以使用二分查找的方法找出 x_\textit{ans}x 
+ans
+​	
+  的值。
+
+在二分查找的每一步中，我们实际上需要解决一个判定问题：给定船的运载能力 xx，我们是否可以在 DD 天内运送完所有包裹呢？这个判定问题可以通过贪心的方法来解决：
+
+由于我们必须按照数组 \textit{weights}weights 中包裹的顺序进行运送，因此我们从数组 \textit{weights}weights 的首元素开始遍历，将连续的包裹都安排在同一天进行运送。当这批包裹的重量大于运载能力 xx 时，我们就需要将最后一个包裹拿出来，安排在新的一天，并继续往下遍历。当我们遍历完整个数组后，就得到了最少需要运送的天数。
+
+我们将「最少需要运送的天数」与 DD 进行比较，就可以解决这个判定问题。当其小于等于 DD 时，我们就忽略二分的右半部分区间；当其大于 DD 时，我们就忽略二分的左半部分区间。
+
+细节
+
+二分查找的初始左右边界应当如何计算呢？
+
+对于左边界而言，由于我们不能「拆分」一个包裹，因此船的运载能力不能小于所有包裹中最重的那个的重量，即左边界为数组 \textit{weights}weights 中元素的最大值。
+
+对于右边界而言，船的运载能力也不会大于所有包裹的重量之和，即右边界为数组 \textit{weights}weights 中元素的和。
+
+我们从上述左右边界开始进行二分查找，就可以保证找到最终的答案。
+
+代码
+
+C++JavaPython3JavaScriptGolangC
+
+class Solution:
+    def shipWithinDays(self, weights: List[int], D: int) -> int:
+        # 确定二分查找左右边界
+        left, right = max(weights), sum(weights)
+        while left < right:
+            mid = (left + right) // 2
+            # need 为需要运送的天数
+            # cur 为当前这一天已经运送的包裹重量之和
+            need, cur = 1, 0
+            for weight in weights:
+                if cur + weight > mid:
+                    need += 1
+                    cur = 0
+                cur += weight
+            
+            if need <= D:
+                right = mid
+            else:
+                left = mid + 1
+        
+        return left
+复杂度分析
+
+时间复杂度：O\big(n\log(\Sigma w)\big)O(nlog(Σw))，其中 nn 是数组 \textit{weights}weights 的长度，\Sigma wΣw 是数组 \textit{weights}weights 中元素的和。二分查找需要执行的次数为 O(\log(\Sigma w))O(log(Σw))，每一步中需要对数组 \textit{weights}weights 进行依次遍历，时间为 O(n)O(n)，相乘即可得到总时间复杂度。
+
+空间复杂度：O(1)O(1)。
+
+作者：LeetCode-Solution
+链接：https://leetcode-cn.com/problems/capacity-to-ship-packages-within-d-days/solution/zai-d-tian-nei-song-da-bao-guo-de-neng-l-ntml/
+来源：力扣（LeetCode）
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+'''
