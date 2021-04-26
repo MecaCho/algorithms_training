@@ -157,7 +157,42 @@ class Solution(object):
             else:
                 min_ = mid + 1
         return min_
+       
+       
+       
+# golang solution
 
+'''
+func shipWithinDays(weights []int, D int) int {
+    // 确定二分查找左右边界
+    left, right := 0, 0
+    for _, w := range weights {
+        if w > left {
+            left = w
+        }
+        right += w
+    }
+    return left + sort.Search(right-left, func(x int) bool {
+        x += left
+        day := 1 // 需要运送的天数
+        sum := 0 // 当前这一天已经运送的包裹重量之和
+        for _, w := range weights {
+            if sum+w > x {
+                day++
+                sum = 0
+            }
+            sum += w
+        }
+        return day <= D
+    })
+}
+
+作者：LeetCode-Solution
+链接：https://leetcode-cn.com/problems/capacity-to-ship-packages-within-d-days/solution/zai-d-tian-nei-song-da-bao-guo-de-neng-l-ntml/
+来源：力扣（LeetCode）
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+'''
+       
        
        
 # solutions
