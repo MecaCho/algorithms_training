@@ -110,4 +110,89 @@ class Solution1(object):
             return self.rangeSumBST(root.right, low, high)
 
 
+# solutions
+
+'''
+方法一：深度优先搜索
+思路
+
+按深度优先搜索的顺序计算范围和。记当前子树根节点为 \textit{root}root，分以下四种情况讨论：
+
+\textit{root}root 节点为空
+
+返回 00。
+
+\textit{root}root 节点的值大于 \textit{high}high
+
+由于二叉搜索树右子树上所有节点的值均大于根节点的值，即均大于 \textit{high}high，故无需考虑右子树，返回左子树的范围和。
+
+\textit{root}root 节点的值小于 \textit{low}low
+
+由于二叉搜索树左子树上所有节点的值均小于根节点的值，即均小于 \textit{low}low，故无需考虑左子树，返回右子树的范围和。
+
+\textit{root}root 节点的值在 [\textit{low},\textit{high}][low,high] 范围内
+
+此时应返回 \textit{root}root 节点的值、左子树的范围和、右子树的范围和这三者之和。
+
+代码
+
+C++JavaGolangJavaScriptPython3C
+
+func rangeSumBST(root *TreeNode, low, high int) int {
+    if root == nil {
+        return 0
+    }
+    if root.Val > high {
+        return rangeSumBST(root.Left, low, high)
+    }
+    if root.Val < low {
+        return rangeSumBST(root.Right, low, high)
+    }
+    return root.Val + rangeSumBST(root.Left, low, high) + rangeSumBST(root.Right, low, high)
+}
+复杂度分析
+
+时间复杂度：O(n)O(n)，其中 nn 是二叉搜索树的节点数。
+
+空间复杂度：O(n)O(n)。空间复杂度主要取决于栈空间的开销。
+
+方法二：广度优先搜索
+思路
+
+使用广度优先搜索的方法，用一个队列 qq 存储需要计算的节点。每次取出队首节点时，若节点为空则跳过该节点，否则按方法一中给出的大小关系来决定加入队列的子节点。
+
+代码
+
+C++JavaGolangJavaScriptPython3C
+
+func rangeSumBST(root *TreeNode, low, high int) (sum int) {
+    q := []*TreeNode{root}
+    for len(q) > 0 {
+        node := q[0]
+        q = q[1:]
+        if node == nil {
+            continue
+        }
+        if node.Val > high {
+            q = append(q, node.Left)
+        } else if node.Val < low {
+            q = append(q, node.Right)
+        } else {
+            sum += node.Val
+            q = append(q, node.Left, node.Right)
+        }
+    }
+    return
+}
+复杂度分析
+
+时间复杂度：O(n)O(n)，其中 nn 是二叉搜索树的节点数。
+
+空间复杂度：O(n)O(n)。空间复杂度主要取决于队列的空间。
+
+作者：LeetCode-Solution
+链接：https://leetcode-cn.com/problems/range-sum-of-bst/solution/er-cha-sou-suo-shu-de-fan-wei-he-by-leet-rpq7/
+来源：力扣（LeetCode）
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+'''
 
