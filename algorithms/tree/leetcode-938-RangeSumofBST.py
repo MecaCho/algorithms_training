@@ -110,6 +110,36 @@ class Solution1(object):
             return self.rangeSumBST(root.right, low, high)
 
 
+         
+# golang solution
+
+'''
+/**
+ * Definition for a binary tree node.
+ * type TreeNode struct {
+ *     Val int
+ *     Left *TreeNode
+ *     Right *TreeNode
+ * }
+ */
+func rangeSumBST(root *TreeNode, low int, high int) int {
+    if root == nil{
+        return 0
+    }
+    if root.Val < low{
+        return rangeSumBST(root.Right, low, high)
+    }
+
+    if root.Val > high{
+        return rangeSumBST(root.Left, low, high)
+    }
+
+    return rangeSumBST(root.Left, low, high) + root.Val + rangeSumBST(root.Right, low, high)
+
+}
+'''
+
+
 # solutions
 
 '''
