@@ -140,6 +140,48 @@ func rangeSumBST(root *TreeNode, low int, high int) int {
 '''
 
 
+
+# golang solution 
+
+'''
+/**
+ * Definition for a binary tree node.
+ * type TreeNode struct {
+ *     Val int
+ *     Left *TreeNode
+ *     Right *TreeNode
+ * }
+ */
+func rangeSumBST(root *TreeNode, low int, high int) int {
+    queue := []*TreeNode{}
+
+    if root == nil{
+        return 0
+    }
+    queue = append(queue, root)
+
+    res := 0
+
+    for len(queue) > 0{
+        node := queue[0]
+        queue = queue[1:]
+        if node == nil{
+            continue
+        }
+        if node.Val < low{
+            queue = append(queue, node.Right)
+        } else if node.Val > high{
+            queue = append(queue, node.Left)
+        } else{
+            res += node.Val
+            queue = append(queue, node.Left)
+            queue = append(queue, node.Right)
+        }
+    }
+    return res
+}
+'''
+
 # solutions
 
 '''
