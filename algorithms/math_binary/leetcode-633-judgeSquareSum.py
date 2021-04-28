@@ -47,3 +47,21 @@ class Solution(object):
             if is_qrt(c-i*i):
                 return True
         return False
+       
+  
+# golang solution
+
+'''
+func judgeSquareSum(c int) bool {
+	sqrt := int(math.Sqrt(float64(c))) + 1
+	for i := 0; i < sqrt; i ++{
+		b := float64(c - i * i)
+		a := int(math.Sqrt(b))
+		if a * a == int(b){
+            // fmt.Println(a)
+			return true
+		}
+	}
+	return false
+}
+'''
