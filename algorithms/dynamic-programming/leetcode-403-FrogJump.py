@@ -30,14 +30,6 @@ Constraints:
 stones[0] == 0
 
 403. 青蛙过河
-难度
-困难
-
-258
-
-
-
-
 
 一只青蛙想要过河。 假定河流被等分为若干个单元格，并且在每一个单元格内都有可能放有一块石子（也有可能没有）。 青蛙可以跳上石子，但是不可以跳入水中。
 
@@ -90,6 +82,37 @@ class Solution(object):
                         return True
         return False
 
+# golang solution
+
+'''
+func canCross(stones []int) bool {
+	length := len(stones)
+	if stones[1] != 1 {
+		return false
+	}
+
+	dp := make([][]bool, length)
+
+	for i := range dp {
+		dp[i] = make([]bool, length+1)
+	}
+	dp[0][0] = true
+
+	for i := 1; i < length; i++ {
+		for j := i - 1; j >= 0; j-- {
+			k := stones[i] - stones[j]
+			if k <= j+1 {
+				dp[i][k] = dp[j][k] || dp[j][k+1] || dp[j][k-1]
+				if i == length-1 && dp[i][k] {
+					return true
+				}
+			}
+		}
+	}
+
+	return false
+}
+'''
 
 # solutions
 
