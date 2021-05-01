@@ -118,3 +118,78 @@ func getImportance(employees []*Employee, id int) int {
 '''
 
 
+# solutions
+
+'''
+前言
+由于一个员工最多有一个直系领导，可以有零个或若干个直系下属，因此员工之间的领导和下属关系构成树的结构。给定一个员工编号，要求计算这个员工及其所有下属的重要性之和，即为找到以该员工为根节点的子树的结构中，每个员工的重要性之和。
+
+对于树结构的问题，可以使用深度优先搜索或广度优先搜索的方法解决。
+
+方法一：深度优先搜索
+深度优先搜索的做法非常直观。根据给定的员工编号找到员工，从该员工开始遍历，对于每个员工，将其重要性加到总和中，然后对该员工的每个直系下属继续遍历，直到所有下属遍历完毕，此时的总和即为给定的员工及其所有下属的重要性之和。
+
+实现方面，由于给定的是员工编号，且每个员工的编号都不相同，因此可以使用哈希表存储每个员工编号和对应的员工，即可通过员工编号得到对应的员工。
+
+JavaC#JavaScriptGolangC++Python3
+
+func getImportance(employees []*Employee, id int) (total int) {
+    mp := map[int]*Employee{}
+    for _, employee := range employees {
+        mp[employee.Id] = employee
+    }
+
+    var dfs func(int)
+    dfs = func(id int) {
+        employee := mp[id]
+        total += employee.Importance
+        for _, subId := range employee.Subordinates {
+            dfs(subId)
+        }
+    }
+    dfs(id)
+    return
+}
+复杂度分析
+
+时间复杂度：O(n)O(n)，其中 nn 是员工数量。需要遍历所有员工，在哈希表中存储员工编号和员工的对应关系，深度优先搜索对每个员工遍历一次。
+
+空间复杂度：O(n)O(n)，其中 nn 是员工数量。空间复杂度主要取决于哈希表的空间和递归调用栈的空间，哈希表的大小为 nn，栈的深度不超过 nn。
+
+方法二：广度优先搜索
+也可以使用广度优先搜索的做法。
+
+和深度优先搜索一样，使用哈希表存储每个员工编号和对应的员工，即可通过员工编号得到对应的员工。根据给定的员工编号找到员工，从该员工开始广度优先搜索，对于每个遍历到的员工，将其重要性加到总和中，最终得到的总和即为给定的员工及其所有下属的重要性之和。
+
+JavaC#JavaScriptGolangC++Python3
+
+func getImportance(employees []*Employee, id int) (total int) {
+    mp := map[int]*Employee{}
+    for _, employee := range employees {
+        mp[employee.Id] = employee
+    }
+
+    queue := []int{id}
+    for len(queue) > 0 {
+        employee := mp[queue[0]]
+        queue = queue[1:]
+        total += employee.Importance
+        for _, subId := range employee.Subordinates {
+            queue = append(queue, subId)
+        }
+    }
+    return
+}
+复杂度分析
+
+时间复杂度：O(n)O(n)，其中 nn 是员工数量。需要遍历所有员工，在哈希表中存储员工编号和员工的对应关系，广度优先搜索对每个员工遍历一次。
+
+空间复杂度：O(n)O(n)，其中 nn 是员工数量。空间复杂度主要取决于哈希表的空间和队列的空间，哈希表的大小为 nn，队列的大小不超过 nn。
+
+作者：LeetCode-Solution
+链接：https://leetcode-cn.com/problems/employee-importance/solution/yuan-gong-de-zhong-yao-xing-by-leetcode-h6xre/
+来源：力扣（LeetCode）
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+'''
+
+
