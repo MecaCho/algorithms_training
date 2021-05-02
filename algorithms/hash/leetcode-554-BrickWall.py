@@ -81,6 +81,34 @@ class Solution(object):
                 else:
                     wall_dict[tmp-1] = 1
         return len(wall) - max(wall_dict.values()) if wall_dict else len(wall)
+
+       
+       
+# golang solution
+
+
+'''
+func leastBricks(wall [][]int) int {
+	wallDict := map[int]int{}
+	for _, wal := range wall {
+		tmp := 0
+		for j := 0; j < len(wal)-1; j++ {
+			tmp += wal[j]
+			wallDict[tmp-1]++
+		}
+	}
+    // fmt.Println(wallDict)
+	maxCount := 0
+	for _, v := range wallDict {
+		if maxCount < v {
+			maxCount = v
+		}
+	}
+	return len(wall) - maxCount
+}
+'''
+   
+ 
 # solutions
 
 
