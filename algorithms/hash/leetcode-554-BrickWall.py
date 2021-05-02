@@ -81,4 +81,52 @@ class Solution(object):
                 else:
                     wall_dict[tmp-1] = 1
         return len(wall) - max(wall_dict.values()) if wall_dict else len(wall)
+# solutions
 
+
+'''
+方法一：哈希表
+思路及算法
+
+由于砖墙是一面矩形，所以对于任意一条垂线，其穿过的砖块数量加上从边缘经过的砖块数量之和是一个定值，即砖墙的高度。
+
+因此，问题可以转换成求「垂线穿过的砖块边缘数量的最大值」，用砖墙的高度减去该最大值即为答案。
+
+虽然垂线在每行至多只能通过一个砖块边缘，但是每行的砖块边缘也各不相同，因此我们需要用哈希表统计所有符合要求的砖块边缘的数量。
+
+注意到题目要求垂线不能通过砖墙的两个垂直边缘，所以砖墙两侧的边缘不应当被统计。因此，我们只需要统计每行砖块中除了最右侧的砖块以外的其他砖块的右边缘即可。
+
+具体地，我们遍历砖墙的每一行，对于当前行，我们从左到右地扫描每一块砖，使用一个累加器记录当前砖的右侧边缘到砖墙的左边缘的距离，将除了最右侧的砖块以外的其他砖块的右边缘到砖墙的左边缘的距离加入到哈希表中。最后我们遍历该哈希表，找到出现次数最多的砖块边缘，这就是垂线经过的砖块边缘，而该垂线经过的砖块数量即为砖墙的高度减去该垂线经过的砖块边缘的数量。
+
+代码
+
+C++JavaC#JavaScriptGolangC
+
+func leastBricks(wall [][]int) int {
+    cnt := map[int]int{}
+    for _, widths := range wall {
+        sum := 0
+        for _, width := range widths[:len(widths)-1] {
+            sum += width
+            cnt[sum]++
+        }
+    }
+    maxCnt := 0
+    for _, c := range cnt {
+        if c > maxCnt {
+            maxCnt = c
+        }
+    }
+    return len(wall) - maxCnt
+}
+复杂度分析
+
+时间复杂度：O(nm)O(nm)，其中 nn 是砖墙的高度，mm 是每行砖墙的砖的平均数量。我们需要遍历每行砖块中除了最右侧的砖块以外的每一块砖，将其右侧边缘到砖墙的左边缘的距离加入到哈希表中。
+
+空间复杂度：O(nm)O(nm)，其中 nn 是砖墙的高度，mm 是每行砖墙的砖的平均数量。我们需要将每行砖块中除了最右侧的砖块以外的每一块砖的右侧边缘到砖墙的左边缘的距离加入到哈希表中。
+
+作者：LeetCode-Solution
+链接：https://leetcode-cn.com/problems/brick-wall/solution/zhuan-qiang-by-leetcode-solution-2kls/
+来源：力扣（LeetCode）
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+'''
