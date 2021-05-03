@@ -78,7 +78,24 @@ class Solution20210503(object):
         if -2**31 <= res <= 2**31-1:
             return -res if flag else res
         return 0
+       
+       
+# golang solution
 
+'''
+func reverse(x int) int {
+	res := 0
+	for x != 0 {
+		if res > math.MaxInt32/10 || res < math.MinInt32/10 {
+			return 0
+		}
+		num := x % 10
+		res = res*10 + num
+		x /= 10
+	}
+	return res
+}
+'''
        
 # solutions
 
