@@ -56,3 +56,27 @@ class Solution(object):
         if -2**31<res<2**31-1:
             return res
         return 0
+       
+       
+       
+class Solution20210503(object):
+    def reverse(self, x):
+        """
+        :type x: int
+        :rtype: int
+        """
+
+        flag = False
+        if x < 0:
+            x = -x
+            flag = True
+        res = 0
+        while x:
+            num = x % 10
+            res = 10 * res + num
+            x /= 10
+        if -2**31 <= res <= 2**31-1:
+            return -res if flag else res
+        return 0
+
+       
