@@ -92,6 +92,35 @@ class Solution(object):
 
       
       
+class Solution1(object):
+    def minimumTimeRequired(self, jobs, k):
+        """
+        :type jobs: List[int]
+        :type k: int
+        :rtype: int
+        """
+        workers = [0]*k
+        
+        self.res = sys.maxsize
+
+        def dfs(curr):
+            if curr == len(jobs):
+                self.res = min(self.res, max(workers))
+                return
+            
+            seen = set()
+            for i in range(k):
+                if workers[i] in seen: 
+                    continue 
+                if workers[i] + jobs[curr] >= self.res: 
+                    continue
+                seen.add(workers[i])
+                workers[i] += jobs[curr]
+                dfs(curr+1)
+                workers[i] -= jobs[curr]
+        
+        dfs(0)
+        return self.res        
       
 # solutions
 
