@@ -223,3 +223,252 @@ class Solution:
 
         return dfs(0)
 '''
+
+
+# solutions
+
+'''
+方法一：二分查找 + 回溯 + 剪枝
+思路及算法
+
+在本题中，我们很难直接计算出完成所有工作的最短时间。而注意到，当完成所有工作的最短时间已经确定为 \textit{limit}limit 时，如果存在可行的方案，那么对于任意长于 \textit{limit}limit 的最短时间，都一定也存在可行的方案。因此我们可以考虑使用二分查找的方法寻找最小的存在可行方案的 \textit{limit}limit 值。
+
+当完成所有工作的最短时间已经确定为 \textit{limit}limit 时，我们可以利用回溯的方式来寻找方案。
+
+一个朴素的方案是，开辟一个大小为 kk 的数组 \textit{workloads}workloads，\textit{workloads}[i]workloads[i] 表示第 ii 个工人的当前已经被分配的工作量，然后我们利用一个递归函数 \text{backtrack}(i)backtrack(i) 递归地枚举第 ii 个任务的分配方案，过程中实时地更新 \textit{workloads}workloads 数组。具体地，函数中我们检查每一个工人 jj 当前已经被分配的工作量，如果被分配的工作量 \textit{workloads}[j]workloads[j] 与当前工作的工作量 \textit{jobs}[i]jobs[i] 之和不超过 \textit{limit}limit 的限制，我们即可以将该工作分配给工人 jj，然后计算下一个工作 jobs[i+1]jobs[i+1] 的分配方案。过程中一旦我们找到了一个可行方案，我们即可以返回 \text{true}true，而无需枚举完所有的方案。
+
+朴素的方案中，\text{backtrack}backtrack 函数的效率可能十分低下，有可能需要枚举完所有的分配方案才能得到答案，因此我们提出几个优化措施：
+
+缩小二分查找的上下限，下限为所有工作中的最大工作量，上限为所有工作的工作量之和。
+每一个工作都必须被分配，因此必然有一个工人承接了工作量最大的工作；
+在最坏情况下，只有一个工人，他必须承接所有工作。
+优先分配工作量大的工作。
+感性地理解，如果要求将小石子和大石块放入玻璃瓶中，优先放入大石块更容易使得工作变得简单。
+在搜索过程中，优先分配工作量小的工作会使得工作量大的工作更有可能最后无法被分配。
+当工人 ii 还没被分配工作时，我们不给工人 i+1i+1 分配工作。
+如果当前工人 ii 和 i+1i+1 都没有被分配工作，那么我们将工作先分配给任何一个人都没有区别，如果分配给工人 ii 不能成功完成分配任务，那么分配给工人 i+1i+1 也一样无法完成。
+当我们将工作 ii 分配给工人 jj，使得工人 jj 的工作量恰好达到 \textit{limit}limit，且计算分配下一个工作的递归函数返回了 \text{false}false，此时即无需尝试将工作 ii 分配给其他工人，直接返回 \text{false}false 即可。
+常规逻辑下，递归函数返回了 \text{false}false，那么我们需要尝试将工作 ii 分配给其他工人，假设分配给了工人 j'j 
+′
+ ，那么此时工人 j'j 
+′
+  的工作量必定不多于工人 jj 的工作量；
+如果存在一个方案使得分配给工人 j'j 
+′
+  能够成功完成分配任务，那么此时必然有一个或一组工作 i'i 
+′
+  取代了工作 ii 被分配给工人 jj，否则我们可以直接将工作 ii 移交给工人 jj，仍然能成功完成分配任务。而我们知道工作 i'i 
+′
+  的总工作量不会超过工作 ii，因此我们可以直接交换工作 ii 与工作 i'i 
+′
+ ，仍然能成功完成分配任务。这与假设不符，可知不存在这样一个满足条件的工人 j'j 
+′
+ 。
+代码
+
+C++JavaC#JavaScriptGolangC
+
+func minimumTimeRequired(jobs []int, k int) int {
+    n := len(jobs)
+    sort.Sort(sort.Reverse(sort.IntSlice(jobs)))
+    l, r := jobs[0], 0
+    for _, v := range jobs {
+        r += v
+    }
+    return l + sort.Search(r-l, func(limit int) bool {
+        limit += l
+        workloads := make([]int, k)
+        var backtrack func(int) bool
+        backtrack = func(idx int) bool {
+            if idx == n {
+                return true
+            }
+            cur := jobs[idx]
+            for i := range workloads {
+                if workloads[i]+cur <= limit {
+                    workloads[i] += cur
+                    if backtrack(idx + 1) {
+                        return true
+                    }
+                    workloads[i] -= cur
+                }
+                // 如果当前工人未被分配工作，那么下一个工人也必然未被分配工作
+                // 或者当前工作恰能使该工人的工作量达到了上限
+                // 这两种情况下我们无需尝试继续分配工作
+                if workloads[i] == 0 || workloads[i]+cur == limit {
+                    break
+                }
+            }
+            return false
+        }
+        return backtrack(0)
+    })
+}
+复杂度分析
+
+时间复杂度：O(n \log n + \log (S-M) \times n!)O(nlogn+log(S−M)×n!)，其中 nn 是数组 \textit{jobs}jobs 的长度，SS 是数组 \textit{jobs}jobs 的元素之和，MM 是数组 \textit{jobs}jobs 中元素的最大值。最坏情况下每次二分需要遍历所有分配方案的排列，但经过一系列优化后，实际上可以规避掉绝大部分不必要的计算。
+
+空间复杂度：O(n)O(n)。空间复杂度主要取决于递归的栈空间的消耗，而递归至多有 nn 层。
+
+方法二：动态规划 + 状态压缩
+思路及算法
+
+按照朴素的思路，我们按顺序给每一个工人安排工作，注意到当我们给第 ii 个工人分配工作的时候，能够选择的分配方案仅和前 i-1i−1 个人被分配的工作有关。因此我们考虑使用动态规划解决本题，只需要记录已经被分配了工作的工人数量，以及已经被分配的工作是哪些即可。
+
+因为工作数量较少，我们可以使用状态压缩的方式来表示已经被分配的工作是哪些。具体地，假设有 nn 个工作需要被分配，我们就使用一个 nn 位的二进制整数来表示哪些工作已经被分配，哪些工作尚未被分配，如果该二进制整数的第 ii 位为 11，那么第 ii 个工作已经被分配，否则第 ii 个工作尚未被分配。如有 33 个工作需要被分配，那么 5=(101)_25=(101) 
+2
+​	
+  即代表 第 00 和第 22 个工作已经被分配，第 11 个工作还未被分配。
+
+这样我们可以写出状态方程：f[i][j]f[i][j] 表示给前 ii 个人分配工作，工作的分配情况为 jj 时，完成所有工作的最短时间。注意这里的 jj 是一个二进制整数，表示了工作的分配情况。实际上我们也可以将 jj 看作一个集合，包含了已经被分配的工作。
+
+那么我们可以写出状态转移方程：
+
+f[i][j] = \min_{j'\in j}\{ \max(f[i-1][\complement_{j}j'], \textit{sum}[j'])\}
+f[i][j]= 
+j 
+′
+ ∈j
+min
+​	
+ {max(f[i−1][∁ 
+j
+​	
+ j 
+′
+ ],sum[j 
+′
+ ])}
+
+式中 \textit{sum}[j']sum[j 
+′
+ ] 表示集合 j'j 
+′
+  中的工作的总工作量，\complement_{j}j'∁ 
+j
+​	
+ j 
+′
+  表示集合 jj 中子集 j'j 
+′
+  的补集。状态转移方程的含义为，我们枚举 jj 的每一个子集 j'j 
+′
+ ，让其作为分配给工人 ii 的工作，这样我们需要给前 i-1i−1 个人分配 \complement_{j}j'∁ 
+j
+​	
+ j 
+′
+  的工作。
+
+在实际代码中，我们首先预处理出 \textit{sum}sum 数组，然后初始化 f[0][j]=sum[j]f[0][j]=sum[j]，最终答案即为 f[k-1][2^n-1]f[k−1][2 
+n
+ −1]（表示给全部 kk 个工人分配全部 nn 个工作，完成所有工作的最短时间）。
+
+代码
+
+C++JavaC#JavaScriptGolangC
+
+func minimumTimeRequired(jobs []int, k int) int {
+    n := len(jobs)
+    m := 1 << n
+    sum := make([]int, m)
+    for i := 1; i < m; i++ {
+        x := bits.TrailingZeros(uint(i))
+        y := i ^ 1<<x
+        sum[i] = sum[y] + jobs[x]
+    }
+
+    dp := make([][]int, k)
+    for i := range dp {
+        dp[i] = make([]int, m)
+    }
+    for i, s := range sum {
+        dp[0][i] = s
+    }
+
+    for i := 1; i < k; i++ {
+        for j := 0; j < (1 << n); j++ {
+            minn := math.MaxInt64
+            for x := j; x > 0; x = (x - 1) & j {
+                minn = min(minn, max(dp[i-1][j-x], sum[x]))
+            }
+            dp[i][j] = minn
+        }
+    }
+    return dp[k-1][(1<<n)-1]
+}
+
+func min(a, b int) int {
+    if a < b {
+        return a
+    }
+    return b
+}
+
+func max(a, b int) int {
+    if a > b {
+        return a
+    }
+    return b
+}
+复杂度分析
+
+时间复杂度：O(n\times 3^n)O(n×3 
+n
+ )，其中 nn 是数组 \textit{jobs}jobs 的长度。我们需要 O(2^n)O(2 
+n
+ ) 的时间预处理 \textit{sum}sum 数组。动态规划中共有 O(n \times 2^n)O(n×2 
+n
+ ) 种状态，将每个状态看作集合，大小为 kk 的集合有 n \times C_n^kn×C 
+n
+k
+​	
+  个，其转移个数为 2^k2 
+k
+ ，根据二项式定理有
+
+\sum_{k=0}^nC_n^k2^k=\sum_{k=0}^nC_n^k2^k1^{n-k}=(2+1)^n=3^n
+k=0
+∑
+n
+​	
+ C 
+n
+k
+​	
+ 2 
+k
+ = 
+k=0
+∑
+n
+​	
+ C 
+n
+k
+​	
+ 2 
+k
+ 1 
+n−k
+ =(2+1) 
+n
+ =3 
+n
+ 
+
+因此动态规划的时间复杂度为 O(n \times 3^n)O(n×3 
+n
+ )，故总时间复杂度为 O(n\times 3^n)O(n×3 
+n
+ )。
+
+空间复杂度：O(n\times 2^{n})O(n×2 
+n
+ )。我们需要保存动态规划的每一个状态。
+
+作者：LeetCode-Solution
+链接：https://leetcode-cn.com/problems/find-minimum-time-to-finish-all-jobs/solution/wan-cheng-suo-you-gong-zuo-de-zui-duan-s-hrhu/
+来源：力扣（LeetCode）
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+'''
