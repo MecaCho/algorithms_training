@@ -207,6 +207,47 @@ func minDays(bloomDay []int, m int, k int) int {
 }
 '''
 
+# golang solution
+
+'''
+func minDays(bloomDay []int, m int, k int) int {
+    if k * m > len(bloomDay){
+        return -1
+    }
+	check := func(mid int) bool {
+		res := 0
+		cur := 0
+		for i := 0; i < len(bloomDay); i++ {
+			if bloomDay[i] <= mid {
+				cur++
+			} else {
+				cur = 0
+			}
+			if cur/k == 1 {
+				cur = 0
+				res++
+				if res >= m {
+					return true
+				}
+			}
+		}
+
+		return false
+	}
+
+	r := 0
+	for _, b := range bloomDay {
+		if b > r {
+			r = b
+		}
+	}
+	
+	return sort.Search(
+		r, check,
+		)
+}
+'''
+
 # tips
 
 '''
