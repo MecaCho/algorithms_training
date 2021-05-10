@@ -121,3 +121,76 @@ class Solution(object):
 
         return vals1 == vals2
 
+# solutions
+
+'''
+方法一：深度优先搜索
+思路与算法
+
+我们可以使用深度优先搜索的方法得到一棵树的「叶值序列」。
+
+具体地，在深度优先搜索的过程中，我们总是先搜索当前节点的左子节点，再搜索当前节点的右子节点。如果我们搜索到一个叶节点，就将它的值放入序列中。
+
+在得到了两棵树分别的「叶值序列」后，我们比较它们是否相等即可。
+
+代码
+
+C++JavaC#Python3JavaScriptGolangC
+
+func leafSimilar(root1, root2 *TreeNode) bool {
+    vals := []int{}
+    var dfs func(*TreeNode)
+    dfs = func(node *TreeNode) {
+        if node == nil {
+            return
+        }
+        if node.Left == nil && node.Right == nil {
+            vals = append(vals, node.Val)
+            return
+        }
+        dfs(node.Left)
+        dfs(node.Right)
+    }
+    dfs(root1)
+    vals1 := append([]int(nil), vals...)
+    vals = []int{}
+    dfs(root2)
+    if len(vals) != len(vals1) {
+        return false
+    }
+    for i, v := range vals1 {
+        if v != vals[i] {
+            return false
+        }
+    }
+    return true
+}
+复杂度分析
+
+时间复杂度：O(n_1 + n_2)O(n 
+1
+​	
+ +n 
+2
+​	
+ )，其中 n_1n 
+1
+​	
+  和 n_2n 
+2
+​	
+  分别是两棵树的节点个数。
+
+空间复杂度：O(n_1 + n_2)O(n 
+1
+​	
+ +n 
+2
+​	
+ )。空间复杂度主要取决于存储「叶值序列」的空间以及深度优先搜索的过程中需要使用的栈空间。
+
+作者：LeetCode-Solution
+链接：https://leetcode-cn.com/problems/leaf-similar-trees/solution/xie-zi-xiang-si-de-shu-by-leetcode-solut-z0w6/
+来源：力扣（LeetCode）
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+'''
