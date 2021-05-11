@@ -101,3 +101,88 @@ func Decode(encoded []int) []int {
 	return res
 }
 '''
+
+
+# solutions
+
+'''
+方法一：利用异或运算解码
+这道题规定了数组 \textit{perm}perm 是前 nn 个正整数的排列，其中 nn 是奇数，只有充分利用给定的条件，才能得到答案。
+
+为了得到原始数组 \textit{perm}perm，应首先得到数组 \textit{perm}perm 的第一个元素（即下标为 00 的元素），这也是最容易得到的。如果能得到数组 \textit{perm}perm 的全部元素的异或运算结果，以及数组 \textit{perm}perm 除了 \textit{perm}[0]perm[0] 以外的全部元素的异或运算结果，即可得到 \textit{perm}[0]perm[0] 的值。
+
+由于数组 \textit{perm}perm 是前 nn 个正整数的排列，因此数组 \textit{perm}perm 的全部元素的异或运算结果即为从 11 到 nn 的全部正整数的异或运算结果。用 \textit{total}total 表示数组 \textit{perm}perm 的全部元素的异或运算结果，则有
+
+\begin{aligned} \textit{total} &= 1 \oplus 2 \oplus \ldots \oplus n \\ &= \textit{perm}[0] \oplus \textit{perm}[1] \oplus \ldots \oplus \textit{perm}[n-1] \end{aligned}
+total
+​	
+  
+=1⊕2⊕…⊕n
+=perm[0]⊕perm[1]⊕…⊕perm[n−1]
+​	
+ 
+
+其中 \oplus⊕ 是异或运算符。
+
+如何得到数组 \textit{perm}perm 除了 \textit{perm}[0]perm[0] 以外的全部元素的异或运算结果？由于 nn 是奇数，除了 \textit{perm}[0]perm[0] 以外，数组 \textit{perm}perm 还有 n-1n−1 个其他元素，n-1n−1 是偶数，又由于数组 \textit{encoded}encoded 的每个元素都是数组 \textit{perm}perm 的两个元素异或运算的结果，因此数组 \textit{encoded}encoded 中存在 \frac{n-1}{2} 
+2
+n−1
+​	
+  个元素，这些元素的异或运算的结果为数组 \textit{perm}perm 除了 \textit{perm}[0]perm[0] 以外的全部元素的异或运算结果。
+
+具体而言，数组 \textit{encoded}encoded 的所有下标为奇数的元素的异或运算结果即为数组 \textit{perm}perm 除了 \textit{perm}[0]perm[0] 以外的全部元素的异或运算结果。用 \textit{odd}odd 表示数组 \textit{encoded}encoded 的所有下标为奇数的元素的异或运算结果，则有
+
+\begin{aligned} \textit{odd} &= \textit{encoded}[1] \oplus \textit{encoded}[3] \oplus \ldots \oplus \textit{encoded}[n-2] \\ &= \textit{perm}[1] \oplus \textit{perm}[2] \oplus \ldots \oplus \textit{perm}[n] \end{aligned}
+odd
+​	
+  
+=encoded[1]⊕encoded[3]⊕…⊕encoded[n−2]
+=perm[1]⊕perm[2]⊕…⊕perm[n]
+​	
+ 
+
+根据 \textit{total}total 和 \textit{odd}odd 的值，即可计算得到 \textit{perm}[0]perm[0] 的值：
+
+\begin{aligned} \textit{perm}[0] &= (\textit{perm}[0] \oplus \ldots \oplus \textit{perm}[n]) \oplus (\textit{perm}[1] \oplus \ldots \oplus \textit{perm}[n]) \\ &= \textit{total} \oplus \textit{odd} \end{aligned}
+perm[0]
+​	
+  
+=(perm[0]⊕…⊕perm[n])⊕(perm[1]⊕…⊕perm[n])
+=total⊕odd
+​	
+ 
+
+当 1 \le i<n1≤i<n 时，有 \textit{encoded}[i-1]=\textit{perm}[i-1] \oplus \textit{perm}[i]encoded[i−1]=perm[i−1]⊕perm[i]。在等号两边同时异或 \textit{perm}[i-1]perm[i−1]，即可得到 \textit{perm}[i]=\textit{perm}[i-1] \oplus \textit{encoded}[i-1]perm[i]=perm[i−1]⊕encoded[i−1]。计算过程见「1720. 解码异或后的数组的官方题解」。
+
+由于 \textit{perm}[0]perm[0] 已知，因此对 ii 从 11 到 n-1n−1 依次计算 \textit{perm}[i]perm[i] 的值，即可得到原始数组 \textit{perm}perm。
+
+JavaC#JavaScriptGolangC++CPython3
+
+func decode(encoded []int) []int {
+    n := len(encoded)
+    total := 0
+    for i := 1; i <= n+1; i++ {
+        total ^= i
+    }
+    odd := 0
+    for i := 1; i < n; i += 2 {
+        odd ^= encoded[i]
+    }
+    perm := make([]int, n+1)
+    perm[0] = total ^ odd
+    for i, v := range encoded {
+        perm[i+1] = perm[i] ^ v
+    }
+    return perm
+}
+复杂度分析
+
+时间复杂度：O(n)O(n)，其中 nn 是原始数组 \textit{perm}perm 的长度。计算 \textit{total}total 和 \textit{odd}odd 各需要遍历长度为 n-1n−1 的数组 \textit{encoded}encoded 一次，计算原数组 \textit{perm}perm 的每个元素值也需要遍历长度为 n-1n−1 的数组 \textit{encoded}encoded 一次。
+
+空间复杂度：O(1)O(1)。注意空间复杂度不考虑返回值。
+
+作者：LeetCode-Solution
+链接：https://leetcode-cn.com/problems/decode-xored-permutation/solution/jie-ma-yi-huo-hou-de-pai-lie-by-leetcode-9gw4/
+来源：力扣（LeetCode）
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+'''
