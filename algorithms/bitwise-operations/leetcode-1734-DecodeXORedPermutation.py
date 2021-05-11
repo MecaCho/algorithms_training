@@ -77,8 +77,9 @@ class Solution(object):
         
         return perm
 
-# solutions
+# golang solutions
 
+# 204 ms	9.8 MB
 '''
 func Decode(encoded []int) []int {
 	n := len(encoded)
@@ -101,6 +102,31 @@ func Decode(encoded []int) []int {
 	return res
 }
 '''
+
+# 180 ms	9.8 MB
+'''
+func decode(encoded []int) []int {
+    n := len(encoded)
+	total := 0
+	for i := 1; i <= n+1; i++ {
+		total ^= i
+	}
+
+	odd := 0
+	for i := 1; i < n; i += 2 {
+		odd ^= encoded[i]
+	}
+
+    res := make([]int, n+1)
+	res[0] = total ^ odd
+	for i := 1; i <= n; i++ {
+		res[i] = res[i-1]^encoded[i-1]
+	}
+
+	return res
+}
+'''
+
 
 
 # solutions
