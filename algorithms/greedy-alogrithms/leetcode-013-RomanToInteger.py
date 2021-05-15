@@ -112,3 +112,48 @@ class Solution(object):
                 res += value
                 s = s[2:]
         return res
+    
+    
+# solutions
+
+‘’‘
+方法一：模拟
+思路
+
+通常情况下，罗马数字中小的数字在大的数字的右边。若输入的字符串满足该情况，那么可以将每个字符视作一个单独的值，累加每个字符对应的数值即可。
+
+例如 \texttt{XXVII}XXVII 可视作 \texttt{X}+\texttt{X}+\texttt{V}+\texttt{I}+\texttt{I}=10+10+5+1+1=27X+X+V+I+I=10+10+5+1+1=27。
+
+若存在小的数字在大的数字的左边的情况，根据规则需要减去小的数字。对于这种情况，我们也可以将每个字符视作一个单独的值，若一个数字右侧的数字比它大，则将该数字的符号取反。
+
+例如 \texttt{XIV}XIV 可视作 \texttt{X}-\texttt{I}+\texttt{V}=10-1+5=14X−I+V=10−1+5=14。
+
+代码
+
+C++JavaC#GolangJavaScriptPython3C
+
+var symbolValues = map[byte]int{'I': 1, 'V': 5, 'X': 10, 'L': 50, 'C': 100, 'D': 500, 'M': 1000}
+
+func romanToInt(s string) (ans int) {
+    n := len(s)
+    for i := range s {
+        value := symbolValues[s[i]]
+        if i < n-1 && value < symbolValues[s[i+1]] {
+            ans -= value
+        } else {
+            ans += value
+        }
+    }
+    return
+}
+复杂度分析
+
+时间复杂度：O(n)O(n)，其中 nn 是字符串 ss 的长度。
+
+空间复杂度：O(1)O(1)。
+
+作者：LeetCode-Solution
+链接：https://leetcode-cn.com/problems/roman-to-integer/solution/luo-ma-shu-zi-zhuan-zheng-shu-by-leetcod-w55p/
+来源：力扣（LeetCode）
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+’‘’
