@@ -112,3 +112,118 @@ class Solution(object):
             return True
         return False
       
+# solutions
+
+'''
+前言
+要想判断两个节点 xx 和 yy 是否为堂兄弟节点，我们就需要求出这两个节点分别的「深度」以及「父节点」。
+
+因此，我们可以从根节点开始，对树进行一次遍历，在遍历的过程中维护「深度」以及「父节点」这两个信息。当我们遍历到 xx 或 yy 节点时，就将信息记录下来；当这两个节点都遍历完成了以后，我们就可以退出遍历的过程，判断它们是否为堂兄弟节点了。
+
+常见的遍历方法有两种：深度优先搜索和广度优先搜索。
+
+方法一：深度优先搜索
+思路与算法
+
+我们只需要在深度优先搜索的递归函数中增加表示「深度」以及「父节点」的两个参数即可。
+
+代码
+
+C++JavaC#Python3JavaScriptGolangC
+
+func isCousins(root *TreeNode, x, y int) bool {
+    var xParent, yParent *TreeNode
+    var xDepth, yDepth int
+    var xFound, yFound bool
+
+    var dfs func(node, parent *TreeNode, depth int)
+    dfs = func(node, parent *TreeNode, depth int) {
+        if node == nil {
+            return
+        }
+
+        if node.Val == x {
+            xParent, xDepth, xFound = parent, depth, true
+        } else if node.Val == y {
+            yParent, yDepth, yFound = parent, depth, true
+        }
+
+        // 如果两个节点都找到了，就可以提前退出遍历
+        // 即使不提前退出，对最坏情况下的时间复杂度也不会有影响
+        if xFound && yFound {
+            return
+        }
+
+        dfs(node.Left, node, depth+1)
+
+        if xFound && yFound {
+            return
+        }
+
+        dfs(node.Right, node, depth+1)
+    }
+    dfs(root, nil, 0)
+
+    return xDepth == yDepth && xParent != yParent
+}
+复杂度分析
+
+时间复杂度：O(n)O(n)，其中 nn 是树中的节点个数。在最坏情况下，我们需要遍历整棵树，时间复杂度为 O(n)O(n)。
+
+空间复杂度：O(n)O(n)，即为深度优先搜索的过程中需要使用的栈空间。在最坏情况下，树呈现链状结构，递归的深度为 O(n)O(n)。
+
+方法二：广度优先搜索
+思路与算法
+
+在广度优先搜索的过程中，每当我们从队首取出一个节点，它就会作为「父节点」，将最多两个子节点放入队尾。因此，除了节点以外，我们只需要在队列中额外存储「深度」的信息即可。
+
+代码
+
+C++JavaC#Python3JavaScriptGolangC
+
+func isCousins(root *TreeNode, x, y int) bool {
+    var xParent, yParent *TreeNode
+    var xDepth, yDepth int
+    var xFound, yFound bool
+
+    // 用来判断是否遍历到 x 或 y 的辅助函数
+    update := func(node, parent *TreeNode, depth int) {
+        if node.Val == x {
+            xParent, xDepth, xFound = parent, depth, true
+        } else if node.Val == y {
+            yParent, yDepth, yFound = parent, depth, true
+        }
+    }
+
+    type pair struct {
+        node  *TreeNode
+        depth int
+    }
+    q := []pair{{root, 0}}
+    update(root, nil, 0)
+    for len(q) > 0 && (!xFound || !yFound) {
+        node, depth := q[0].node, q[0].depth
+        q = q[1:]
+        if node.Left != nil {
+            q = append(q, pair{node.Left, depth + 1})
+            update(node.Left, node, depth+1)
+        }
+        if node.Right != nil {
+            q = append(q, pair{node.Right, depth + 1})
+            update(node.Right, node, depth+1)
+        }
+    }
+
+    return xDepth == yDepth && xParent != yParent
+}
+复杂度分析
+
+时间复杂度：O(n)O(n)，其中 nn 是树中的节点个数。在最坏情况下，我们需要遍历整棵树，时间复杂度为 O(n)O(n)。
+
+空间复杂度：O(n)O(n)，即为广度优先搜索的过程中需要使用的队列空间。
+
+作者：LeetCode-Solution
+链接：https://leetcode-cn.com/problems/cousins-in-binary-tree/solution/er-cha-shu-de-tang-xiong-di-jie-dian-by-mfh2d/
+来源：力扣（LeetCode）
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+'''
