@@ -97,6 +97,78 @@ class Solution(object):
         # print(dp)
         return dp[-1][-1]
 
+# solutions
 
+'''
+方法一：动态规划
+给定两个数组 \textit{nums}_1nums 
+状态转移方程：
+
+\textit{dp}[i][j] = \begin{cases} \textit{dp}[i-1][j-1]+1, & \textit{nums}_1[i-1]=\textit{nums}_2[j-1] \\ \max(\textit{dp}[i-1][j],\textit{dp}[i][j-1]), & \textit{nums}_1[i-1] \ne \textit{nums}_2[j-1] \end{cases}
+dp[i][j]={ 
+dp[i−1][j−1]+1,
+max(dp[i−1][j],dp[i][j−1]),
+
+ 
+
+最终计算得到 \textit{dp}[m][n]dp[m][n] 即为数组 \textit{nums}_1nums 
+1
+​	
+  和 \textit{nums}_2nums 
+2
+​	
+  的最长公共子序列的长度，即可以绘制的最大连线数。
+
+
+
+JavaC#JavaScriptGolangPython3C++C
+
+func maxUncrossedLines(nums1, nums2 []int) int {
+    m, n := len(nums1), len(nums2)
+    dp := make([][]int, m+1)
+    for i := range dp {
+        dp[i] = make([]int, n+1)
+    }
+    for i, v := range nums1 {
+        for j, w := range nums2 {
+            if v == w {
+                dp[i+1][j+1] = dp[i][j] + 1
+            } else {
+                dp[i+1][j+1] = max(dp[i][j+1], dp[i+1][j])
+            }
+        }
+    }
+    return dp[m][n]
+}
+
+func max(a, b int) int {
+    if a > b {
+        return a
+    }
+    return b
+}
+复杂度分析
+
+时间复杂度：O(mn)O(mn)，其中 mm 和 nn 分别是数组 \textit{nums}_1nums 
+1
+​	
+  和 \textit{nums}_2nums 
+2
+​	
+  的长度。二维数组 \textit{dp}dp 有 m+1m+1 行和 n+1n+1 列，需要对 \textit{dp}dp 中的每个元素进行计算。
+
+空间复杂度：O(mn)O(mn)，其中 mm 和 nn 分别是数组 \textit{nums}_1nums 
+1
+​	
+  和 \textit{nums}_2nums 
+2
+​	
+  的长度。创建了 m+1m+1 行 n+1n+1 列的二维数组 \textit{dp}dp。
+
+作者：LeetCode-Solution
+链接：https://leetcode-cn.com/problems/uncrossed-lines/solution/bu-xiang-jiao-de-xian-by-leetcode-soluti-6tqz/
+来源：力扣（LeetCode）
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+'''
 
 
