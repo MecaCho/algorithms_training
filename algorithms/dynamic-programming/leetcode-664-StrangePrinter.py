@@ -1,6 +1,7 @@
 # encoding=utf8
 
 
+
 '''
 664. Strange Printer
 
