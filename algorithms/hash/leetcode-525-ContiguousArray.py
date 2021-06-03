@@ -74,6 +74,37 @@ class Solution(object):
 
         return res
 
+# golang solution
+
+'''
+func findMaxLength(nums []int) int {
+    max := func(a, b int) int {
+		if b > a {
+			return b
+		}
+		return a
+	}
+	counter := 0
+
+	indexMap := make(map[int]int, len(nums))
+    indexMap[0] = -1
+	res := 0
+	for i, num := range nums {
+		if num == 1 {
+			counter++
+		} else {
+			counter--
+		}
+		v, ok := indexMap[counter]
+		if ok {
+			res = max(res, i-v)
+		} else {
+			indexMap[counter] = i
+		}
+	}
+	return res
+}
+'''
 
 # solutions
 
