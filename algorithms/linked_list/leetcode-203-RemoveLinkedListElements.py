@@ -1,6 +1,15 @@
 
 
 '''
+203. Remove Linked List Elements
+Remove all elements from a linked list of integers that have value val.
+
+Example:
+
+Input:  1->2->6->3->4->5->6, val = 6
+Output: 1->2->3->4->5
+
+
 203. 移除链表元素
 删除链表中等于给定值 val 的所有节点。
 
@@ -9,14 +18,6 @@
 输入: 1->2->6->3->4->5->6, val = 6
 输出: 1->2->3->4->5
 
-
-203. Remove Linked List Elements
-Remove all elements from a linked list of integers that have value val.
-
-Example:
-
-Input:  1->2->6->3->4->5->6, val = 6
-Output: 1->2->3->4->5
 '''
 
 
@@ -74,6 +75,30 @@ func removeElements(head *ListNode, val int) *ListNode {
 	}
 
 	return dummy.Next
+}
+'''
+
+# golang solution1
+
+'''
+/**
+ * Definition for singly-linked list.
+ * type ListNode struct {
+ *     Val int
+ *     Next *ListNode
+ * }
+ */
+func removeElements(head *ListNode, val int) *ListNode {
+	pre := &ListNode{Val: 0}
+	pre.Next = head
+	p := pre
+	for p != nil{
+		for p.Next != nil && p.Next.Val == val{
+			p.Next = p.Next.Next
+		}
+		p = p.Next
+	}
+	return pre.Next
 }
 '''
 
