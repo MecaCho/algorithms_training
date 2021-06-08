@@ -90,4 +90,60 @@ class Solution(object):
 
         return sum_stones - 2*dp[sum_stones/2]
 
+       
+# solutions
 
+'''
+解题思路
+和昨天的每日一题有点像494. 目标和
+两个石头相撞，大的减小的，数组里面的数字有的前面是 “ + ” 有的是 “ - ”，相当于就是给这个数组，每个数字前面加上符号。
+(sum - neg) - neg = sum - 2 * neg 需要找出 neg 最接近sum/2 的值 ，即背包容量sum/2 ，求得是包内装最大的物品。
+dp数组 表示的是在有i件商品背包容量为j前提下，能装物品的最大值
+
+初始状态：dp[0][0] = 0; 当背包为0 ，能装进去的最大为0
+如果可以装下，可选择装不装下，判断大小：dp[i][j] = Math.max(dp[i-1][j] , dp[i-1][j - x] + x);
+
+代码
+
+class Solution {
+    public int lastStoneWeightII(int[] stones) {        
+        int n = stones.length , sum = 0;
+        for(int i = 0; i < n; i++){
+            sum += stones[i];
+        }
+        int l = sum/2 ;
+        //dp 表示的是在有i件商品背包容量为j前提下，能装物品的最大值
+        int[][] dp = new int[n + 1][l+1];
+        // dp[0][0] = 0; 当背包为0 ，能装进去的最大为0
+
+        for(int i = 1 ; i < n + 1; i++){
+            int x =  stones[i-1];
+            for(int j = 0; j < l + 1; j++ ){
+                if(j < stones[i - 1]){
+                    dp[i][j] = dp[i-1][j];
+                }else{
+                    //如果可以装下，可选择装不装下，判断大小
+                    dp[i][j] = Math.max(dp[i-1][j] , dp[i-1][j - x] + x);
+                }
+            }
+        }
+
+        return Math.abs(sum - dp[n][l] * 2);
+
+    }
+}
+
+
+作者：xue-you-yong-de-ben-mao
+链接：https://leetcode-cn.com/problems/last-stone-weight-ii/solution/1049-zui-hou-yi-kuai-shi-tou-de-zhong-li-vfx7/
+来源：力扣（LeetCode）
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+'''
+
+# tips
+
+'''
+Think of the final answer as a sum of weights with + or - sign symbols infront of each weight. Actually, all sums with 1 of each sign symbol are possible.
+
+Use dynamic programming: for every possible sum with N stones, those sums +x or -x is possible with N+1 stones, where x is the value of the newest stone. (This overcounts sums that are all positive or all negative, but those don't matter.)
+'''
