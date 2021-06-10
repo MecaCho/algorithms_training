@@ -161,3 +161,19 @@ class Solution:
 时间复杂度：\mathcal{O}(N \times \textrm{amount})O(N×amount)。其中 N 为 coins 数组的长度。
 空间复杂度：\mathcal{O}(\textrm{amount})O(amount)，dp 数组使用的空间。
 '''
+
+# golang solution
+
+'''
+func change(amount int, coins []int) int {
+	dp := make([]int, amount+1)
+	dp[0] = 1
+	for _, coin := range coins {
+		for num := coin; num <= amount; num++ {
+			dp[num] = dp[num-coin] + dp[num]
+		}
+	}
+	return dp[amount]
+
+}
+'''
