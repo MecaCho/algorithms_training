@@ -12,8 +12,8 @@
 输入: n = 13
 输出: 2
 解释: 13 = 4 + 9.
-Perfect Squares
-279. 
+
+279. Perfect Squares
 Given a positive integer n, find the least number of perfect square numbers (for example, 1, 4, 9, 16, ...) which sum to n.
 
 Example 1:
@@ -45,3 +45,27 @@ class Solution(object):
                 if i - sqrt_num >= 0:
                     dp[i] = min(dp[i], dp[i-sqrt_num] + 1)
         return dp[n]
+
+    
+# golang solution
+
+'''
+func numSquares(n int) int {
+	dp := make([]int, n+1)
+
+	min := func(a, b int) int {
+		if a < b {
+			return a
+		}
+		return b
+	}
+
+	for i := 1; i <= n; i++ {
+		dp[i] = i
+		for k := 1; k*k <= i; k++ {
+			dp[i] = min(dp[i-k*k]+1, dp[i])
+		}
+	}
+	return dp[n]
+}
+'''
