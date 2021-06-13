@@ -1,3 +1,5 @@
+# encoding=utf8
+
 '''
 278. First Bad Version
 You are a product manager and currently leading a team to develop a new product. Unfortunately, the latest version of your product fails the quality check. Since each version is developed based on the previous version, all the versions after a bad version are also bad.
@@ -56,3 +58,25 @@ class Solution(object):
             else:
                 i = mid + 1
         return i
+    
+# solution
+
+# The isBadVersion API is already defined for you.
+# @param version, an integer
+# @return a bool
+# def isBadVersion(version):
+
+class Solution(object):
+    def firstBadVersion20210613(self, n):
+        """
+        :type n: int
+        :rtype: int
+        """
+        l, r = 1, n
+        while l < r:
+            mid = (l+r)/2
+            if isBadVersion(mid):
+                r = mid
+            else:
+                l = mid + 1
+        return l
