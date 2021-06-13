@@ -80,3 +80,37 @@ class Solution(object):
             else:
                 l = mid + 1
         return l
+    
+    
+# solutions
+
+'''
+方法一：二分查找
+思路及算法
+
+因为题目要求尽量减少调用检查接口的次数，所以不能对每个版本都调用检查接口，而是应该将调用检查接口的次数降到最低。
+
+注意到一个性质：当一个版本为正确版本，则该版本之前的所有版本均为正确版本；当一个版本为错误版本，则该版本之后的所有版本均为错误版本。我们可以利用这个性质进行二分查找。
+
+具体地，将左右边界分别初始化为 11 和 nn，其中 nn 是给定的版本数量。设定左右边界之后，每次我们都依据左右边界找到其中间的版本，检查其是否为正确版本。如果该版本为正确版本，那么第一个错误的版本必然位于该版本的右侧，我们缩紧左边界；否则第一个错误的版本必然位于该版本及该版本的左侧，我们缩紧右边界。
+
+这样我们每判断一次都可以缩紧一次边界，而每次缩紧时两边界距离将变为原来的一半，因此我们至多只需要缩紧 O(\log n)O(logn) 次。
+
+代码
+
+C++JavaC#GolangJavaScriptC
+
+func firstBadVersion(n int) int {
+    return sort.Search(n, func(version int) bool { return isBadVersion(version) })
+}
+复杂度分析
+
+时间复杂度：O(\log n)O(logn)，其中 nn 是给定版本的数量。
+
+空间复杂度：O(1)O(1)。我们只需要常数的空间保存若干变量。
+
+作者：LeetCode-Solution
+链接：https://leetcode-cn.com/problems/first-bad-version/solution/di-yi-ge-cuo-wu-de-ban-ben-by-leetcode-s-pf8h/
+来源：力扣（LeetCode）
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+'''
