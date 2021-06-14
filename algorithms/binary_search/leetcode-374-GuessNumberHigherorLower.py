@@ -125,3 +125,41 @@ func guessNumber(n int) int {
 }
 '''
 
+
+
+# solutions
+
+'''
+方法一：二分查找
+记选出的数字为 \textit{pick}pick，猜测的数字为 xx。根据题目描述，若 \texttt{guess}(x)\le 0guess(x)≤0 则说明 x\ge\textit{pick}x≥pick，否则 x<\textit{pick}x<pick。
+
+根据这一性质我们可以使用二分查找来求出答案 \textit{pick}pick。
+
+二分时，记当前区间为 [\textit{left},\textit{right}][left,right]，初始时 \textit{left}=1left=1，\textit{right}=nright=n。记区间中间元素为 \textit{mid}mid，若有 \texttt{guess}(mid)\le 0guess(mid)≤0 则说明 \textit{pick} \in [\textit{left},\textit{mid}]pick∈[left,mid]，否则 \textit{pick} \in [\textit{mid}+1,\textit{right}]pick∈[mid+1,right]。当区间左右端点相同时，则说明我们找到了答案，退出循环。
+
+C++JavaC#GolangJavaScriptCPython3
+
+class Solution:
+    def guessNumber(self, n: int) -> int:
+        left, right = 1, n
+        while left < right:
+            mid = (left + right) // 2
+            if guess(mid) <= 0:
+                right = mid   # 答案在区间 [left, mid] 中
+            else:
+                left = mid + 1   # 答案在区间 [mid+1, right] 中
+        
+        # 此时有 left == right，区间缩为一个点，即为答案
+        return left
+复杂度分析
+
+时间复杂度：O(\log n)O(logn)。时间复杂度即为二分的次数，每次二分我们将区间的长度减小一半，直至区间长度为 11 时二分终止，而区间初始长度为 nn，因此二分次数为 O(\log n)O(logn)。
+
+空间复杂度：O(1)O(1)。
+
+作者：LeetCode-Solution
+链接：https://leetcode-cn.com/problems/guess-number-higher-or-lower/solution/cai-shu-zi-da-xiao-by-leetcode-solution-qdzu/
+来源：力扣（LeetCode）
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+'''
+
