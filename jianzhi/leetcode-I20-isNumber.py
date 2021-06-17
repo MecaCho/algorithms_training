@@ -1,3 +1,5 @@
+# encoding=utf8
+
 '''
 65. 有效数字
 验证给定的字符串是否可以解释为十进制数字。
@@ -100,6 +102,32 @@ if __name__ == '__main__':
     for s in ["+100", "5e2", "-123", "3.1416", "0123", "-1E-16", " ", "12e", "1a3.14", "1.2.3", "+-5", "12e+5.4"]:
         print(s, demo.isNumber(s))
 
+        
+class Solution(object):
+    def isNumber(self, s):
+        """
+        :type s: str
+        :rtype: bool
+        """
+        s = s.strip()
+        met_dot = met_e = met_digit = False
+        for i, char in enumerate(s):
+            if char in ('+', '-'):
+                if i > 0 and s[i-1] != 'e' and s[i-1] != 'E':
+                    return False
+            elif char == '.':
+                if met_dot or met_e: 
+                    return False
+                met_dot = True
+            elif char == 'e' or char == 'E':
+                if met_e or not met_digit:
+                    return False
+                met_e, met_digit = True, False # e后必须接，所以这时重置met_digit为False,以免e为最后一个char
+            elif char.isdigit():
+                met_digit = True
+            else:
+                return False
+        return met_digit
 
 # solution
 
