@@ -40,3 +40,25 @@ class Solution(object):
                     dfs(tmp, res+vals[i])
         dfs(s_list, "")
         return list(set(self.res))
+    
+    
+# solution
+
+class Solution20210622(object):
+    def permutation(self, s):
+        """
+        :type s: str
+        :rtype: List[str]
+        """
+        self.vals = []
+        s = "".join(sorted(list(s)))
+        def bk(chars, tmp):
+            if len(tmp) == len(s):
+                self.vals.append(tmp)
+            pre = None
+            for i in range(len(chars)):
+                if not pre or pre != chars[i]:
+                    bk(chars[:i]+chars[i+1:], tmp+chars[i])
+                    pre = chars[i]
+        bk(s, "")
+        return self.vals
