@@ -94,3 +94,28 @@ class Solution(object):
             columnNumber /= 26
         return res
 
+# solutions
+
+'''
+class Solution:
+    def convertToTitle(self, columnNumber: int) -> str:
+        ans = list()
+        while columnNumber > 0:
+            a0 = (columnNumber - 1) % 26 + 1
+            ans.append(chr(a0 - 1 + ord("A")))
+            columnNumber = (columnNumber - a0) // 26
+        return "".join(ans[::-1])
+
+'''
+
+
+'''
+class Solution:
+    def convertToTitle(self, columnNumber: int) -> str:
+        ans = list()
+        while columnNumber > 0:
+            columnNumber -= 1
+            ans.append(chr(columnNumber % 26 + ord("A")))
+            columnNumber //= 26
+        return "".join(ans[::-1])
+'''
