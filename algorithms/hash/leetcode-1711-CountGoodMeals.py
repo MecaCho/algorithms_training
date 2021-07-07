@@ -69,6 +69,24 @@ func countPairs(deliciousness []int) int {
 	sort.Ints(deliciousness)
 	maxNum := deliciousness[len(deliciousness)-1] * 2
 	desMap := make(map[int]int)
+    res := 0
+	for _, val := range deliciousness {
+        for sum := 1; sum <= maxNum; sum <<= 1 {
+            res += desMap[sum-val]
+        }
+        desMap[val]++
+	}
+	return res % 1000000007
+}
+'''
+
+# golang solution
+
+'''
+func countPairs(deliciousness []int) int {
+	sort.Ints(deliciousness)
+	maxNum := deliciousness[len(deliciousness)-1] * 2
+	desMap := make(map[int]int)
 	for _, v := range deliciousness {
 		if _, ok := desMap[v]; ok {
 			desMap[v]++
