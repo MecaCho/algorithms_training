@@ -150,6 +150,26 @@ class Solution20201201(object):
 
         return [left, right]
 
+   
+# golang solution
+
+'''
+func search(nums []int, target int) int {
+	length := len(nums)
+	l := sort.SearchInts(nums, target)
+    fmt.Println(l)
+	if l == length || nums[l] != target{
+		return 0
+	}
+
+	r := sort.Search(length, func(i int) bool {
+		return nums[i] > target
+	})
+	fmt.Println(r)
+
+	return r - l
+}
+'''
 
 
 if __name__ == '__main__':
