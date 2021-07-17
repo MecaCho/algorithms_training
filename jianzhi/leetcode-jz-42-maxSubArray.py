@@ -58,3 +58,32 @@ class Solution_(object):
             max_sum = max(max_sum, cur)
         return max_sum
 
+# golang solution
+
+'''
+func maxSubArray(nums []int) int {
+	if len(nums) < 1{
+		return -2147483648
+	}
+	
+	max := func(a, b int) int{
+		if a > b{
+			return a
+		}
+		return b
+	}
+	
+
+	cur, res := nums[0], nums[0]
+	for i := 1; i < len(nums); i++{
+		num := nums[i]
+		if cur < 0{
+			cur = num
+		}else {
+			cur += num
+		}
+		res = max(cur, res)
+	}
+	return res
+}
+'''
