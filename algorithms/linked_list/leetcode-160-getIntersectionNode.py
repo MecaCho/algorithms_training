@@ -110,6 +110,43 @@ class Solution(object):
             headA_ = headA_.next if headA_ else headB
             headB_ = headB_.next if headB_ else headA
         return headA_
+
+       
+# Definition for singly-linked list.
+# class ListNode(object):
+#     def __init__(self, x):
+#         self.val = x
+#         self.next = None
+
+class Solution1(object):
+    def getIntersectionNode(self, headA, headB):
+        """
+        :type head1, head1: ListNode
+        :rtype: ListNode
+        """
+        # 1,2,3,4,5,a,b,c
+        # a,b,c,1,2,3,4,5
+
+        # 1,2,3,a,b,4,a,b
+        # 4,a,b,1,2,3,a,b
+        newHeadA = headA
+        newHeadB = headB
+
+        while headA != headB:
+            # if not headA.next and not headB.next:
+            #     return None
+            if not headA:
+                headA = newHeadB
+            else:
+                headA = headA.next
+
+            if not headB:
+                headB = newHeadA
+            else:
+                headB = headB.next
+        return headA
+
+
 # golang solution
 
 '''
