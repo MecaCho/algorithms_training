@@ -1,4 +1,24 @@
+# encoding=utf8
+
 '''
+516. Longest Palindromic Subsequence
+Given a string s, find the longest palindromic subsequence's length in s. You may assume that the maximum length of s is 1000.
+
+Example 1:
+Input:
+
+"bbbab"
+Output:
+4
+One possible longest palindromic subsequence is "bbbb".
+Example 2:
+Input:
+
+"cbbd"
+Output:
+2
+One possible longest palindromic subsequence is "bb".
+
 516. 最长回文子序列
 给定一个字符串s，找到其中最长的回文子序列。可以假设s的最大长度为1000。
 
@@ -19,24 +39,6 @@
 
 2
 一个可能的最长回文子序列为 "bb"。
-
-516. Longest Palindromic Subsequence
-Given a string s, find the longest palindromic subsequence's length in s. You may assume that the maximum length of s is 1000.
-
-Example 1:
-Input:
-
-"bbbab"
-Output:
-4
-One possible longest palindromic subsequence is "bbbb".
-Example 2:
-Input:
-
-"cbbd"
-Output:
-2
-One possible longest palindromic subsequence is "bb".
 '''
 
 
@@ -61,6 +63,43 @@ class Solution(object):
         # print(dp)
         return dp[0][length-1]
 
+# golang solution
+
+'''
+func longestPalindromeSubseq(s string) int {
+	length := len(s)
+	max := func(a, b int)int {
+		if a > b{
+			return a
+		}
+		return b
+	}
+
+	dp := [][]int{}
+	for i := 0; i < length; i++{
+		dp = append(dp, []int{})
+		for j := 0; j < length; j++{
+            if i == j {
+			    dp[i] = append(dp[i], 1)
+            }else{
+                dp[i] = append(dp[i], 0)
+            }
+		}
+	}
+
+	for i := length - 2; i >= 0; i-- {
+		for j := i+1; j < length; j++ {
+			if s[i] == s[j] {
+				dp[i][j] = dp[i+1][j-1] + 2
+			}else {
+				dp[i][j] = max(dp[i+1][j], dp[i][j-1])
+			}
+		}
+	}
+
+	return dp[0][length-1]
+}
+'''
 
 
 # tips
