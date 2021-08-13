@@ -1,5 +1,14 @@
+# encoding=utf8
 
 '''
+233. Number of Digit One
+Given an integer n, count the total number of digit 1 appearing in all non-negative integers less than or equal to n.
+
+Example:
+
+Input: 13
+Output: 6
+Explanation: Digit 1 occurred in the following numbers: 1, 10, 11, 12, 13.
 
 233. 数字 1 的个数
 给定一个整数 n，计算所有小于等于 n 的非负整数中数字 1 出现的个数。
@@ -9,15 +18,6 @@
 输入: 13
 输出: 6
 解释: 数字 1 出现在以下数字中: 1, 10, 11, 12, 13 。
-
-233. Number of Digit One
-Given an integer n, count the total number of digit 1 appearing in all non-negative integers less than or equal to n.
-
-Example:
-
-Input: 13
-Output: 6
-Explanation: Digit 1 occurred in the following numbers: 1, 10, 11, 12, 13.
 '''
 
 
@@ -37,6 +37,36 @@ class Solution(object):
             i *= 10
 
         return count
+
+# golang solution
+
+'''
+func countDigitOne(n int) int {
+    min := func(a, b int) int{
+        if a < b {
+            return a
+        }
+        return b
+    }
+
+    max := func(a, b int) int {
+        if a > b {
+            return a
+        }
+        return b
+    }
+    
+    res := 0
+    for k, mulk := 0, 1; n >= mulk; k++ {
+        res += (n/(mulk*10))*mulk + min(max(n%(mulk*10)-mulk+1, 0), mulk)
+        mulk *= 10
+    }
+    return res
+}
+
+'''
+
+# solutions
 
 
 '''
