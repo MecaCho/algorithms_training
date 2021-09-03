@@ -37,3 +37,13 @@ class Solution(object):
         """
         heapq.heapify(arr)
         return heapq.nsmallest(k, arr)
+
+    
+# golang solution
+
+'''
+func smallestK(arr []int, k int) []int {
+	sort.Ints(arr)
+	return arr[:k]
+}
+'''
