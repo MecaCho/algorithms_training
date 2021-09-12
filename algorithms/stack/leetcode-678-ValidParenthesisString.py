@@ -32,6 +32,40 @@ Constraints:
 s[i] is '(', ')' or '*'.
 '''
 
+class Solution(object):
+    def checkValidString(self, s):
+        """
+        :type s: str
+        :rtype: bool
+        """
+        l_stack = []
+        s_stack = []
+        for i in range(len(s)):
+            if s[i] == "(":
+                l_stack.append(i)
+            elif s[i] == "*":
+                s_stack.append(i)
+            elif len(l_stack) > 0:
+                l_stack.pop()
+            elif len(s_stack) > 0:
+                s_stack.pop()
+            else:
+                return False
+
+        l = len(l_stack) - 1
+        s = len(s_stack) - 1
+
+        if s < l:
+            return False
+        while s >= 0 and l >= 0:
+            if l_stack[l] > s_stack[s]:
+                s -= 1
+            else:
+                s -= 1
+                l -= 1
+
+        return l < 0
+
 # golang solution
 
 '''
