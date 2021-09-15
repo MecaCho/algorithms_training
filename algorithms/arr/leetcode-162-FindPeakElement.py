@@ -1,3 +1,6 @@
+# encoding=utf8
+
+
 '''
 
 162. 寻找峰值
@@ -63,3 +66,18 @@ class Solution(object):
             if nums[i] > nums[i+1]:
                 return i
         return len(nums) - 1
+
+class Solution(object):
+    def findPeakElement(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        res = 0
+        for i in range(len(nums)):
+            if nums[i] > nums[res]:
+                res = i
+
+        return res
+
+    
