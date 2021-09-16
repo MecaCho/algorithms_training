@@ -1,3 +1,5 @@
+# encoding=utf8
+
 '''
 212. 单词搜索 II
 给定一个二维网格 board 和一个字典中的单词列表 words，找出所有同时在二维网格和字典中出现的单词。
@@ -144,6 +146,59 @@ class Solution(object):
                     dfs("", i, j)
 
         return sorted(self.res)
+
+      
+# solution
+
+class Trie(object):
+
+    def __init__(self):
+        self.children = defaultdict(Trie)
+        self.word = ""
+
+    def insert(self, word):
+        cur = self
+        for c in word:
+            cur = cur.children[c]
+        cur.is_word = True
+        cur.word = word
+
+class Solution(object):
+    def findWords(self, board, words):
+        """
+        :type board: List[List[str]]
+        :type words: List[str]
+        :rtype: List[str]
+        """
+        trie = Trie()
+        for word in words:
+            trie.insert(word)
+
+        def dfs(now, i1, j1):
+            if board[i1][j1] not in now.children:
+                return
+
+            ch = board[i1][j1]
+
+            now = now.children[ch]
+            if now.word != "":
+                ans.add(now.word)
+
+            board[i1][j1] = "#"
+            for i2, j2 in [(i1 + 1, j1), (i1 - 1, j1), (i1, j1 + 1), (i1, j1 - 1)]:
+                if 0 <= i2 < m and 0 <= j2 < n:
+                    dfs(now, i2, j2)
+            board[i1][j1] = ch
+
+        ans = set()
+        m, n = len(board), len(board[0])
+
+        for i in range(m):
+            for j in range(n):
+                dfs(trie, i, j)
+
+        return list(ans)
+
 
 
 '''
