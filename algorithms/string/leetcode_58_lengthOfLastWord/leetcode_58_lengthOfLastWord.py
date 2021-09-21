@@ -84,3 +84,21 @@ class Solution(object):
 if __name__ == '__main__':
     demo = Solution()
     print(demo.lengthOfLastWord("abc Hello jjfkd "))
+   
+   
+# Golang solution
+
+'''
+func lengthOfLastWord(s string) (ans int) {
+    index := len(s) - 1
+    for s[index] == ' ' {
+        index--
+    }
+    for index >= 0 && s[index] != ' ' {
+        ans++
+        index--
+    }
+    return
+}
+'''
+
