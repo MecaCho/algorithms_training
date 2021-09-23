@@ -1,3 +1,5 @@
+# encoding=utf8
+
 '''
 326. Power of Three
 Given an integer, write a function to determine if it is a power of three.
@@ -60,6 +62,18 @@ class Solution(object):
                 return False
             n /= 3
         return False
+
+    
+# golang solution
+
+'''
+func isPowerOfThree(n int) bool {
+    for n != 0 && n % 3 == 0{
+        n /= 3
+    }
+    return n == 1
+}
+'''
 
 if __name__ == '__main__':
     demo = Solution()
