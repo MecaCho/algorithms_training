@@ -1,5 +1,4 @@
-
-
+# encoding=utf8
 
 '''
 1436. 旅行终点站
@@ -88,6 +87,26 @@ class Solution(object):
         for i in range(len(paths)):
             if paths[i][1] not in starts:
                 return paths[i][1]
+            
+            
+class Solution(object):
+    def destCity(self, paths):
+        """
+        :type paths: List[List[str]]
+        :rtype: str
+        """
+        d = {}
+        for path in paths:
+            fm, to = path
+            d[fm] = to
+            if to not in d:
+                d[to] = None
+        
+        for key in d.keys():
+            if d[key] is None:
+                return key
+
+        
 
 
 # tips
