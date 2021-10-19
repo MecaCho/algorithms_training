@@ -1,5 +1,27 @@
+# encoding=utf8
+
 
 '''
+211. Add and Search Word - Data structure design
+Design a data structure that supports the following two operations:
+
+void addWord(word)
+bool search(word)
+search(word) can search a literal word or a regular expression string containing only letters a-z or .. A . means it can represent any one letter.
+
+Example:
+
+addWord("bad")
+addWord("dad")
+addWord("mad")
+search("pad") -> false
+search("bad") -> true
+search(".ad") -> true
+search("b..") -> true
+Note:
+You may assume that all words are consist of lowercase letters a-z.
+
+
 211. 添加与搜索单词 - 数据结构设计
 设计一个支持以下两种操作的数据结构：
 
@@ -20,24 +42,6 @@ search("b..") -> true
 
 你可以假设所有单词都是由小写字母 a-z 组成的。
 
-211. Add and Search Word - Data structure design
-Design a data structure that supports the following two operations:
-
-void addWord(word)
-bool search(word)
-search(word) can search a literal word or a regular expression string containing only letters a-z or .. A . means it can represent any one letter.
-
-Example:
-
-addWord("bad")
-addWord("dad")
-addWord("mad")
-search("pad") -> false
-search("bad") -> true
-search(".ad") -> true
-search("b..") -> true
-Note:
-You may assume that all words are consist of lowercase letters a-z.
 '''
 
 
@@ -105,3 +109,65 @@ class WordDictionary(object):
 # obj = WordDictionary()
 # obj.addWord(word)
 # param_2 = obj.search(word)
+
+# golang solution
+
+'''
+package code
+
+
+type TrieNode struct {
+	children [26]*TrieNode
+	isEnd    bool
+}
+
+func (t *TrieNode) Insert(word string) {
+	node := t
+	for _, ch := range word {
+		ch -= 'a'
+		if node.children[ch] == nil {
+			node.children[ch] = &TrieNode{}
+		}
+		node = node.children[ch]
+	}
+	node.isEnd = true
+}
+
+type WordDictionary struct {
+	trieRoot *TrieNode
+}
+
+func Constructor() WordDictionary {
+	return WordDictionary{&TrieNode{}}
+}
+
+func (d *WordDictionary) AddWord(word string) {
+	d.trieRoot.Insert(word)
+}
+
+func (d *WordDictionary) Search(word string) bool {
+	var dfs func(int, *TrieNode) bool
+	dfs = func(index int, node *TrieNode) bool {
+		if index == len(word) {
+			return node.isEnd
+		}
+		ch := word[index]
+		if ch != '.' {
+			child := node.children[ch-'a']
+			if child != nil && dfs(index+1, child) {
+				return true
+			}
+		} else {
+			for i := range node.children {
+				child := node.children[i]
+				if child != nil && dfs(index+1, child) {
+					return true
+				}
+			}
+		}
+		return false
+	}
+	return dfs(0, d.trieRoot)
+}
+
+'''
