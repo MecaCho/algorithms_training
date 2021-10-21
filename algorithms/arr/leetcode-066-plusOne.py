@@ -67,6 +67,26 @@ class Solution(object):
         """
         return [int(i) for i in list(str(int("".join([str(digit) for digit in digits])) + 1))]
 
+# golang solution
+
+'''
+func plusOne(digits []int) []int {
+	flag := 0
+	for i := len(digits)-1; i >=0; i--{
+		if digits[i] < 9{
+			digits[i]++
+			break
+		}else {
+			flag++
+			digits[i] = 0
+		}
+	}
+	if flag == len(digits){
+		digits = append([]int{1}, digits...)
+	}
+	return digits
+}
+'''
 
 # solutions
 
