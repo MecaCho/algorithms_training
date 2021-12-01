@@ -1,5 +1,5 @@
 
-
+# encoding=utf8
 
 '''
 5396. 连续字符
@@ -97,7 +97,22 @@ class Solution(object):
                 tmp = 1
             pre = s[i]
         return max_len
-
+    
+class Solution(object):
+    def maxPower(self, s):
+        """
+        :type s: str
+        :rtype: int
+        """
+        res = 0
+        
+        for i in range(len(s)):
+            if i >= 1 and s[i] == s[i-1]:
+                count += 1
+            else:
+                count = 1
+            res = max(count, res)
+        return res
 # tips
 
 '''
