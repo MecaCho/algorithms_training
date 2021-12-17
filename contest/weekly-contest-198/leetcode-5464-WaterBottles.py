@@ -1,3 +1,5 @@
+# encoding=utf8
+
 '''
 5464. Water Bottles
 Given numBottles full water bottles, you can exchange numExchange empty water bottles for one full water bottle.
@@ -119,6 +121,22 @@ class Solution1(object):
         :rtype: int
         """
         return (numBottles * numExchange - 1) / (numExchange-1)
+    
+# golang
+
+'''
+func numWaterBottles(numBottles int, numExchange int) int {
+
+    res := numBottles
+    for numBottles/numExchange >= 1{
+        res += numBottles/numExchange
+        numBottles = numBottles%numExchange + numBottles/numExchange
+    }
+
+    return res
+
+}
+'''
 
 # tips
 
