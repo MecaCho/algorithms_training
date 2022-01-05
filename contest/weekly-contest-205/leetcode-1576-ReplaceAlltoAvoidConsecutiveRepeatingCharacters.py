@@ -1,3 +1,5 @@
+# encoding=utf8
+
 '''
 1576. Replace All ?'s to Avoid Consecutive Repeating Characters
 Given a string s containing only lower case English letters and the '?' character, convert all the '?' characters into lower case letters such that the final string does not contain any consecutive repeating characters. You cannot modify the non '?' characters.
@@ -103,4 +105,16 @@ class Solution(object):
         # print(s_list)
         return "".join(s_list)
 
-
+class Solution(object):
+    def modifyString(self, s):
+        """
+        :type s: str
+        :rtype: str
+        """
+        l = list(s)
+        for i in range(len(l)):
+            if l[i] == "?":
+                l[i] = "a"
+                while (i+1 < len(l) and l[i] == l[i+1]) or (l[i-1] == l[i] and i-1 >= 0):
+                    l[i] = chr(ord(l[i]) + 1)
+        return "".join(l)
