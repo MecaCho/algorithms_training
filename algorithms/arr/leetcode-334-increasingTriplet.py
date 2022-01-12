@@ -1,4 +1,4 @@
-
+# encoding=utf8
 
 '''
 334. Increasing Triplet Subsequence
@@ -117,4 +117,37 @@ class Solution2(object):
         return max(dp) >= 3 if length > 2 else False
 
 
+# 2022.01.12 solution
+
+class Solution(object):
+    def increasingTriplet(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: bool
+        """
+        if len(set(nums)) < 3:
+            return False
+        min_num = nums[0]
+        left = [0]
+        for i in range(1, len(nums)):
+            if nums[i] > min_num:
+                left.append(1)
+            else:
+                min_num = nums[i]
+                left.append(0)
+
+        max_num = nums[-1]
+        right  = [0]*len(nums)
+        for i in range(len(nums)-2, -1, -1):
+            if nums[i] < max_num:
+                right[i] = 1
+            else:
+                max_num = nums[i]
+                right[i] = 0
+        # print(left, right)
+        for i in range(len(nums)):
+            if left[i] + right[i] == 2:
+                return True
+
+        return False
 
