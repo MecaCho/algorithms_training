@@ -62,4 +62,16 @@ class Solution(object):
 
         return (a + e + i + o + u) % M
 
+# solutions
+
+'''
+我们设 dp[i][j] 代表当前长度为 i且以字符 j 为结尾的字符串的数目
+   
+dp[i][0]=dp[i−1][1]+dp[i−1][2]+dp[i−1][4]
+dp[i][1]=dp[i−1][0]+dp[i−1][2]
+dp[i][2]=dp[i−1][1]+dp[i−1][3]
+dp[i][3]=dp[i−1][2]
+dp[i][4]=dp[i−1][2]+dp[i−1][3] 
+
+'''
 
