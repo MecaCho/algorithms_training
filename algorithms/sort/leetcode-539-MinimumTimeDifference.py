@@ -22,20 +22,23 @@ Constraints:
 timePoints[i] is in the format "HH:MM".
 '''
 
+
 class Solution(object):
     def findMinDifference(self, timePoints):
         """
         :type timePoints: List[str]
         :rtype: int
         """
+        if len(timePoints) > 1440:
+            return 0
         mins = [int(timePoints[i].split(":")[0])*60 + int(timePoints[i].split(":")[1]) for i in range(len(timePoints))]
         mins.sort()
         min_dif = 1440
         for i in range(1, len(mins)):
             if mins[i] - mins[i-1] < min_dif:
                 min_dif = mins[i] - mins[i-1]
-        # print(min_dif)
 
         return min(min_dif, mins[0] + 1440 - mins[-1])
+        
 
 
