@@ -35,3 +35,21 @@ Constraints:
 
 1 <= n <= 200
 '''
+
+class Solution(object):
+    def numberOfMatches(self, n):
+        """
+        :type n: int
+        :rtype: int
+        """
+        res = 0
+        while n > 1:
+
+            if n % 2 == 0:
+                res += n / 2
+            else:
+                res += n/2 + 1
+            n /= 2
+        return res
+
+
