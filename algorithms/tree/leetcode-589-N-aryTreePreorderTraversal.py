@@ -31,3 +31,29 @@ The height of the n-ary tree is less than or equal to 1000.
 
 Follow up: Recursive solution is trivial, could you do it iteratively?
 '''
+
+"""
+# Definition for a Node.
+class Node(object):
+    def __init__(self, val=None, children=None):
+        self.val = val
+        self.children = children
+"""
+
+class Solution(object):
+    def preorder(self, root):
+        """
+        :type root: Node
+        :rtype: List[int]
+        """
+        res = []
+        if not root:
+            return res
+        stack = [root]
+        while stack:
+            node = stack.pop()
+            res.append(node.val)
+            stack.extend(reversed(node.children))
+        return res
+            
+
