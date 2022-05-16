@@ -1,4 +1,4 @@
-
+# encoding=utf8
 
 
 '''
@@ -83,6 +83,31 @@ class Solution(object):
         inorder_traversal(root)
         return self.res
 
+# Definition for a binary tree node.
+# class TreeNode(object):
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+
+class Solution(object):
+    def inorderSuccessor(self, root, p):
+        """
+        :type root: TreeNode
+        :type p: TreeNode
+        :rtype: TreeNode
+        """
+        st, pre, cur = [], None, root
+        while st or cur:
+            while cur:
+                st.append(cur)
+                cur = cur.left
+            cur = st.pop()
+            if pre == p:
+                return cur
+            pre = cur
+            cur = cur.right
+        return None
 
 '''
 方法一：中序遍历
