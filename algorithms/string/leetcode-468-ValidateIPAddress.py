@@ -67,3 +67,21 @@ func validIPAddress(queryIP string) string {
 }
 '''
 
+class Solution(object):
+    def validIPAddress(self, queryIP):
+        """
+        :type queryIP: str
+        :rtype: str
+        """
+        ipv4 = queryIP.split(".")
+        ipv6 = queryIP.split(":")
+        if len(ipv4) == 4:
+            if all(re.match(r"^0$|^([1-9]\d{0,2})$", part) and int(part) < 256 for part in ipv4):
+                return "IPv4"
+        elif len(ipv6) == 8:
+            if all(re.match(r"^[0-9a-fA-F]{1,4}$", part) for part in ipv6):
+                return "IPv6"
+        return "Neither"
+
+
+
