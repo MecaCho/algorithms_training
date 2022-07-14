@@ -1,3 +1,5 @@
+# encoding=utf8
+
 '''
 745. 前缀和后缀搜索
 给定多个 words，words[i] 的权重为 i 。
