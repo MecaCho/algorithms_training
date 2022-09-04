@@ -1,3 +1,5 @@
+# encoding=utf8
+
 '''
 1582. Special Positions in a Binary Matrix
 Given a rows x cols matrix mat, where mat[i][j] is either 0 or 1, return the number of special positions in mat.
@@ -105,6 +107,21 @@ class Solution(object):
                 res += 1
 
         return res
+      
+      
+class Solution:
+    def numSpecial(self, mat: List[List[int]]) -> int:
+        row1nums = [sum(row) for row in mat]
+        col1nums = [sum(col) for col in zip(*mat)]
+
+        res = 0
+        for i in range(len(mat)):
+            for j in range(len(mat[0])):
+                if mat[i][j] == 1 and row1nums[i] == 1 and col1nums[j] == 1:
+                    res += 1
+        return res
+
+
 
 
 # tips
