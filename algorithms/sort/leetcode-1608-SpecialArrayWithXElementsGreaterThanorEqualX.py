@@ -37,3 +37,18 @@ Constraints:
 0 <= nums[i] <= 1000
 
 '''
+
+class Solution:
+    def specialArray(self, nums: List[int]) -> int:
+        nums.sort()
+        n = len(nums)
+        if n <= nums[0]:
+            return n
+        if 0 > nums[-1]:
+            return 0
+
+        for i in range(1, n):
+            if nums[i-1] < n-i <= nums[i]:
+                return n-i
+        return -1
+       
