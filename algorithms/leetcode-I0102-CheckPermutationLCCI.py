@@ -1,3 +1,5 @@
+# encoding=utf8
+
 '''
 
 面试题 01.02. 判定是否互为字符重排
@@ -43,3 +45,7 @@ class Solution(object):
         """
         return set(s1) == set(s2)
         # return set(list(s1)) == set(list(s2))
+        
+class Solution:
+    def CheckPermutation(self, s1: str, s2: str) -> bool:
+        return sorted(list(s1)) == sorted(list(s2))
