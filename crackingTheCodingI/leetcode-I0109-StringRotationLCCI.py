@@ -1,3 +1,5 @@
+# encoding=utf8
+
 '''
 面试题 01.09. String Rotation LCCI
 Given two strings, s1 and s2, write code to check if s2 is a rotation of s1 (e.g.,"waterbottle" is a rotation of"erbottlewat"). Can you use only one call to the method that checks if one word is a substring of another?
