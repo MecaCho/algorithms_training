@@ -1,3 +1,5 @@
+# encoding=utf8
+
 '''
 784. 字母大小写全排列
 给定一个字符串S，通过将字符串S中的每个字母转变大小写，我们可以获得一个新的字符串。返回所有可能得到的字符串集合。
@@ -59,6 +61,25 @@ class Solution(object):
 
         backtrack(S, 0)
         return self.vals[::-1]
+    
+class Solution1:
+    def letterCasePermutation(self, s: str) -> List[str]:
+        res = []
+        m = sum(1 if c.isalpha() else 0 for c in s)
+        for mask in range(2**m):
+            tmp = []
+            k = 0
+            for c in s:
+                if c.isalpha():
+                    if (mask >> k) & 1 == 1:
+                        tmp.append(c.upper())
+                    else:
+                        tmp.append(c.lower())
+                    k += 1
+                else:
+                    tmp.append(c)
+            res.append("".join(tmp))
+        return res
 
 
 '''
