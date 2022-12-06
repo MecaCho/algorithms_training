@@ -1,7 +1,24 @@
 # encoding=utf8
 
-
 '''
+
+265. Paint House II
+There are a row of n houses, each house can be painted with one of the k colors. The cost of painting each house with a certain color is different. You have to paint all the houses such that no two adjacent houses have the same color.
+
+The cost of painting each house with a certain color is represented by a n x k cost matrix. For example, costs[0][0] is the cost of painting house 0 with color 0; costs[1][2] is the cost of painting house 1 with color 2, and so on... Find the minimum cost to paint all houses.
+
+Note:
+All costs are positive integers.
+
+Example:
+
+Input: [[1,5,3],[2,9,4]]
+Output: 5
+Explanation: Paint house 0 into color 0, paint house 1 into color 2. Minimum cost: 1 + 4 = 5;
+             Or paint house 0 into color 2, paint house 1 into color 0. Minimum cost: 3 + 2 = 5.
+Follow up:
+Could you solve it in O(nk) runtime?
+
 265. 粉刷房子 II
 假如有一排房子，共 n 个，每个房子可以被粉刷成 k 种颜色中的一种，你需要粉刷所有的房子并且使其相邻的两个房子颜色不能相同。
 
@@ -22,44 +39,7 @@
 进阶：
 您能否在 O(nk) 的时间复杂度下解决此问题？
 
-265. Paint House II
-There are a row of n houses, each house can be painted with one of the k colors. The cost of painting each house with a certain color is different. You have to paint all the houses such that no two adjacent houses have the same color.
-
-The cost of painting each house with a certain color is represented by a n x k cost matrix. For example, costs[0][0] is the cost of painting house 0 with color 0; costs[1][2] is the cost of painting house 1 with color 2, and so on... Find the minimum cost to paint all houses.
-
-Note:
-All costs are positive integers.
-
-Example:
-
-Input: [[1,5,3],[2,9,4]]
-Output: 5
-Explanation: Paint house 0 into color 0, paint house 1 into color 2. Minimum cost: 1 + 4 = 5;
-             Or paint house 0 into color 2, paint house 1 into color 0. Minimum cost: 3 + 2 = 5.
-Follow up:
-Could you solve it in O(nk) runtime?
 '''
-
-
-class Solution1(object):
-    def numDifferentIntegers(self, word):
-        """
-        :type word: str
-        :rtype: int
-        """
-        return len(set(int(i) for i in re.split(r"[a-z]", word) if i))
-
-
-
-if __name__ == '__main__':
-
-    import re
-    print(re.split(r"[a-zA-Z]", "ab123abc"))
-    print(re.split(r"[0-9]", "ab123abc"))
-
-    demo = Solution1()
-    res = demo.numDifferentIntegers("123ghgg2565hjd63565gff6545")
-    print res
 
 class Solution(object):
     def minCostII(self, costs):
