@@ -49,4 +49,29 @@ class Solution:
             if nums[i] <= nums[i-1]:
                 return False
         return True
+       
+# golang
+
+'''
+import (
+	"strconv"
+	"strings"
+)
+
+func areNumbersAscending(s string) bool {
+	strs := strings.Split(s, " ")
+	pre := -1
+	for _, str := range strs {
+		num, err := strconv.Atoi(str)
+		if err != nil {
+			continue
+		}
+		if num <= pre {
+			return false
+		}
+		pre = num
+	}
+	return true
+}
+'''
 
