@@ -30,3 +30,23 @@ Constraints:
 1 <= nums[i] <= 104
 1 <= x <= 109
 '''
+
+class Solution:
+    def minOperations(self, nums: List[int], x: int) -> int:
+        total = sum(nums)
+        if total < x:
+            return -1
+        target = total - x
+        sum_tmp = 0
+        left = 0
+        res = -1
+        for i in range(len(nums)):
+            sum_tmp += nums[i]
+            while left >= 0 and sum_tmp > target:
+                sum_tmp -= nums[left]
+                left += 1
+
+            if sum_tmp == target:
+                res = max(res, i - left + 1)
+        return -1 if res == -1 else len(nums) - res    
+
