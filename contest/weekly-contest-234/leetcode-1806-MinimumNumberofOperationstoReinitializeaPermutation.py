@@ -105,7 +105,18 @@ class Solution(object):
             perm = arr[:]
 
 
-import re
+class Solution:
+    def reinitializePermutation(self, n: int) -> int:
+        pos = 1
+        res = 1
+        pos = n / 2 + (pos-1)/2
+        while pos != 1:
+            if pos % 2 == 1:
+                pos = n / 2 + (pos-1)/2
+            else:
+                pos /= 2
+            res += 1
+        return res
 
 
 if __name__ == '__main__':
