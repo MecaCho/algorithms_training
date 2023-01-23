@@ -48,3 +48,19 @@ upperi is sorted in ascending order.
 All the values of upperi are unique.
 The upper bound of the last tax bracket is greater than or equal to income.
 '''
+
+class Solution:
+    def calculateTax(self, brackets: List[List[int]], income: int) -> float:
+        res = 0
+        pre = 0
+        for i in range(len(brackets)):
+            upper = brackets[i][0]
+            percent = brackets[i][1]
+            if upper <= income:
+                res += (upper - pre) * percent / 100
+            else:
+                res += (income - pre) * percent / 100
+                return res
+            pre = upper
+        return res
+
