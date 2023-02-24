@@ -30,3 +30,8 @@ Constraints:
 1 <= nums.length <= 100
 0 <= nums[i] <= 100
 '''
+
+class Solution:
+    def minimumOperations(self, nums: List[int]) -> int:
+        return len(set(nums) - {0})
+
