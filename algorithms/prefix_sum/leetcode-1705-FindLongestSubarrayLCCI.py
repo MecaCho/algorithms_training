@@ -20,3 +20,23 @@ Note:
 
 array.length <= 100000
 '''
+
+class Solution:
+    def findLongestSubarray(self, array: List[str]) -> List[str]:
+        indexs = {0: -1}
+
+        sum_ = 0
+        max_len = 0
+        res = []
+        for i in range(len(array)):
+            if '0' <= array[i][0] <= '9':
+                sum_ += 1
+            else:
+                sum_ -= 1
+            if sum_ in indexs:
+                if max_len < (i - indexs[sum_]+1):
+                    res = [indexs[sum_], i]
+                    max_len = i - indexs[sum_]+1
+            else:
+                indexs[sum_] = i
+        return array[res[0]+1:res[1]+1] if res else []
