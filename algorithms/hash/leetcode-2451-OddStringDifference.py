@@ -37,3 +37,17 @@ n == words[i].length
 2 <= n <= 20
 words[i] consists of lowercase English letters.
 '''
+
+class Solution:
+    def oddString(self, words: List[str]) -> str:
+        cnt = defaultdict(int)
+        diff_list = []
+        for i in range(len(words)):
+            tmp = tuple([ord(words[i][j]) - ord(words[i][j-1]) for j in range(1, len(words[i]))])
+            cnt[tmp] += 1
+            diff_list.append(tmp)
+
+        for i, diff in enumerate(diff_list):
+            if cnt[diff] == 1:
+                return words[i]
+
