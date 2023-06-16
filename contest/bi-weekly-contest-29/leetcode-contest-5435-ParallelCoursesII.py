@@ -1,3 +1,5 @@
+# encoding=utf8
+
 '''
 1494. Parallel Courses II
 Given the integer n representing the number of courses at some university labeled from 1 to n, and the array dependencies where dependencies[i] = [xi, yi]  represents a prerequisite relationship, that is, the course xi must be taken before the course yi.  Also, you are given the integer k.
