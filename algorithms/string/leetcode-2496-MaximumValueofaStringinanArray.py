@@ -35,3 +35,12 @@ Constraints:
 1 <= strs[i].length <= 9
 strs[i] consists of only lowercase English letters and digits.
 '''
+
+class Solution:
+    def maximumValue(self, strs: List[str]) -> int:
+
+            is_digit = lambda x: all(c.isdigit() for c in x)
+            return max([int(s) if is_digit(s) else len(s) for s in strs])
+
+
+
