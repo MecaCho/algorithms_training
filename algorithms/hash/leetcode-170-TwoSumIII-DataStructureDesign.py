@@ -1,3 +1,5 @@
+# encoding=utf8
+
 '''
 170. 两数之和 III - 数据结构设计
 设计并实现一个 TwoSum 的类，使该类需要支持 add 和 find 的操作。
