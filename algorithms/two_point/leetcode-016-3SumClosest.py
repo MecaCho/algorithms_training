@@ -2,7 +2,6 @@
 
 
 '''
-
 16. 3Sum Closest
 Given an array nums of n integers and an integer target, find three integers in nums such that the sum is closest to target. Return the sum of the three integers. You may assume that each input would have exactly one solution.
 
@@ -29,7 +28,6 @@ class Solution(object):
         :type target: int
         :rtype: int
         """
-        # res = target
         length = len(nums)
         if length <=3:
             return sum(nums)
@@ -61,7 +59,6 @@ class Solution(object):
         return sum(result_list)
 
 
-
 # solutions
 
 '''
@@ -70,9 +67,7 @@ class Solution(object):
 方法一：排序 + 双指针
 思路与算法
 
-题目要求找到与目标值 \textit{target}target 最接近的三元组，这里的「最接近」即为差值的绝对值最小。我们可以考虑直接使用三重循环枚举三元组，找出与目标值最接近的作为答案，时间复杂度为 O(N^3)O(N 
-3
- )。然而本题的 NN 最大为 10001000，会超出时间限制。
+题目要求找到与目标值 \textit{target}target 最接近的三元组，这里的「最接近」即为差值的绝对值最小。我们可以考虑直接使用三重循环枚举三元组，找出与目标值最接近的作为答案，时间复杂度为 O(N^3)O(N 3)。然而本题的 NN 最大为 10001000，会超出时间限制。
 
 那么如何进行优化呢？我们首先考虑枚举第一个元素 aa，对于剩下的两个元素 bb 和 cc，我们希望它们的和最接近 \textit{target} - atarget−a。对于 bb 和 cc，如果它们在原数组中枚举的范围（既包括下标的范围，也包括元素值的范围）没有任何规律可言，那么我们还是只能使用两重循环来枚举所有的可能情况。因此，我们可以考虑对整个数组进行升序排序，这样一来：
 
@@ -82,11 +77,9 @@ class Solution(object):
 
 当我们知道了 bb 和 cc 可以枚举的下标范围，并且知道这一范围对应的数组元素是有序（升序）的，那么我们是否可以对枚举的过程进行优化呢？
 
-答案是可以的。借助双指针，我们就可以对枚举的过程进行优化。我们用 p_bp 
-b
+答案是可以的。借助双指针，我们就可以对枚举的过程进行优化。我们用 p_bp b
 ​	
-  和 p_cp 
-c
+  和 p_cp c
 ​	
   分别表示指向 bb 和 cc 的指针，初始时，p_bp 
 b
@@ -221,11 +214,8 @@ class Solution:
         return best
 复杂度分析
 
-时间复杂度：O(N^2)O(N 
-2
- )，其中 NN 是数组 \textit{nums}nums 的长度。我们首先需要 O(N \log N)O(NlogN) 的时间对数组进行排序，随后在枚举的过程中，使用一重循环 O(N)O(N) 枚举 aa，双指针 O(N)O(N) 枚举 bb 和 cc，故一共是 O(N^2)O(N 
-2
- )。
+时间复杂度：O(N^2)O(N 2)，其中 NN 是数组 \textit{nums}nums 的长度。我们首先需要 O(N \log N)O(NlogN) 的时间对数组进行排序，随后在枚举的过程中，使用一重循环 O(N)O(N) 枚举 aa，双指针 O(N)O(N) 枚举 bb 和 cc，故一共是 O(N^2)O(N 
+2)。
 
 空间复杂度：O(\log N)O(logN)。排序需要使用 O(\log N)O(logN) 的空间。然而我们修改了输入的数组 \textit{nums}nums，在实际情况下不一定允许，因此也可以看成使用了一个额外的数组存储了 \textit{nums}nums 的副本并进行排序，此时空间复杂度为 O(N)O(N)。
 
