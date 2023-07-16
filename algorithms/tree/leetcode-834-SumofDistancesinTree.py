@@ -1,3 +1,5 @@
+# encoding=utf8
+
 '''
 834. Sum of Distances in Tree
 An undirected, connected tree with N nodes labelled 0...N-1 and N-1 edges are given.
