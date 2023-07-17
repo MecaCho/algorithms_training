@@ -1,3 +1,5 @@
+# encoding=utf8
+
 '''
 415. 字符串相加
 给定两个字符串形式的非负整数 num1 和num2 ，计算它们的和。
@@ -42,6 +44,23 @@ class Solution(object):
             j -= 1
 
         return res
+
+class Solution:
+    def addStrings(self, num1: str, num2: str) -> str:
+        i, j = len(num1)-1, len(num2)-1
+        pre = 0
+        res = []
+        while i >= 0 or j >= 0 or pre:
+            a = int(num1[i]) if i >= 0 else 0
+            b = int(num2[j]) if j >= 0 else 0
+            sum_ = a+b+pre
+            res.append(sum_%10)
+            pre = sum_ // 10
+            i -= 1
+            j -= 1
+        return "".join(str(v) for v in res[::-1])
+
+
 
 # golang
 
