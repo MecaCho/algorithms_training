@@ -1,3 +1,5 @@
+# encoding=utf8
+
 '''
 860. Lemonade Change
 At a lemonade stand, each lemonade costs $5.
@@ -146,5 +148,25 @@ class Solution1(object):
 
         return True
 
-
+class Solution:
+    def lemonadeChange(self, bills: List[int]) -> bool:
+        changes = defaultdict(int)
+        for i in range(len(bills)):
+            if bills[i] == 5:
+                changes[5] += 1
+            elif bills[i] == 10:
+                if changes[5] < 1:
+                    return False
+                changes[5] -= 1
+                changes[10] += 1
+            else:
+                if changes[10] > 0 and changes[5] > 0:
+                    changes[10] -= 1
+                    changes[5] -= 1
+                elif changes[5] > 2:
+                    changes[5] -= 3
+                else:
+                    return False
+                changes[20] += 1
+        return True
 
