@@ -1,6 +1,5 @@
 # encoding=utf8
 
-
 '''
 2208. Minimum Operations to Halve Array Sum
 You are given an array nums of positive integers. In one operation, you can choose any number from nums and reduce it to exactly half the number. (Note that you may choose this reduced number in future operations.)
@@ -42,3 +41,20 @@ Constraints:
 1 <= nums.length <= 105
 1 <= nums[i] <= 107
 '''
+
+class Solution:
+    def halveArray(self, nums: List[int]) -> int:
+        pq = []
+        for num in nums:
+            heappush(pq, -num)
+        res = 0
+        total = sum(nums)
+        sum_ = 0
+        while sum_ < total / 2:
+            x = -heappop(pq)
+            sum_ += x / 2
+            heappush(pq, -(x / 2))
+            res += 1
+        return res
+
+
