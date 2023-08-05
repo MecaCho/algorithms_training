@@ -1,4 +1,4 @@
-
+# encoding
 
 '''
 21. 合并两个有序链表
@@ -85,3 +85,39 @@ class Solution1(object):
 
         cur.next = l1 if l1 else l2
         return pre.next
+
+
+
+
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+class Solution:
+    def mergeTwoLists(self, list1: Optional[ListNode], list2: Optional[ListNode]) -> Optional[ListNode]:
+        new_head = ListNode(0)
+        dummy = new_head
+        head1 = list1
+        head2 = list2
+        while head1 or head2:
+            value = 0
+            if head1 and head2:
+                if head1.val < head2.val:
+                    value = head1.val 
+                    head1 = head1.next
+                else:
+                    value = head2.val
+                    head2 = head2.next
+            elif head1:
+                value = head1.val
+                head1 = head1.next
+            else:
+                value = head2.val
+                head2 = head2.next
+            new_node = ListNode(val=value)
+            new_head.next = new_node
+            new_head = new_head.next
+        # print(dummy)
+        return dummy.next
+
