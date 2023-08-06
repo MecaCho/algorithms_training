@@ -1,3 +1,6 @@
+# encoding=utf8
+
+
 '''
 24. Swap Nodes in Pairs
 Given a linked list, swap every two adjacent nodes and return its head.
@@ -42,9 +45,7 @@ class Solution(object):
         p = self.swapPairs(head.next.next)
 
         node2.next = node1
-
         node1.next = p
-
         return node2
 
 # Definition for singly-linked list.
