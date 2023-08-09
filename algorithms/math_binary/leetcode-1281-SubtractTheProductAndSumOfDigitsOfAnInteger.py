@@ -1,3 +1,5 @@
+# encoding=utf8
+
 '''
 1281. 整数的各位积和之差
 给你一个整数 n，请你帮忙计算并返回该整数「各位数字之积」与「各位数字之和」的差。
@@ -62,3 +64,15 @@ class Solution(object):
             add += num
             n = n/10
         return mul - add
+
+class Solution:
+    def subtractProductAndSum(self, n: int) -> int:
+        product = 1
+        sum_ = 0
+        while n:
+            tmp = n % 10
+            product *= tmp
+            n //= 10
+            sum_ += tmp
+        return product - sum_
+
