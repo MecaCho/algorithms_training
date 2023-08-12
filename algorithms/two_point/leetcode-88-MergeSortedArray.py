@@ -52,7 +52,6 @@ class Solution(object):
         :type n: int
         :rtype: None Do not return anything, modify nums1 in-place instead.
         """
-
         while m > 0 and n > 0:
             if nums1[m-1] > nums2[n-1]:
                 nums1[m+n-1] = nums1[m-1]
@@ -63,7 +62,6 @@ class Solution(object):
 
         if n > 0:
             nums1[:n] = nums2[:n]
-
         return nums1
 
 
@@ -79,7 +77,6 @@ class Solution20210121(object):
         i, j = m-1, n-1
         k = m + n - 1
         while j >= 0 and i >= 0:
-            # print i, j
             if nums1[i] > nums2[j]:
                 nums1[k] = nums1[i]
                 i -= 1
