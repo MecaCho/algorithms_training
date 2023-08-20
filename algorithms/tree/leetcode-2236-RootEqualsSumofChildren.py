@@ -30,3 +30,16 @@ Constraints:
 The tree consists only of the root, its left child, and its right child.
 -100 <= Node.val <= 100
 '''
+
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def checkTree(self, root: Optional[TreeNode]) -> bool:
+        # def get_value(root):
+            # return root.val if root else 0
+        return root.val == root.left.val + root.right.val
+
