@@ -1,3 +1,5 @@
+# encoding=utf8
+
 '''
 57. Insert Interval
 Given a set of non-overlapping intervals, insert a new interval into the intervals (merge if necessary).
@@ -79,3 +81,23 @@ class Solution(object):
             if interval[1] > res[-1][1]:
                 res[-1][1] = interval[1]
         return res
+
+
+
+class Solution:
+    def insert(self, intervals: List[List[int]], newInterval: List[int]) -> List[List[int]]:
+        intervals.append(newInterval)
+        intervals.sort()
+        
+        res = []
+        for i in range(len(intervals)):
+            if not res or intervals[i][0] > res[-1][1]:
+                res.append(intervals[i])
+                continue
+            if intervals[i][0] <= res[-1][1]:
+                res[-1][1] = max(intervals[i][1], res[-1][1])
+
+        return res
+            
+
+            
