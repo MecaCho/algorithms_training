@@ -60,3 +60,9 @@ class Solution(object):
 
         return len(q)
 
+# tips
+
+'''
+对于两门课 (t1,d1)(t2, d2),如果后者的关闭时间较晚，即那么我们先学习前者，再学习后者，总是最优的。
+'''
+
