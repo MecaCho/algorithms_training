@@ -2,7 +2,6 @@
 
 
 '''
-
 198. House Robber
 You are a professional robber planning to rob houses along a street. Each house has a certain amount of money stashed, the only constraint stopping you from robbing each of them is that adjacent houses have security system connected and it will automatically contact the police if two adjacent houses were broken into on the same night.
 
@@ -55,4 +54,18 @@ class Solution(object):
             dp.append([0, 0])
             dp[i][0] = max(dp[i-1])
             dp[i][1] = max(dp[i-1][0] + nums[i], dp[i-1][1])
+        return max(dp[-1])
+
+class Solution:
+    def rob(self, nums: List[int]) -> int:
+        if len(nums) == 1:
+            return sum(nums)
+        if len(nums) == 2:
+            return max(nums)
+        dp = [[0, 0] for i in range(len(nums))]
+        dp[0] = [0, nums[0]]
+        dp[1] = [nums[0], nums[1]]
+        for i in range(2,len(nums)):
+            dp[i][0] = max(dp[i-1])
+            dp[i][1] = max(dp[i-1][0] + nums[i], dp[i-2][1])
         return max(dp[-1])
