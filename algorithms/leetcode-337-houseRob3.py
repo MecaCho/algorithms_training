@@ -1,3 +1,5 @@
+# encoding=utf8
+
 '''
 
 337. House Robber III
@@ -89,6 +91,27 @@ class Solution(object):
             return [do_it, not_do_it]
 
         return max(deep_traval_tree(root))
+
+
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def rob(self, root: Optional[TreeNode]) -> int:
+        def deep_rob(root):
+            if not root:
+                return [0, 0]
+            value = root.val
+            left = deep_rob(root.left)
+            right = deep_rob(root.right)
+            
+            return [max(left)+max(right), left[0]+right[0]+value]
+
+        return max(deep_rob(root))
+            
 
 # solution
 
