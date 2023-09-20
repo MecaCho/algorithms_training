@@ -1,3 +1,5 @@
+# encoding=utf8
+
 '''
 LCP 06. 拿硬币
 桌上有 n 堆力扣币，每堆的数量保存在数组 coins 中。我们每次可以选择任意一堆，拿走其中的一枚或者两枚，求拿完所有力扣币的最少次数。
@@ -35,3 +37,7 @@ class Solution(object):
             num = coin // 2 + (coin % 2)
             count += num
         return count
+
+class Solution:
+    def minCount(self, coins: List[int]) -> int:
+        return sum(ceil(num/2) for num in coins)
