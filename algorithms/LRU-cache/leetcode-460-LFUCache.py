@@ -1,3 +1,4 @@
+# encoding=utf8
 
 '''
 460. LFU缓存
