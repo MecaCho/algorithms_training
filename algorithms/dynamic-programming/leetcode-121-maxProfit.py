@@ -1,6 +1,5 @@
 # encoding=utf8
 
-
 '''
 121. Best Time to Buy and Sell Stock
 Say you have an array for which the ith element is the price of a given stock on day i.
@@ -82,6 +81,15 @@ class Solution(object):
     def max_profit():
         print("staticmethod")
 
+class Solution:
+    def maxProfit(self, prices: List[int]) -> int:
+        min_price = float("inf")
+        for i in range(len(prices)):
+            if prices[i] < min_price:
+                min_price = prices[i]
+            prices[i] = prices[i] - min_price
+        return max(prices)
+      
 '''
 作者：qiuwenqi
 链接：https://leetcode-cn.com/problems/best-time-to-buy-and-sell-stock/solution/python-jian-dan-suan-fa-ji-bai-liao-10000-de-yong-/
