@@ -128,3 +128,16 @@ class Solution20210109(object):
                     dp[j][1][i] = max(dp[j-1][0][i-1]-price, dp[j-1][1][i])
         # print(dp)
         return max(dp[-1][0]) if dp else 0
+
+
+class Solution:
+    def maxProfit(self, prices: List[int]) -> int:
+        n = len(prices)
+        dp0 = [0, -prices[0]]
+        dp1 = [0, -prices[0]]
+        for i in range(1, n):
+            dp0[0] = max(dp0[1]+prices[i], dp0[0])
+            dp0[1] = max(dp0[1], -prices[i])
+            dp1[0] = max(dp1[1]+prices[i], dp1[0])
+            dp1[1] = max(dp0[0]-prices[i], dp1[1])
+        return dp1[0]
