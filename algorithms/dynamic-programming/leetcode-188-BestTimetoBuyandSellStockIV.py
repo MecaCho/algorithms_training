@@ -1,4 +1,5 @@
 # encoding=utf8
+
 '''
 188. Best Time to Buy and Sell Stock IV
 Say you have an array for which the i-th element is the price of a given stock on day i.
@@ -85,6 +86,22 @@ class SolutionTemplate(object):
                     dp[j][1][i] = max(dp[j-1][0][i-1]-price, dp[j-1][1][i])
         # print(dp)
         return max(dp[-1][0]) if dp else 0
+
+
+class Solution:
+    def maxProfit(self, k: int, prices: List[int]) -> int:
+        n = len(prices)
+        dp = [[-inf, -inf] for i in range(k+2)]
+        for i in range(1, k+2):
+            dp[i][0] = 0
+        for i in range(n):
+            for kk in range(k+1, 0, -1):
+                dp[kk][0] = max(dp[kk][1] + prices[i], dp[kk][0])
+                dp[kk][1] = max(dp[kk-1][0] - prices[i], dp[kk][1])
+                # print(dp[kk])
+        # print(dp)
+        return dp[-1][0]
+
 
 
 # solutions
