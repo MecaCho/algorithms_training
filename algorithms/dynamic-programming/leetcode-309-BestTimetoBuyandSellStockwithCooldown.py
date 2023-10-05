@@ -1,3 +1,5 @@
+# encoding=utf8
+
 '''
 309. Best Time to Buy and Sell Stock with Cooldown
 Say you have an array for which the ith element is the price of a given stock on day i.
@@ -26,6 +28,16 @@ Explanation: transactions = [buy, sell, cooldown, buy, sell]
 输出: 3
 解释: 对应的交易状态为: [买入, 卖出, 冷冻期, 买入, 卖出]
 '''
+
+
+class Solution:
+    def maxProfit(self, prices: List[int]) -> int:
+        n = len(prices)
+        dp = [[0, -prices[i]] for i in range(n)]
+        for i in range(1, n):
+            dp[i][0] = max(dp[i-1][0], dp[i-1][1]+prices[i])
+            dp[i][1] = max(dp[i-1][1], dp[i-2][0] - prices[i] if i > 1 else dp[0][0] - prices[i])
+        return dp[-1][0] 
 
 
 
