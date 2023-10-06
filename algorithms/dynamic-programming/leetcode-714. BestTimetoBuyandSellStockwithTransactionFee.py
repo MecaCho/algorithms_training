@@ -1,5 +1,6 @@
 # encoding=utf8
 # -*-coding=UTF-8-*-
+
 '''
 714. Best Time to Buy and Sell Stock with Transaction Fee
 Your are given an array of integers prices, for which the i-th element is the price of a given stock on day i; and a non-negative integer fee representing a transaction fee.
@@ -48,6 +49,16 @@ Note:
 0 < prices[i] < 50000.
 0 <= fee < 50000.
 '''
+
+class Solution:
+    def maxProfit(self, prices: List[int], fee: int) -> int:
+        n = len(prices)
+        dp = [[0, -prices[0]-fee] for _ in range(n)]
+        for i in range(n):
+            dp[i][0] = max(dp[i-1][1] + prices[i], dp[i-1][0])
+            dp[i][1] = max(dp[i-1][0] - prices[i] - fee, dp[i-1][1])
+        return dp[-1][0]
+
 
 
 class Solution(object):
