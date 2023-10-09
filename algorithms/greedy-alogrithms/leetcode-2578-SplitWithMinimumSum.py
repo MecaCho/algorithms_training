@@ -32,3 +32,10 @@ Constraints:
 
 10 <= num <= 109
 '''
+
+class Solution:
+    def splitNum(self, num: int) -> int:
+        nums = list(str(num))
+        nums.sort()
+        return int("".join(nums[::2])) + int("".join(nums[1::2]))
+
