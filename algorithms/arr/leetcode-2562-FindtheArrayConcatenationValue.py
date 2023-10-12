@@ -54,3 +54,18 @@ Constraints:
 1 <= nums.length <= 1000
 1 <= nums[i] <= 104
 '''
+
+class Solution:
+    def findTheArrayConcVal(self, nums: List[int]) -> int:
+        res = 0
+        while len(nums) > 1:
+            tmp = 0
+
+            left = nums.pop(0)
+            right = nums.pop()
+            tmp = right + (10 ** len(str(right))) * left
+            res += tmp
+        if nums:
+            res += nums[0]
+        return res
+     
