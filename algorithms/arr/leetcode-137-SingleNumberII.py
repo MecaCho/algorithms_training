@@ -1,3 +1,5 @@
+# encoding=utf8
+
 '''
 137. Single Number II
 Given a non-empty array of integers, every element appears three times except for one, which appears exactly once. Find that single one.
@@ -40,7 +42,7 @@ class Solution(object):
         :type nums: List[int]
         :rtype: int
         """
-        return (sum(set(nums)) * 3 - sum(nums)) / 2
+        return (sum(set(nums)) * 3 - sum(nums)) // 2
 
     
     
@@ -57,6 +59,13 @@ class Solution(object):
             a = (a ^ num) & ~b
         return b
 
+class Solution:
+    def singleNumber(self, nums: List[int]) -> int:
+        counter = collections.Counter(nums)
+        for k, v in counter.items():
+            if v == 1:
+                return k
+        return 0
     
 
 '''
