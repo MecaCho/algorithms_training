@@ -71,6 +71,12 @@ func singleNumber(nums []int) []int {
 }
 '''
 
+class Solution:
+    def singleNumber(self, nums: List[int]) -> List[int]:
+        freq = Counter(nums)
+        return [num for num, v in freq.items() if v == 1]
+        
+
 '''
 概述
 使用哈希表可以在 \mathcal{O}(N)O(N) 的时间复杂度和 \mathcal{O}(N)O(N) 的空间复杂度中解决该问题。
