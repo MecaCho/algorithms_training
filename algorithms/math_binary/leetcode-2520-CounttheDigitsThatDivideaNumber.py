@@ -31,3 +31,8 @@ Constraints:
 1 <= num <= 109
 num does not contain 0 as one of its digits.
 '''
+
+class Solution:
+    def countDigits(self, num: int) -> int:
+        return sum([1 for n in list(str(num)) if num % int(n) == 0])
+
