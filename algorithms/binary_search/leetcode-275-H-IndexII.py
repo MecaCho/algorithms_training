@@ -58,6 +58,19 @@ h 指数的定义: “h 代表“高引用次数”（high citations），一名
 你可以优化你的算法到对数时间复杂度吗？
 '''
 
+class Solution:
+    def hIndex(self, citations: List[int]) -> int:
+        n = len(citations)
+        l, r = 0, n - 1
+        while l <= r:
+            mid = (l+r)//2
+            if citations[mid] >= n - mid:
+                r = mid - 1
+            else:
+                l = mid + 1
+        return n - l 
+
+
 # golang solution
 
 '''
