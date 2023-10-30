@@ -48,6 +48,17 @@ h 指数的定义：h 代表“高引用次数”（high citations），一名�
 提示：如果 h 有多种可能的值，h 指数是其中最大的那个。
 '''
 
+class Solution:
+    def hIndex(self, citations: List[int]) -> int:
+        citations.sort()
+        i = len(citations) - 1
+        h = 0
+        while i >= 0 and citations[i] > h:
+            h += 1
+            i -= 1
+        return h
+
+
 # golang solution
 
 '''
