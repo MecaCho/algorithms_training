@@ -4,8 +4,6 @@
 318. Maximum Product of Word Lengths
 Given a string array words, return the maximum value of length(word[i]) * length(word[j]) where the two words do not share common letters. If no such two words exist, return 0.
 
- 
-
 Example 1:
 
 Input: words = ["abcw","baz","foo","bar","xtfn","abcdef"]
@@ -48,3 +46,17 @@ class Solution(object):
                     res = max(res, len(words[i])*len(words[j]))
         return res
 
+class Solution:
+    def maxProduct(self, words: List[str]) -> int:
+        n = len(words)
+        hash = [0] * n
+        for i in range(n):
+            for ch in words[i]:
+                hash[i] |= 1 << (ord(ch) - ord('a'))
+        
+        res = 0
+        for i in range(n):
+            for j in range(i+1, n):
+                if hash[i] & hash[j] == 0:
+                    res = max(res, len(words[i]) * len(words[j]))
+        return res
