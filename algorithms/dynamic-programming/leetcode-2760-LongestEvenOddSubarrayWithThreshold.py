@@ -43,3 +43,18 @@ Constraints:
 1 <= nums[i] <= 100 
 1 <= threshold <= 100
 '''
+
+class Solution:
+    def longestAlternatingSubarray(self, nums: List[int], threshold: int) -> int:
+        res, dp = 0, 0
+        n = len(nums)
+        for l in range(n-1, -1, -1):
+            if nums[l] > threshold:
+                dp = 0
+            elif l == n - 1 or nums[l] % 2 != nums[l+1] % 2:
+                dp += 1
+            else:
+                dp = 1
+            res = dp if nums[l] % 2 == 0 and dp > res else res
+        return res 
+     
