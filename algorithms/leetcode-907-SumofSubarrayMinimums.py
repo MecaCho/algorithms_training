@@ -1,6 +1,7 @@
 # encoding=utf8
 
 '''
+leetcode-907-SumofSubarrayMinimums.py
 907. Sum of Subarray Minimums
 Given an array of integers arr, find the sum of min(b), where b ranges over every (contiguous) subarray of arr. Since the answer may be large, return the answer modulo 109 + 7.
 
@@ -28,17 +29,19 @@ Constraints:
 
 class Solution:
     def sumSubarrayMins(self, arr: List[int]) -> int:
-        MOD = 1000000007
+        MOD = 10 ** 9 + 7
         n = len(arr)
         monoStack = []
         dp = [0] * n
-        ans = 0
+        res = 0
         for i, x in enumerate(arr):
             while monoStack and arr[monoStack[-1]] > x:
                 monoStack.pop()
             k = i - monoStack[-1] if monoStack else i + 1
             dp[i] = k * x + (dp[i - k] if monoStack else 0)
-            ans = (ans + dp[i]) % MOD
+            res = (res + dp[i]) % MOD
             monoStack.append(i)
-        return ans
+        return res
+
+
 
