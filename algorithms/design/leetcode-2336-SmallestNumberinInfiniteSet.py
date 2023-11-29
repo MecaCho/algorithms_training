@@ -38,3 +38,32 @@ Constraints:
 1 <= num <= 1000
 At most 1000 calls will be made in total to popSmallest and addBack.
 '''
+
+import sortedcontainers
+class SmallestInfiniteSet:
+
+    def __init__(self):
+        self.min = 1
+        self.s = sortedcontainers.SortedSet()
+
+    def popSmallest(self) -> int:
+        if not self.s:
+            res = self.min
+            self.min += 1
+            return res
+
+        res = self.s[0]
+        self.s.pop(0)
+        return res
+
+    def addBack(self, num: int) -> None:
+        if num < self.min:
+            self.s.add(num)
+
+
+# Your SmallestInfiniteSet object will be instantiated and called as such:
+# obj = SmallestInfiniteSet()
+# param_1 = obj.popSmallest()
+# obj.addBack(num)
+
+
