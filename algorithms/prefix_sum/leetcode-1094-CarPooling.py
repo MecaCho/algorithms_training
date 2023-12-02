@@ -29,3 +29,20 @@ trips[i].length == 3
 0 <= fromi < toi <= 1000
 1 <= capacity <= 105
 '''
+
+class Solution:
+    def carPooling(self, trips: List[List[int]], capacity: int) -> bool:
+        diff = [0] * 1001
+        for trip in trips:
+            num_passage, from_, to_ = trip
+            diff[from_] += num_passage
+            diff[to_] -= num_passage
+        
+        count = 0
+        for i in range(1001):
+            count += diff[i]
+            if count > capacity:
+                return False
+        
+        return True
+
