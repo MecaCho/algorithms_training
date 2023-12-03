@@ -153,3 +153,15 @@ class Solution:
 来源：力扣（LeetCode）
 著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
 '''
+
+class Solution:
+    def maxScore(self, cardPoints: List[int], k: int) -> int:
+        n = len(cardPoints)
+        sum_ = sum(cardPoints[:n-k])
+        min_sum = sum_
+        for i in range(n-k, n):
+            sum_ += cardPoints[i] - cardPoints[i - (n-k)]
+            min_sum = min(min_sum, sum_)
+        return sum(cardPoints) - min_sum
+
+
