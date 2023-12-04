@@ -76,3 +76,25 @@ class Solution(object):
         self.num = root.val
         self.bstToGst(root.left)
         return root
+
+
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def bstToGst(self, root: TreeNode) -> TreeNode:
+        self.sum_ =  0
+        def traversal(root: TreeNode):
+            if not root:
+                return root
+            traversal(root.right)
+            root.val += self.sum_
+            self.sum_ = root.val
+            traversal(root.left)
+            return root
+        traversal(root)
+        return root
+        
