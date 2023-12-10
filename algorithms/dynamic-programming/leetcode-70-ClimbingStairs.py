@@ -1,3 +1,5 @@
+# encoding=utf8
+
 '''
 70. 爬楼梯
 假设你正在爬楼梯。需要 n 阶你才能到达楼顶。
@@ -74,6 +76,14 @@ class Solution1(object):
             a, b = b, a+b
         return a
 
+
+class Solution:
+    def climbStairs(self, n: int) -> int:
+        a, b = 0, 1
+        for i in range(n):
+            a, b = b, a+b
+
+        return b
 
 # solutions
 
