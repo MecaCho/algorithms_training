@@ -144,8 +144,6 @@ ans
 
 下面的代码中使用的是广度优先搜索。
 
-C++JavaPython3JavaScriptGolangC
-
 class Solution:
     def minimumEffortPath(self, heights: List[List[int]]) -> int:
         m, n = len(heights), len(heights[0])
@@ -170,11 +168,10 @@ class Solution:
                 left = mid + 1
 
         return ans
+        
 复杂度分析
 
-时间复杂度：O(mn \log C)O(mnlogC)，其中 mm 和 nn 分别是地图的行数和列数，CC 是格子的最大高度，在本题中 CC 不超过 10^610
-6
- 。我们需要进行 O(\log C)O(logC) 次二分查找，每一步查找的过程中需要使用广度优先搜索，在 O(mn)O(mn) 的时间判断是否可以从左上角到达右下角，因此总时间复杂度为 O(mn \log C)O(mnlogC)。
+时间复杂度：O(mn \log C)O(mnlogC)，其中 mm 和 nn 分别是地图的行数和列数，CC 是格子的最大高度，在本题中 CC 不超过 10^6106。我们需要进行 O(\log C)O(logC) 次二分查找，每一步查找的过程中需要使用广度优先搜索，在 O(mn)O(mn) 的时间判断是否可以从左上角到达右下角，因此总时间复杂度为 O(mn \log C)O(mnlogC)。
 
 空间复杂度：O(mn)O(mn)，即为广度优先搜索中使用的队列需要的空间。
 
@@ -188,7 +185,6 @@ class Solution:
 
 代码
 
-C++JavaPython3JavaScriptGolangC
 
 # 并查集模板
 class UnionFind:
