@@ -53,6 +53,25 @@ Note:
 Your solution should be in logarithmic complexity.
 '''
 
+class Solution:
+    def findPeakElement(self, nums: List[int]) -> int:
+        n = len(nums)
+        def get_value(i):
+            if i == -1 or i == n:
+                return -float("inf")
+            return nums[i]
+
+        l, r = 0, n-1
+        while True:
+            mid = (l+r) // 2
+            if get_value(mid-1) < get_value(mid) and get_value(mid) > get_value(mid+1):
+                return mid
+            if get_value(mid) < get_value(mid+1):
+                l = mid + 1
+            else:
+                r = mid - 1
+
+
 
 
 
