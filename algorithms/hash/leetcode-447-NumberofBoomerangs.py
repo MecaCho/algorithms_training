@@ -30,6 +30,10 @@ n == points.length
 points[i].length == 2
 -104 <= xi, yi <= 104
 All the points are unique.
+
+给定平面上 n 对 互不相同 的点 points ，其中 points[i] = [xi, yi] 。回旋镖 是由点 (i, j, k) 表示的元组 ，其中 i 和 j 之间的距离和 i 和 k 之间的欧式距离相等（需要考虑元组的顺序）。
+
+返回平面上所有回旋镖的数量。
 '''
 
 class Solution(object):
@@ -48,4 +52,12 @@ class Solution(object):
                 res += m * (m - 1)
         return res
 
+# tips
 
+'''
+2909. 元素和最小的山形三元组 II 1479
+2874. 有序三元组中的最大值 II 1583
+2242. 节点序列的最大得分 2304
+2867. 统计树中的合法路径数目 2428
+
+'''
