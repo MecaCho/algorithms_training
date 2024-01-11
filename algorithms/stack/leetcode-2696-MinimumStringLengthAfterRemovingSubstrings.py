@@ -32,6 +32,11 @@ Note that the string concatenates after removing the substring and could produce
 
   1 <= s.length <= 100
   s consists only of uppercase English letters.
-
-
   '''
+
+class Solution:
+    def minLength(self, s: str) -> int:
+        while("AB" in s or "CD" in s):
+            s = s.replace("AB", "")
+            s = s.replace("CD", "")
+        return len(s)
