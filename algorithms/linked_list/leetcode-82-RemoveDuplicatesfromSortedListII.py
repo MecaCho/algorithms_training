@@ -144,6 +144,54 @@ class Solution20210325_1(object):
                 pre = pre.next
         return dummy_node.next
 
+
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+class Solution:
+    def deleteDuplicates(self, head: Optional[ListNode]) -> Optional[ListNode]:
+        res = ListNode(0, head)
+        pre = res
+        pre_val = None
+        while head:
+            if pre_val is None:
+                if (head.next is None or head.next.val != head.val):
+                    pre.next = head
+                    pre = pre.next
+            else:
+                if (head.val != pre_val and (head.next is None or head.next.val != head.val)):
+                    pre.next = head
+                    pre = pre.next
+                    # print(head.val, head.next)
+            pre_val = head.val
+            head = head.next
+        pre.next = None
+        return res.next
+
+
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+class Solution:
+    def deleteDuplicates(self, head: Optional[ListNode]) -> Optional[ListNode]:
+        res = ListNode(101, head)
+        pre = res
+        pre_val = 101
+        while head:
+            if head.val != pre_val and (head.next is None or head.next.val != head.val):
+                pre.next = head
+                pre = pre.next
+            pre_val = head.val
+            head = head.next
+        pre.next = None
+        return res.next
+
+
+
 # solutions
 
 '''
