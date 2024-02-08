@@ -111,7 +111,34 @@ class Solution(object):
         if self.x_deepth == self.y_deepth and self.x_parent != self.y_parent:
             return True
         return False
-      
+
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def isCousins(self, root: Optional[TreeNode], x: int, y: int) -> bool:
+        self.node_x = (None, 0)
+        self.node_y = (None, 0)
+        def dfs(root, p, depth):
+            if not root:
+                return
+            if root.val == x:
+                # print(p, depth)
+                self.node_x = (p, depth)
+            if root.val == y:
+                self.node_y = (p, depth)
+            dfs(root.left, root, depth+1)
+            dfs(root.right, root, depth+1)
+        dfs(root, None, 0)
+        # print(self.node_x, self.node_y)
+        if self.node_x[0] != self.node_y[0] and self.node_x[1] == self.node_y[1]:
+            return True
+        return False
+
+
 # solutions
 
 '''
