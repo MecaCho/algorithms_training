@@ -1,3 +1,5 @@
+# encoding=utf8
+
 '''
 144. 二叉树的前序遍历
 给定一个二叉树，返回它的 前序 遍历。
@@ -121,6 +123,28 @@ class Solution202010271(object):
                     stack.append((node, 1))
 
         return res
+
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def preorderTraversal(self, root: Optional[TreeNode]) -> List[int]:
+        stack = [(0, root)]
+        res = []
+        while stack:
+            flag, node = stack.pop()
+            if node:
+                if flag == 0:
+                    stack.append((0, node.right))
+                    stack.append((0, node.left))
+                    stack.append((1, node))
+                else:
+                    res.append(node.val)
+        return res
+
 
 
 # golang solutions
