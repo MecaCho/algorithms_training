@@ -119,4 +119,22 @@ class Solution(object):
                 d[x].append((y, node.val))
                 stack.extend([(node.right, x+1, y+1), (node.left, x-1, y+1)])
         return [[val for _, val in sorted(d[x])] for x in sorted(d)]
-        
+
+
+
+# tips
+
+'''
+知道每个节点的行号 row\textit{row}row、列号 col\textit{col}col 以及节点值 val\textit{val}val。
+
+如果知道了这些信息，那么问题相当于，给你这些三元组：
+
+(2,−2,4),(1,−1,2),(0,0,1),(2,0,6),(2,0,5),(1,1,3),(2,2,7)(2,-2,4),(1,-1,2),(0,0,1),(2,0,6),(2,0,5),(1,1,3),(2,2,7)
+(2,−2,4),(1,−1,2),(0,0,1),(2,0,6),(2,0,5),(1,1,3),(2,2,7)
+每个三元组表示 (row,col,val)(\textit{row},\textit{col},\textit{val})(row,col,val)，你需要把这些三元组按照 col\textit{col}col 分组，也就是把 col\textit{col}col 相同的分到同一组，每组只保留 val\textit{val}val，每组的 val\textit{val}val 按照 row\textit{row}row 从小到大排序，row\textit{row}row 相同的按照 val\textit{val}val 从小到大排序。分组后的结果就是答案 [[4],[2],[1,5,6],[3],[7]][[4],[2],[1,5,6],[3],[7]][[4],[2],[1,5,6],[3],[7]]。
+
+作者：灵茶山艾府
+链接：https://leetcode.cn/problems/vertical-order-traversal-of-a-binary-tree/solutions/2638913/si-chong-xie-fa-dfsha-xi-biao-shuang-shu-tg6q/
+来源：力扣（LeetCode）
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+'''
