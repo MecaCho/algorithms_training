@@ -69,6 +69,28 @@ class Solution(object):
 
 
 # Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+        def levelOrder(self, root: Optional[TreeNode]) -> List[List[int]]:
+                    self.res = []
+                            def dfs(deepth, root):
+                                            if not root:
+                                                               return
+                                                                       if len(self.res) < deepth + 1:
+                                                                                           self.res.append([root.val])
+                                                                                                       else:
+                                                                                                                          self.res[deepth].append(root.val)
+                                                                                                                                      dfs(deepth+1, root.left)   
+                                                                                                                                                  dfs(deepth+1, root.right)     
+                                                                                                                                                          dfs(0, root)      
+                                                                                                                                                                  return self.res 
+                                                                                                                                                                        
+                                                                                                                                                                         
+# Definition for a binary tree node.
 # class TreeNode(object):
 #     def __init__(self, x):
 #         self.val = x
