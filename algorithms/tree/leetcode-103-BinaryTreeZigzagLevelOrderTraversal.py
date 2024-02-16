@@ -1,4 +1,5 @@
 # encoding=utf8
+
 '''
 103. 二叉树的锯齿形层次遍历
 给定一个二叉树，返回其节点值的锯齿形层次遍历。（即先从左往右，再从右往左进行下一层遍历，以此类推，层与层之间交替进行）。
@@ -140,6 +141,31 @@ class Solution20201222(object):
         travel_root(root, 0)
         return self.vals
 
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def zigzagLevelOrder(self, root: Optional[TreeNode]) -> List[List[int]]:
+        self.vals = []
+        def dfs(root, deepth):
+            if not root:
+                return 
+            val = root.val
+            if len(self.vals) <= deepth:
+                self.vals.append([val])
+            else:
+                if deepth % 2 == 0:
+                    self.vals[deepth].append(val)
+                else:
+                    self.vals[deepth] = [val] + self.vals[deepth]
+            dfs(root.left, deepth+1)
+            dfs(root.right, deepth+1)
+
+        dfs(root, 0)
+        return self.vals
 
 
 # solutions
