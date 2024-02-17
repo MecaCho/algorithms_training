@@ -43,14 +43,14 @@ class Solution(object):
         :rtype: List[List[int]]
         """
         self.vals = []
-        def dfs(root, depth):
+        def dfs(root, deepth):
             if not root:
                 return
-            if len(self.vals) < depth+1:
+            if len(self.vals) < deepth+1:
                 self.vals.append([])
-            self.vals[depth].append(root.val)
+            self.vals[deepth].append(root.val)
             for ch in root.children:
-                dfs(ch, depth+1)
+                dfs(ch, deepth+1)
             
         dfs(root, 0)
         return self.vals
