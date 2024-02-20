@@ -1,3 +1,5 @@
+# encoding=utf8
+
 '''
 106. 从中序与后序遍历序列构造二叉树
 根据一棵树的中序遍历与后序遍历构造二叉树。
@@ -36,6 +38,22 @@ Return the following binary tree:
     /  \
    15   7
 '''
+
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def buildTree(self, inorder: List[int], postorder: List[int]) -> Optional[TreeNode]:
+        if not inorder or not postorder:
+            return None
+        idx = inorder.index(postorder[-1])
+        root = TreeNode(postorder[-1])
+        root.left = self.buildTree(inorder[:idx], postorder[:idx])
+        root.right = self.buildTree(inorder[idx+1:], postorder[idx:len(postorder)-1])
+        return root
 
 
 # Definition for a binary tree node.
