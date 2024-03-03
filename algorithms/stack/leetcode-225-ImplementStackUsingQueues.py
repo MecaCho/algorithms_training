@@ -196,9 +196,6 @@ class MyStack2(object):
         """
         res = self.pop()
         self.push(res)
-        # self.queue.put(res)
-        # for _ in range(self.queue.qsize() - 1):
-        #     self.queue.put(self.queue.get())
         return res
 
 
