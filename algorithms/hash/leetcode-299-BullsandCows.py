@@ -113,4 +113,10 @@ class Solution(object):
                 cntG[int(g)] += 1
         cows = sum(min(s, g) for s, g in zip(cntS, cntG))
         return "{0}A{1}B".format(bulls, cows)
+     
+class Solution:
+    def getHint(self, secret: str, guess: str) -> str:
+        A = sum(starmap(eq, zip(secret, guess)))
+        B = sum((Counter(secret) & Counter(guess)).values()) - A
+        return f"{A}A{B}B"
 
