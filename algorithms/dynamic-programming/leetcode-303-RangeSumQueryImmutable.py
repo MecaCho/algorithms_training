@@ -119,6 +119,26 @@ class NumArray2(object):
 # param_1 = obj.sumRange(i,j)
 
 
+class NumArray:
+
+    def __init__(self, nums: List[int]):
+        self.pre_sum = [0]
+        l = 0
+        for i in range(len(nums)):
+            l += nums[i]
+            self.pre_sum.append(l)
+
+
+    def sumRange(self, left: int, right: int) -> int:
+        return self.pre_sum[right+1] - self.pre_sum[left]
+
+
+
+# Your NumArray object will be instantiated and called as such:
+# obj = NumArray(nums)
+# param_1 = obj.sumRange(left,right)
+
+
 # solutions
 
 '''
