@@ -41,3 +41,28 @@ Constraints:
 3 <= nums.length <= 50
 1 <= nums[i] <= 50
 '''
+
+class Solution:
+    def minimumSum(self, nums: List[int]) -> int:
+        res = -1
+        n = len(nums)
+        suf = nums[:]
+        min_num = nums[-1]
+        for i in range(n-2, -1, -1):
+            suf[i] = min_num
+            if nums[i] < min_num:
+                min_num = nums[i]
+        tmp_min = nums[0]
+
+        for i in range(1, n-1):
+            if nums[i] > tmp_min and nums[i] > suf[i]:
+                if res == -1:
+                    res = nums[i] + tmp_min + suf[i]
+                else:
+                    if nums[i] + tmp_min + suf[i] < res:
+                        res = nums[i] + tmp_min + suf[i]
+            tmp_min = min(tmp_min, nums[i])
+        return res
+
+
+
