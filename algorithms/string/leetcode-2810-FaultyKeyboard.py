@@ -45,3 +45,15 @@ Constraints:
 s consists of lowercase English letters.
 s[0] != 'i'
 '''
+
+class Solution:
+    def finalString(self, s: str) -> str:
+        n = len(s)
+        l = []
+        for i in range(n):
+            if s[i] == "i":
+                l = l[::-1]
+            else:
+                l.append(s[i])    
+        return "".join(l)
+
