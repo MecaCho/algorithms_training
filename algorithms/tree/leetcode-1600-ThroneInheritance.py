@@ -169,4 +169,7 @@ class ThroneInheritance(object):
 # obj = ThroneInheritance(kingName)
 # obj.birth(parentName,childName)
 # obj.death(name)
+
 # param_3 = obj.getInheritanceOrder()
+
+
