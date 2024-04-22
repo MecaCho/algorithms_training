@@ -95,7 +95,17 @@ class Solution(object):
                     combs[i] += combs[i-nums[j]]
         return combs[-1]
 
-       
+
+class Solution:
+    def combinationSum4(self, nums: List[int], target: int) -> int:
+        combs = [1] + [0 for i in range(target)]
+        for i in range(1, target+1):
+            for num in nums:
+                if num <= i:
+                    combs[i] += combs[i-num]
+        return combs[-1]
+
+
 # solutions
 
 '''
