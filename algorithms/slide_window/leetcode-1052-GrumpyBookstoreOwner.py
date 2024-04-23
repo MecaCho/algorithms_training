@@ -107,6 +107,32 @@ func maxSatisfied(customers []int, grumpy []int, X int) int {
 
 
 
+
+'''
+
+func maxSatisfied(customers []int, grumpy []int, minutes int) int {
+    total := 0
+        for k, v := range customers{
+                        if k < minutes{
+                                        total += v
+                                                }else{
+                                                            total += v * (1-grumpy[k])
+                                                                    }
+
+                                                                        }
+
+                                                                            res := total
+                                                                                for i := minutes; i < len(grumpy); i++{
+                                                                                        add := customers[i] * grumpy[i] - customers[i-minutes] * grumpy[i-minutes]
+                                                                                                total += add
+                                                                                                        if total > res{
+                                                                                                                    res = total
+                                                                                                                            }
+                                                                                                                                }
+
+                                                                                                                                    return res
+                                                                                                                                    }
+'''
 # solutions
 
 '''
