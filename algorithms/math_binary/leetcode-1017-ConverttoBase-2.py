@@ -44,4 +44,9 @@ class Solution:
             n //= -2
         return ''.join(res[::-1])
 
+# tips
+
+'''
+除 -2 取余，逆序排列
+'''
 
