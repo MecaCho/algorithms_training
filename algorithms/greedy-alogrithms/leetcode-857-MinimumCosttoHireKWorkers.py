@@ -49,3 +49,11 @@ class Solution:
             totalq += heappop(h)
         return ans
 
+
+
+# tips
+
+
+'''
+贪心+优先队列
+'''
