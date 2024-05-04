@@ -52,3 +52,9 @@ class Solution:
         return dp[n]
 
 
+# tips
+
+'''
+动态规划+二分查找
+'''
+
