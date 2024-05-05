@@ -47,4 +47,9 @@ class Solution:
         code = code+code
         return [sum(code[i+1:i+1+k]) for i in range(n)] if k >= 0 else [sum(code[i+k:i]) for i in range(n, 2*n)]
 
-      
+
+
+
+
+
+
