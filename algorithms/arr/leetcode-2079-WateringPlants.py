@@ -53,3 +53,19 @@ n == plants.length
 1 <= plants[i] <= 106
 max(plants[i]) <= capacity <= 109
 '''
+
+class Solution:
+    def wateringPlants(self, plants: List[int], capacity: int) -> int:
+        n = len(plants)
+        res = 0
+        cur = capacity
+        for i in range(n):
+            if cur < plants[i]:
+                res += 2*i+1
+                cur = capacity - plants[i]
+            else:
+                res += 1
+                cur -= plants[i]
+
+        return res
+
