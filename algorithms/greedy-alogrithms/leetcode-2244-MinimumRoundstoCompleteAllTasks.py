@@ -31,3 +31,17 @@ Constraints:
 1 <= tasks.length <= 105
 1 <= tasks[i] <= 109
 '''
+
+class Solution:
+    def minimumRounds(self, tasks: List[int]) -> int:
+        cnt = Counter(tasks)
+        res = 0
+        for v in cnt.values():
+            if v == 1:
+                return -1
+            if v % 3:
+                res += (1+v//3)
+            else:
+                res += v // 3
+        return res
+     
