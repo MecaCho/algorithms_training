@@ -35,3 +35,19 @@ m == worker.length
 1 <= n, m <= 104
 1 <= difficulty[i], profit[i], worker[i] <= 105
 '''
+
+
+class Solution:
+    def maxProfitAssignment(self, difficulty: List[int], profit: List[int], worker: List[int]) -> int:
+        jobs = sorted(zip(difficulty, profit))
+        res = 0
+        worker.sort()
+        i = 0
+        profi = 0
+        for w in worker:
+            while i < len(jobs) and w >= jobs[i][0]:
+                profi = max(profi, jobs[i][1])
+                i += 1
+            res += profi
+        return res
+     
