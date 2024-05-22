@@ -45,3 +45,20 @@ matches[i].length == 2
 winneri != loseri
 All matches[i] are unique.
 '''
+
+class Solution:
+    def findWinners(self, matches: List[List[int]]) -> List[List[int]]:
+        d = defaultdict(list)
+        for match in matches:
+            d[match[0]].append(1)
+            d[match[1]].append(-1)
+        all_wins = []
+        lost_1 = []
+        for k, v in d.items():
+            if len(v) == sum(v):
+                all_wins.append(k)
+            elif len(v) == sum(v) + 2:
+                lost_1.append(k)
+        return [sorted(all_wins), sorted(lost_1)]
+
+
