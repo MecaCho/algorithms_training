@@ -54,4 +54,18 @@ class Solution(object):
 
         return [quotient + 1] * remainder + [quotient] * (n - remainder)
 
+
+
+class Solution:
+    def missingRolls(self, rolls: List[int], mean: int, n: int) -> List[int]:
+        missingSum = mean * (len(rolls) + n) - sum(rolls)
+
+        if not n <= missingSum <= 6*n:
+            return []
+        avg, rem = divmod(missingSum, n)
+
+        return [avg+1] * rem  + [avg] * (n-rem)
+
+
+
       
