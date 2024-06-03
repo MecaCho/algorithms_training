@@ -1,4 +1,5 @@
 # encoding=utf8
+
 '''
 1103. Distribute Candies to People
 We distribute some number of candies, to a row of n = num_people people in the following way:
@@ -80,11 +81,6 @@ Constraints:
 1 <= num_people <= 1000
 '''
 
-### 解题思路
-# 此处撰写解题思路
-
-### 代码
-
 
 
 import math
@@ -110,3 +106,18 @@ class Solution(object):
             res.append((i + 1 + i + 1 + num_people * (num -1) ) * num / 2 + last)
         return res
 
+
+class Solution:
+    def distributeCandies(self, candies: int, num_people: int) -> List[int]:
+        res = [0]*num_people
+        i = 0
+        while candies:
+            expect_num = i+1
+            if expect_num <= candies:
+                res[i%num_people] += expect_num
+            else:
+                res[i%num_people] += candies
+                break
+            candies -= expect_num
+            i += 1
+        return res
