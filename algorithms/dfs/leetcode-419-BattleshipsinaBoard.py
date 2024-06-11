@@ -28,6 +28,8 @@ board[i][j] is either '.' or 'X'.
  
 
 Follow up: Could you do it in one-pass, using only O(1) extra memory and without modifying the values board?
+
+
 '''
 
 class Solution(object):
@@ -42,3 +44,5 @@ class Solution(object):
                 if ch == 'X' and not (i > 0 and board[i - 1][j] == 'X' or j > 0 and board[i][j - 1] == 'X'):
                     res += 1
         return res
+
+
