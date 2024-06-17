@@ -28,3 +28,20 @@ Constraints:
 strs[i] consists of lowercase English letters.
 
 '''
+
+class Solution:
+    def findLUSlength(self, strs: List[str]) -> int:
+        def is_sub(s, t):
+            i = 0
+            for c in t:
+                if s[i] == c:
+                    i += 1
+                    if i == len(s):
+                        return True
+            return False
+        res  = -1
+        for i, s in enumerate(strs):
+            if len(s) > res and all(j==i or not is_sub(s, t) for j, t in enumerate(strs)):
+                res = len(s)
+        return res
+
