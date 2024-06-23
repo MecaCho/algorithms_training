@@ -61,3 +61,10 @@ class Solution(object):
         return word.upper()==word or word.lower()==word or word.title()==word
 
 
+
+
+class Solution:
+        def detectCapitalUse(self, word: str) -> bool:
+                    # return word.isupper() or word.islower() or word == word.capitalize()
+                            return word.isupper() or word.islower() or word.istitle()
+
