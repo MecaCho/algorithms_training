@@ -33,3 +33,16 @@ n == matrix[i].length
 -1 <= matrix[i][j] <= 100
 The input is generated such that each column contains at least one non-negative integer.
 '''
+
+
+class Solution:
+    def modifiedMatrix(self, matrix: List[List[int]]) -> List[List[int]]:
+        m, n = len(matrix), len(matrix[0])
+        max_of_co = [-1]*n
+        for j in range(n):
+            tmp = max(matrix[i][j] for i in range(m))
+            for i in range(m):
+                if matrix[i][j] == -1:
+                    matrix[i][j] = tmp
+        return matrix
+                
