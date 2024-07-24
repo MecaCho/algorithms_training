@@ -42,3 +42,13 @@ moveFrom.length == moveTo.length
 1 <= nums[i], moveFrom[i], moveTo[i] <= 109
 The test cases are generated such that there is at least a marble in moveFrom[i] at the moment we want to apply the ith move.
 '''
+
+class Solution:
+    def relocateMarbles(self, nums: List[int], moveFrom: List[int], moveTo: List[int]) -> List[int]:
+        positions = set(nums)
+        for source, target in zip(moveFrom, moveTo):
+                if source in positions:
+                    positions.remove(source)
+                    positions.add(target)
+        return sorted(positions)
+
