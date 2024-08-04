@@ -1,3 +1,4 @@
+#eencoding=utf8
 '''
 572. 另一个树的子树
 给定两个非空二叉树 s 和 t，检验 s 中是否包含和 t 具有相同结构和节点值的子树。s 的一个子树包括 s 的一个节点和这个节点的所有子孙。s 也可以看做它自身的一棵子树。
@@ -428,3 +429,30 @@ t
 来源：力扣（LeetCode）
 著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
 '''
+
+
+
+'''
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def isSubtree(self, root: Optional[TreeNode], subRoot: Optional[TreeNode]) -> bool:
+
+            self.res = False
+                    def dfs(root, t):
+                                if not root and not t:
+                                                return True
+                                                            elif not root or not t:
+                                                                            return False
+                                                                                        else:
+                                                                                                        return root.val == t.val and dfs(root.left, t.left) and dfs(root.right, t.right)
+                                                                                                                        # else:
+                                                                                                                                        #     return dfs(root.left, t) or dfs(root.right, t)
+                                                                                                                                                if not root:
+                                                                                                                                                            return False
+                                                                                                                                                                    return dfs(root, subRoot) or self.isSubtree(root.left, subRoot) or self.isSubtree(root.right, subRoot)
+                                                                                                                                                                ''''
