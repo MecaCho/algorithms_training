@@ -42,3 +42,22 @@ nums2.length == nums1.length - 2
 0 <= nums1[i], nums2[i] <= 1000
 The test cases are generated in a way that there is an integer x such that nums1 can become equal to nums2 by removing two elements and adding x to each element of nums1.
 '''
+
+class Solution:
+    def minimumAddedInteger(self, nums1: List[int], nums2: List[int]) -> int:
+        nums1.sort()
+        nums2.sort()
+
+        for i in range(2, 0, -1):
+            x = nums2[0] - nums1[i]
+
+            j = 0
+            for v in nums1[i:]:
+                if nums2[j] == v + x:
+                    j += 1
+                    if j == len(nums2):
+                        return x
+
+        return nums2[0] - nums1[0]
+# 由于只能移除两个元素，所以 nums 的前三小元素必定有一个是保留下来的
+
