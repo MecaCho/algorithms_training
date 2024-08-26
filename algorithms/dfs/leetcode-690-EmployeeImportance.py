@@ -83,6 +83,29 @@ class Solution(object):
 
         return dfs(id)
 
+"""
+# Definition for Employee.
+class Employee:
+    def __init__(self, id: int, importance: int, subordinates: List[int]):
+        self.id = id
+        self.importance = importance
+        self.subordinates = subordinates
+"""
+
+class Solution:
+    def getImportance(self, employees: List['Employee'], id: int) -> int:
+        d1 = {}
+        d2 = {}
+        for employee in employees:
+            d1[employee.id] = employee.importance
+            d2[employee.id] = employee.subordinates
+        
+        def dfs(id_: int):
+            return d1[id_] + sum(dfs(sub) for sub in d2[id_])
+        return dfs(id)
+        
+
+
 # golang solution
 
 '''
