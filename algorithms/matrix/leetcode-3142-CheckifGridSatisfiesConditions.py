@@ -54,3 +54,13 @@ Constraints:
 1 <= n, m <= 10
 0 <= grid[i][j] <= 9
 '''
+
+
+class Solution:
+    def satisfiesConditions(self, grid: List[List[int]]) -> bool:
+        for i, row in enumerate(grid):
+            for j, x in enumerate(row):
+                if j and x == row[j - 1] or i and x != grid[i - 1][j]:
+                    return False
+        return True
+
