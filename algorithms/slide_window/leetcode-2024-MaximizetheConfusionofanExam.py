@@ -59,6 +59,20 @@ class Solution(object):
             return ans
         return max(maxConsecutiveChar('T'), maxConsecutiveChar('F'))
 
+class Solution:
+    def maxConsecutiveAnswers(self, answerKey: str, k: int) -> int:
+        n = len(answerKey)
+        res = 0
+        left = 0
+        cnt = defaultdict(int)
+        for right in range(n):
+            cnt[answerKey[right]] += 1
+            while cnt['T'] > k and cnt['F'] > k:
+                cnt[answerKey[left]] -= 1
+                left += 1
+            res = max(res, right - left + 1)
+
+        return res
 
 
 
