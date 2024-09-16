@@ -57,4 +57,11 @@ class Solution(object):
             start,destination = destination, start
         d = sum(distance[start:destination])
         return min(sum(distance)-d, d)
-        
+
+
+class Solution:
+    def distanceBetweenBusStops(self, distance: List[int], start: int, destination: int) -> int:
+        if destination < start:
+            start, destination = destination, start
+        return min(sum(distance) - sum(distance[start:destination]), sum(distance[start:destination]))
+
