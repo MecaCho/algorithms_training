@@ -36,3 +36,15 @@ Constraints:
 1 <= nums.length <= 2000
 1 <= nums[i] <= 2000
 '''
+
+class Solution:
+    def differenceOfSum(self, nums: List[int]) -> int:
+        def sum_digit(num):
+            res = 0
+            while num:
+                res += num % 10
+                num //= 10
+            return res
+
+        return abs(sum(nums) - sum(sum_digit(num) for num in nums))
+
