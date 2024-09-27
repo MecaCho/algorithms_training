@@ -47,4 +47,13 @@ class Solution:
             return res
 
         return abs(sum(nums) - sum(sum_digit(num) for num in nums))
-
+        #return sum(nums)-sum(map(lambda x:sum(map(int,list(str(x)))),nums))
+class Solution:
+    def differenceOfSum(self, nums: List[int]) -> int:
+        res = 0
+        for x in nums:
+            res += x  
+            while x:
+                res -= x % 10  
+                x //= 10
+        return res
