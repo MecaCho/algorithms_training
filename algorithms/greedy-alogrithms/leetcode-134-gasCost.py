@@ -1,3 +1,5 @@
+# encoding=utf8
+
 '''
 134. Gas Station
 There are N gas stations along a circular route, where the amount of gas at station i is gas[i].
@@ -151,6 +153,26 @@ class Solution20201118(object):
             else:
                 i += cnt + 1
 
+        return -1
+
+class Solution:
+    def canCompleteCircuit(self, gas: List[int], cost: List[int]) -> int:
+        n = len(gas)
+        i = 0
+        while i < n:
+            sum_gas = sum_cost = 0
+            cnt = 0
+            while cnt < n:
+                j = (i+cnt) % n
+                sum_gas += gas[j]
+                sum_cost += cost[j]
+                if sum_cost > sum_gas:
+                    break
+                cnt += 1
+            if cnt == n:
+                return i
+            else:
+                i += cnt + 1
         return -1
 
 
