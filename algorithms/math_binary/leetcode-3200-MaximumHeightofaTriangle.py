@@ -57,3 +57,23 @@ Constraints:
 
 1 <= red, blue <= 100
 '''
+
+class Solution:
+    def maxHeightOfTriangle(self, red: int, blue: int) -> int:
+        sum_balls = blue + red
+        tmp = 0
+        i = 1
+        num0, num1 = 0, 0
+        while tmp + i <= sum_balls:
+            tmp += i
+            if i % 2 == 0:
+                num0 += i
+            else:
+                num1 += i
+            if not (min(num0, num1) <= min(red, blue) and max(num0, num1) <= max(red, blue)):
+                break
+            i += 1
+
+        return i-1
+        
+
