@@ -38,3 +38,17 @@ Constraints:
 2 <= s.length <= 100
 s consists only of digits.
 '''
+
+class Solution:
+    def getSmallestString(self, s: str) -> str:
+        n= len(s)
+        res = list(s)
+        for i in range(n-1):
+            if s[i] > s[i+1] and ord(s[i]) % 2 == ord(s[i+1]) % 2:
+                res[i], res[i+1] = res[i+1], res[i]
+                break
+            
+        return ''.join(res)
+
+
+
