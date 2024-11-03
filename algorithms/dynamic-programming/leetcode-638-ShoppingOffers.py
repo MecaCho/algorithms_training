@@ -80,4 +80,10 @@ n == needs.length
 1 <= special.length <= 100
 special[i].length == n + 1
 0 <= special[i][j] <= 50
+
+
 '''
+
+
+# tips 
+
