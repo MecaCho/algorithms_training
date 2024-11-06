@@ -52,3 +52,18 @@ Constraints:
 1 <= nums[i] <= 105
 1 <= k <= n
 '''
+
+class Solution:
+    def resultsArray(self, nums: List[int], k: int) -> List[int]:
+        n = len(nums)
+        res = [-1] * n
+        cnt = 1
+        for i in range(n):
+            if nums[i] == nums[i-1]+1:
+                cnt += 1
+            else:
+                cnt = 1
+            if cnt >= k:
+                res[i] = nums[i]
+        return res[k-1:]
+        
