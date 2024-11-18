@@ -59,7 +59,21 @@ class Solution(object):
                         k += 1
                 img[i-1][j-1] = int(sums/(9-k))
         return img
-
-
+     
+class Solution:
+    def imageSmoother(self, img: List[List[int]]) -> List[List[int]]:
+        m, n = len(img), len(img[0])
+        res = []
+        for i in range(m):
+            res.append([])
+            for j in range(n):
+                tmp, num = 0, 0
+                for x in range(max(i-1, 0), min(i+2, m)):
+                    for y in range(max(j-1, 0), min(j+2, n)):
+                        tmp += img[x][y]
+                        num += 1
+                res[i].append(tmp//num)
+        return res
+        
 
       
