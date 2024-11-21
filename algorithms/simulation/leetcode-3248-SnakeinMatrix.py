@@ -56,3 +56,16 @@ Constraints:
 commands consists only of "UP", "RIGHT", "DOWN", and "LEFT".
 The input is generated such the snake will not move outside of the boundaries.
 '''
+
+
+class Solution:
+    def finalPositionOfSnake(self, n: int, commands: List[str]) -> int:
+        directions = {"RIGHT":(0, 1), "LEFT":(0, -1), "UP":(-1, 0), "DOWN":(1, 0)}
+        i, j = 0, 0
+        for command in commands:
+            i += directions[command][0]
+            j += directions[command][1]
+
+        return i * n + j
+
+        
