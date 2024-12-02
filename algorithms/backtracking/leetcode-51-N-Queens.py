@@ -1,3 +1,5 @@
+# encoding=utf8
+
 '''
 51. N-Queens
 The n-queens puzzle is the problem of placing n queens on an n×n chessboard such that no two queens attack each other.
@@ -68,9 +70,6 @@ class Solution(object):
         :rtype: List[List[str]]
         """
         self.res = []
-
-        # def check(x, y):
-        #     for i in range()
 
         def dfs(queens, diff, sums):
             seq = len(queens)
