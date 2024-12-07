@@ -35,3 +35,9 @@ Constraints:
 0 <= k <= 100
 0 <= row, column <= n
 '''
+
+
+
+# tips
+
+
