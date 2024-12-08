@@ -57,4 +57,12 @@ class Solution:
         rowdiff = n - rowdiff if rowdiff%2 != 0 or (n%2==0 and (n-rowdiff)<rowdiff) else rowdiff
         coldiff = n - coldiff if coldiff%2 != 0 or (n%2==0 and (n-coldiff)<coldiff) else coldiff
         return (rowdiff+coldiff) // 2
-   
+  
+
+
+
+
+
+# tips
+
+
