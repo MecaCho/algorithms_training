@@ -38,3 +38,13 @@ Constraints:
 3 <= num.length <= 1000
 num only consists of digits.
 '''
+
+class Solution:
+    def largestGoodInteger(self, num: str) -> str:
+        i = 9
+        while i > -1:
+            if str(i)*3 in num:
+                return str(i)*3
+            i -= 1
+        return ""
+        
