@@ -43,3 +43,16 @@ Constraints:
 1 <= k <= 109
 The input is generated such that an answer always exists. That is, there exists some sequence of operations after which all elements of the array are greater than or equal to k.
 '''
+
+class Solution:
+    def minOperations(self, nums: List[int], k: int) -> int:
+        res = 0
+        h = nums[:]
+        heapify(h)
+        while h[0] < k:
+            x = heappop(h)
+            y = heappop(h)
+            heappush(h, x+x+y)
+            res += 1
+        return res
+
