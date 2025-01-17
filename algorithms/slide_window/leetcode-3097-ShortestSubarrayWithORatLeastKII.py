@@ -51,3 +51,18 @@ Constraints:
 0 <= nums[i] <= 109
 0 <= k <= 109
 '''
+
+class Solution:
+    def minimumSubarrayLength(self, nums: List[int], k: int) -> int:
+        res = inf
+        for i, x in enumerate(nums):
+            if x >= k:
+                return 1
+            j = i - 1
+            while j >= 0 and nums[j] | x != nums[j]:
+                nums[j] |= x
+                if nums[j] >= k:
+                    res = min(res, i - j + 1)
+                j -= 1
+        return res if res < inf else -1
+
