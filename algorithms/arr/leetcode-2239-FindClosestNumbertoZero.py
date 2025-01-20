@@ -30,3 +30,9 @@ Constraints:
 1 <= n <= 1000
 -105 <= nums[i] <= 105
 '''
+
+class Solution:
+    def findClosestNumber(self, nums: List[int]) -> int:
+        min_num = min(abs(num) for num in nums)
+        return min_num if min_num in nums else -min_num
+
