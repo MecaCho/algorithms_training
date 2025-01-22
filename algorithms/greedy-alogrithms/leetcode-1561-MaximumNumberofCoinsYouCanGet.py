@@ -40,3 +40,9 @@ Constraints:
 piles.length % 3 == 0
 1 <= piles[i] <= 104
 '''
+
+class Solution:
+    def maxCoins(self, piles: List[int]) -> int:
+        piles.sort()
+        return sum(piles[len(piles)//3::2])
+        
