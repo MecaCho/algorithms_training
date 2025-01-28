@@ -42,4 +42,14 @@ class Solution(object):
             index_dict[nums[i]] = i
 
         return False
-      
+
+class Solution:
+    def containsNearbyDuplicate(self, nums: List[int], k: int) -> bool:
+        d = defaultdict(list)
+        for i, num in enumerate(nums):
+            d[num].append(i)
+            if len(d[num]) >= 2 and abs(d[num][-1] - d[num][-2]) <= k:
+                return True
+        return False
+
+
