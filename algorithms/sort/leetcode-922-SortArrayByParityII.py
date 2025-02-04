@@ -1,25 +1,36 @@
+# encoding=utf8
+
 '''
 922. Sort Array By Parity II
-Given an array A of non-negative integers, half of the integers in A are odd, and half of the integers are even.
 
-Sort the array so that whenever A[i] is odd, i is odd; and whenever A[i] is even, i is even.
+Given an array of integers nums, half of the integers in nums are odd, and the other half are even.
 
-You may return any answer array that satisfies this condition.
+Sort the array so that whenever nums[i] is odd, i is odd, and whenever nums[i] is even, i is even.
 
+Return any answer array that satisfies this condition.
 
+ 
 
 Example 1:
 
-Input: [4,2,5,7]
+Input: nums = [4,2,5,7]
 Output: [4,5,2,7]
 Explanation: [4,7,2,5], [2,5,4,7], [2,7,4,5] would also have been accepted.
+Example 2:
 
+Input: nums = [2,3]
+Output: [2,3]
+ 
 
-Note:
+Constraints:
 
-2 <= A.length <= 20000
-A.length % 2 == 0
-0 <= A[i] <= 1000
+2 <= nums.length <= 2 * 104
+nums.length is even.
+Half of the integers in nums are even.
+0 <= nums[i] <= 1000
+ 
+
+Follow Up: Could you solve it in-place?
 
 922. 按奇偶排序数组 II
 给定一个非负整数数组 A， A 中一半整数是奇数，一半整数是偶数。
@@ -61,6 +72,18 @@ class Solution(object):
             if i < len(A) and j < len(A):
                 A[i], A[j] = A[j], A[i]
         return A
+
+class Solution:
+    def sortArrayByParityII(self, nums: List[int]) -> List[int]:
+        odds, evens = [], []
+        for num in nums:
+            if num & 1:
+                odds.append(num)
+            else:
+                evens.append(num)
+        nums[::2] = evens[:]
+        nums[1::2] = odds[:]
+        return nums
 
 
 # solution
