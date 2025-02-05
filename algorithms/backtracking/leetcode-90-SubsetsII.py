@@ -1,7 +1,31 @@
 # encoding=utf8
 
-
 '''
+90. Subsets II
+
+Given an integer array nums that may contain duplicates, return all possible 
+subsets
+ (the power set).
+
+The solution set must not contain duplicate subsets. Return the solution in any order.
+
+ 
+
+Example 1:
+
+Input: nums = [1,2,2]
+Output: [[],[1],[1,2],[1,2,2],[2],[2,2]]
+Example 2:
+
+Input: nums = [0]
+Output: [[],[0]]
+ 
+
+Constraints:
+
+1 <= nums.length <= 10
+-10 <= nums[i] <= 10
+
 90. 子集 II
 给定一个可能包含重复元素的整数数组 nums，返回该数组所有可能的子集（幂集）。
 
@@ -46,11 +70,6 @@ class Solution(object):
         :type nums: List[int]
         :rtype: List[List[int]]
         """
-        # res = [[]]
-        # for i in nums:
-        #     # print(res)
-        #     res += [[i] + num for num in res if i not in num]
-        # return res
 
         self.vals = []
         nums = sorted(nums)
@@ -58,7 +77,6 @@ class Solution(object):
             if k > len(nums):
                 return
             if len(new_c) == k:
-                # new_c = sorted(new_c)
                 if new_c not in self.vals:
                     self.vals.append(new_c)
             for i in range(pre, len(nums)):
