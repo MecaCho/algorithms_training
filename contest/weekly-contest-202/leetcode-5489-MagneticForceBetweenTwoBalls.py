@@ -1,3 +1,5 @@
+# encoding=utf8
+
 '''
 5489. Magnetic Force Between Two Balls
 In universe Earth C-137, Rick discovered a special form of magnetic force between two balls if they are put in his new invented basket. Rick has n empty baskets, the ith basket is at position[i], Morty has m balls and needs to distribute the balls into the baskets such that the minimum magnetic force between any two balls is maximum.
@@ -106,4 +108,7 @@ If you can place balls such that the answer is x then you can do it for y where 
 Similarly if you cannot place balls such that the answer is x then you can do it for y where y > x.
 
 Binary search on the answer and greedily see if it is possible.
+
+https://leetcode.cn/problems/maximum-tastiness-of-candy-basket/description/
+
 '''
