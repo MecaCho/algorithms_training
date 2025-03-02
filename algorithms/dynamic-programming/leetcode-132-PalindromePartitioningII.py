@@ -2,11 +2,12 @@
 
 '''
 132. Palindrome Partitioning II
+
 Given a string s, partition s such that every substring of the partition is a palindrome.
 
 Return the minimum cuts needed for a palindrome partitioning of s.
 
-
+ 
 
 Example 1:
 
@@ -21,12 +22,12 @@ Example 3:
 
 Input: s = "ab"
 Output: 1
-
+ 
 
 Constraints:
 
 1 <= s.length <= 2000
-s consists of lower-case English letters only.
+s consists of lowercase English letters only.
 
 
 132. 分割回文串 II
@@ -64,20 +65,6 @@ class Solution(object):
         :type s: str
         :rtype: int
         """
-        # self.vals = []
-
-        # def bk(nums, temp):
-        #     if not nums and temp[-1][::-1] == temp[-1]:
-        #         self.vals.append(temp)
-        #         return
-        #     for i in range(len(nums)):
-        #         if temp and temp[-1][::-1] != temp[-1]:
-        #             continue
-        #         bk(nums[ i +1:], temp +["".join(nums[: i +1])])
-
-        # bk(list(s), [])
-        # return len(min(self.vals, key=lambda x: len(x))) - 1
-
         n = len(s)
         g = [[True] * n for _ in range(n)]
 
