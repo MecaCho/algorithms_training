@@ -29,3 +29,17 @@ Constraints:
 1 <= palindrome.length <= 1000
 palindrome consists of only lowercase English letters.
 '''
+
+class Solution:
+    def breakPalindrome(self, palindrome: str) -> str:
+        n = len(palindrome)
+        i = 0
+        if n == 1:
+            return ""
+        while i < n//2:
+            if palindrome[i] != 'a':
+                return ''.join((palindrome[:i], 'a', palindrome[i+1:]))
+            i += 1
+        
+        return palindrome[:n-1]+"b"
+        
