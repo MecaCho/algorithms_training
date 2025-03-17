@@ -45,3 +45,19 @@ n is even.
 s[i] is either '[' or ']'.
 The number of opening brackets '[' equals n / 2, and the number of closing brackets ']' equals n / 2.
 '''
+
+class Solution:
+    def minSwaps(self, s: str) -> int:
+        balance = 0
+        swaps = 0
+        for char in s:
+            if char == '[':
+                balance += 1
+            else:
+                balance -= 1
+                if balance < 0:
+                    swaps += 1
+                    balance = 0
+        return (swaps + 1) // 2
+
+
