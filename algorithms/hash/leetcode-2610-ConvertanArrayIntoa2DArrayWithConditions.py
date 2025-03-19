@@ -36,3 +36,23 @@ Constraints:
 1 <= nums.length <= 200
 1 <= nums[i] <= nums.length
 '''
+
+class Solution:
+    def findMatrix(self, nums: List[int]) -> List[List[int]]:
+        freq = defaultdict(int)
+        max_rows = 0
+        for num in nums:
+            freq[num] += 1
+            if freq[num] > max_rows:
+                max_rows = freq[num]
+        
+        rows = [[] for _ in range(max_rows)]
+        element_counts = defaultdict(int)
+        
+        for num in nums:
+            count = element_counts[num]
+            rows[count].append(num)
+            element_counts[num] += 1
+        
+        return rows
+        
