@@ -29,3 +29,18 @@ Constraints:
 1 <= nums[i] <= 106
 1 <= k <= 105
 '''
+
+class Solution:
+    def countSubarrays(self, nums: List[int], k: int) -> int:
+        mx = max(nums)
+        res = cnt_mx = left = 0
+        for x in nums:
+            if x == mx:
+                cnt_mx += 1
+            while cnt_mx == k:
+                if nums[left] == mx:
+                    cnt_mx -= 1
+                left += 1
+            res += left
+        return res
+
