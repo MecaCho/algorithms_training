@@ -28,3 +28,17 @@ Constraints:
 1 <= n <= 1000
 
 '''
+
+
+MOD = 1_000_000_007
+
+f = [0] * 1001
+f[0] = f[1] = 1
+f[2] = 2
+for i in range(3, len(f)):
+    f[i] = (f[i - 1] * 2 + f[i - 3]) % MOD
+
+class Solution:
+    def numTilings(self, n: int) -> int:
+        return f[n]
+
