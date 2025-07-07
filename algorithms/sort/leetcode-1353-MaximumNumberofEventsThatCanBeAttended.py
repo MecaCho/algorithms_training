@@ -1,3 +1,5 @@
+# encoding=utf8
+
 '''
 1353. Maximum Number of Events That Can Be Attended
 Given an array of events where events[i] = [startDayi, endDayi]. Every event i starts at startDayi and ends at endDayi.
