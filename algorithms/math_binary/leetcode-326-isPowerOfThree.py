@@ -63,6 +63,11 @@ class Solution(object):
             n /= 3
         return False
 
+class Solution:
+    def isPowerOfThree(self, n: int) -> bool:
+        # 在本题的数据范围下，最大的 3 的幂是 3^19=1162261467。
+        return n > 0 and 1162261467 % n == 0
+
     
 # golang solution
 
