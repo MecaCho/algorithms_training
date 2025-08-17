@@ -1,5 +1,8 @@
+# encoding=utf8
+
 '''
 679. 24 Game
+
 You have 4 cards each containing a number from 1 to 9. You need to judge whether they could operated through *, /, +, -, (, ) to get the value of 24.
 
 Example 1:
@@ -15,6 +18,7 @@ Every operation done is between two numbers. In particular, we cannot use - as a
 You cannot concatenate numbers together. For example, if the input is [1, 2, 1, 2], we cannot write this as 12 + 12.
 
 679. 24 点游戏
+
 你有 4 张写有 1 到 9 数字的牌。你需要判断是否能通过 *，/，+，-，(，) 的运算得到 24。
 
 示例 1:
