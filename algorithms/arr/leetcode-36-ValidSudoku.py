@@ -114,7 +114,6 @@ class Solution(object):
                 if board[i][j] == ".":
                     continue
                 index = ord(board[i][j]) - ord("1")
-                # print(i/3, j/3, index)
                 c[i][index] += 1
                 r[j][index] += 1
                 sub_s[i/3][j/3][index] += 1
