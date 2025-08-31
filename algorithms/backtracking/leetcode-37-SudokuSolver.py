@@ -1,5 +1,8 @@
+# encoding=utf8
+
 '''
 37. Sudoku Solver
+
 Write a program to solve a Sudoku puzzle by filling the empty cells.
 
 A sudoku solution must satisfy all of the following rules:
@@ -22,6 +25,7 @@ You may assume that the given Sudoku puzzle will have a single unique solution.
 The given board size is always 9x9.
 
 37. 解数独
+
 编写一个程序，通过已填充的空格来解决数独问题。
 
 一个数独的解法需遵循如下规则：
