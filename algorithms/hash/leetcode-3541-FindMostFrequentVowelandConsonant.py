@@ -45,3 +45,18 @@ Constraints:
 1 <= s.length <= 100
 s consists of lowercase English letters only.
 '''
+
+class Solution:
+    def maxFreqSum(self, s: str) -> int:
+        cnt = Counter(list(s))
+        max0, max1 = 0, 0
+        for k, v in cnt.items():
+            if k in 'aeiuo':
+                if v > max0:
+                    max0 = v
+            else:
+                if v > max1:
+                    max1 = v
+        return max0+max1
+        
+
