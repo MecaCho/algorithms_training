@@ -2,6 +2,7 @@
 
 '''
 166. Fraction to Recurring Decimal
+
 Given two integers representing the numerator and denominator of a fraction, return the fraction in string format.
 
 If the fractional part is repeating, enclose the repeating part in parentheses.
@@ -40,6 +41,7 @@ Constraints:
 denominator != 0
 
 166. 分数到小数
+
 给定两个整数，分别表示分数的分子 numerator 和分母 denominator，以 字符串形式返回小数 。
 
 如果小数部分为循环小数，则将循环的部分括在括号内。
@@ -168,25 +170,25 @@ if __name__ == '__main__':
     res = demo.fractionToDecimal(-1, 300)
     print res
 
-    
-# solutions
+class Solution:
+    def fractionToDecimal(self, numerator: int, denominator: int) -> str:
+        sign = '-' if numerator * denominator < 0 else ''
+        numerator = abs(numerator)  
+        denominator = abs(denominator)
 
-'''
-首先，需要将分子、分母转化为long long，因为分子可能 *10∗10 导致爆掉int的数据范围。
+        q, r = divmod(numerator, denominator)
+        if r == 0:  
+            return sign + str(q)
 
-计算分数到小数，我们将问题拆解为:
+        ans = [sign + str(q) + '.']
+        r_to_pos = {r: 1}  
+        while r:
+            q, r = divmod(r * 10, denominator)
+            ans.append(str(q))
+            if r in r_to_pos:  
+                pos = r_to_pos[r]  
+                return f"{''.join(ans[:pos])}({''.join(ans[pos:])})"
+            r_to_pos[r] = len(ans)  
+        return ''.join(ans)  
+            
 
-如何计算小数的正负号。
-如何计算小数的小数点前的整数。
-如何计算小数的小数点后的有限小数 或者 无限循环小数。
-第一个问题，如何正负号判断，分子和分母相乘，结果如果小于0，则需要加-−号。
-
-第二个问题，如何计算小数的小数点前的整数。分子/分母 整数相除得到的结果就是小数点前的整数，结果可能为0。
-
-第三个问题，如何计算小数的小数点后的有限小数 或者 无限循环小数。模拟除法运算，即分子*10∗10，然后 分子// 分母。注意整除的情况，即没有小数点后的数字。
-
-如果是有限小数，会在某一步，出现 分子/分母 整除的情况。
-如果是无限循环小数，会在某一步，出现 分子/分母 的余数等于之前的一步的分子。因此我们可以借助哈希表，存储之前出现过的分子，并记录他们的下标。
-
-链接：https://leetcode-cn.com/problems/fraction-to-recurring-decimal/solution/acmjin-pai-ti-jie-mo-ni-chu-fa-yun-suan-p96vg/
-'''
