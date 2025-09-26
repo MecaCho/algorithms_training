@@ -67,25 +67,3 @@ class Solution(object):
 
 
 
-
-# 回溯，超时
-import functools
-class Solution0(object):
-    def minimumTotal(self, triangle):
-        """
-        :type triangle: List[List[int]]
-        :rtype: int
-        """
-        self.res = float("inf")
-        self.sum_dict = {}
-        def bk(nums, tmp_sum, pre):
-            # print(nums, pre)
-            if nums == len(triangle):
-                if tmp_sum < self.res:
-                    self.res = tmp_sum
-                return
-            bk(nums+1, tmp_sum+triangle[nums][pre], pre)
-            if len(triangle[nums]) > pre+1:
-                bk(nums+1, tmp_sum+triangle[nums][pre+1], pre+1)
-        bk(0, 0, 0)
-        return self.res
