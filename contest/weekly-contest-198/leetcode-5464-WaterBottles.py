@@ -2,6 +2,7 @@
 
 '''
 5464. Water Bottles
+
 Given numBottles full water bottles, you can exchange numExchange empty water bottles for one full water bottle.
 
 The operation of drinking a full water bottle turns it into an empty bottle.
@@ -43,6 +44,7 @@ Constraints:
 
 
 5464. 换酒问题
+
 小区便利店正在促销，用 numExchange 个空酒瓶可以兑换一瓶新酒。你购入了 numBottles 瓶酒。
 
 如果喝掉了酒瓶中的酒，那么酒瓶就会变成空的。
@@ -83,8 +85,6 @@ Constraints:
 2 <= numExchange <= 100
 '''
 
-
-
 class Solution(object):
     def numWaterBottles(self, numBottles, numExchange):
         """
@@ -96,12 +96,9 @@ class Solution(object):
         null_bottles = numBottles
         while numBottles:
             numBottles = null_bottles / numExchange
-            # print(numBottles)
             res += numBottles
             null_bottles = numBottles + null_bottles % numExchange
         return res
-
-
 
 class Solution2(object):
     def numWaterBottles(self, numBottles, numExchange):
@@ -111,7 +108,6 @@ class Solution2(object):
         :rtype: int
         """
         return numBottles + (numBottles - 1) // (numExchange-1)
-
 
 class Solution1(object):
     def numWaterBottles(self, numBottles, numExchange):
@@ -126,15 +122,12 @@ class Solution1(object):
 
 '''
 func numWaterBottles(numBottles int, numExchange int) int {
-
     res := numBottles
     for numBottles/numExchange >= 1{
         res += numBottles/numExchange
         numBottles = numBottles%numExchange + numBottles/numExchange
     }
-
     return res
-
 }
 '''
 
