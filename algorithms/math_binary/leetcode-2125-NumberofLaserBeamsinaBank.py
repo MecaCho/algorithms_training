@@ -46,3 +46,15 @@ n == bank[i].length
 1 <= m, n <= 500
 bank[i][j] is either '0' or '1'.
 '''
+
+class Solution:
+    def numberOfBeams(self, bank: List[str]) -> int:
+        res = 0
+        tmp = 0
+        for row in bank:
+            cnt = row.count('1')
+            if cnt > 0:
+                res += tmp * cnt
+                tmp = cnt
+        return res
+        
