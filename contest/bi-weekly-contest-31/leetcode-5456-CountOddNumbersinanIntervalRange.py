@@ -1,3 +1,5 @@
+# encoding=utf8
+
 '''
 5456. Count Odd Numbers in an Interval Range
 Given two non-negative integers low and high. Return the count of odd numbers between low and high (inclusive).
@@ -42,12 +44,7 @@ Constraints:
 0 <= low <= high <= 10^9
 '''
 
-class Solution(object):
-    def countOdds(self, low, high):
-        """
-        :type low: int
-        :type high: int
-        :rtype: int
-        """
-        add = 1 if low % 2 == 1 and high % 2 == 1 else 0
-        return (high-low+1)//2 + add
+class Solution:
+    def countOdds(self, low: int, high: int) -> int:
+        return (high + 1) // 2 - low // 2
+        
