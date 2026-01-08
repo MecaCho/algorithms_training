@@ -1,3 +1,5 @@
+# encoding=utf8
+
 '''
 5419. 两个子序列的最大点积
 给你两个数组 nums1 和 nums2 。
@@ -76,6 +78,27 @@ Constraints:
 1 <= nums1.length, nums2.length <= 500
 -1000 <= nums1[i], nums2[i] <= 1000
 '''
+
+class Solution:
+    def maxDotProduct(self, nums1: List[int], nums2: List[int]) -> int:
+        m, n = len(nums1), len(nums2)
+        # Initialize DP table with -infinity (handle all-negative cases)
+        dp = [[float('-inf')] * (n + 1) for _ in range(m + 1)]
+        
+        for i in range(1, m + 1):
+            for j in range(1, n + 1):
+                # Option 1: take nums1[i-1] and nums2[j-1], add to previous max (or 0 if previous is negative)
+                current_product = nums1[i-1] * nums2[j-1]
+                option1 = current_product + max(dp[i-1][j-1], 0)
+                # Option 2: skip nums1[i-1]
+                option2 = dp[i-1][j]
+                # Option 3: skip nums2[j-1]
+                option3 = dp[i][j-1]
+                # Take the maximum of all options
+                dp[i][j] = max(option1, option2, option3)
+        
+        return dp[m][n]
+
 
 
 class Solution(object):
