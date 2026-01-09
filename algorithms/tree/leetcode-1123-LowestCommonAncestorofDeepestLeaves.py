@@ -86,6 +86,31 @@ Note: This question is the same as 865: https://leetcode.com/problems/smallest-s
 #         self.left = left
 #         self.right = right
 class Solution:
+    def subtreeWithAllDeepest(self, root: Optional[TreeNode]) -> Optional[TreeNode]:
+        def get_subtree(root):
+            if not root:
+                return 0, None
+            
+            d1, node1 = get_subtree(root.left)
+            d2, node2 = get_subtree(root.right)
+
+            if d1 > d2:
+                return d1 + 1, node1
+            if d2 > d1:
+                return d2 + 1, node2
+
+            return d1 + 1, root
+        return get_subtree(root)[1]
+
+        
+
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
     def lcaDeepestLeaves(self, root: Optional[TreeNode]) -> Optional[TreeNode]:
         def get_deepth(root):
             if not root:
