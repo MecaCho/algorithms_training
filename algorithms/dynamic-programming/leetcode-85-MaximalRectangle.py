@@ -2,6 +2,7 @@
 
 '''
 85. Maximal Rectangle
+
 Given a rows x cols binary matrix filled with 0's and 1's, find the largest rectangle containing only 1's and return its area.
 
 
@@ -74,6 +75,46 @@ cols == matrix[0].length
 0 <= row, cols <= 200
 matrix[i][j] 为 '0' 或 '1'
 '''
+
+class Solution:
+    def maximalRectangle(self, matrix: List[List[str]]) -> int:
+        if not matrix or not matrix[0]:
+            return 0
+    
+        rows = len(matrix)
+        cols = len(matrix[0])
+        max_area = 0
+        # Initialize height array (histogram) for the first row
+        heights = [0] * cols
+        
+        for row in range(rows):
+            # Update the histogram for current row
+            for col in range(cols):
+                if matrix[row][col] == '1':
+                    heights[col] += 1
+                else:
+                    heights[col] = 0
+            
+            # Calculate max area for current histogram (using monotonic stack)
+            stack = []
+            current_max = 0
+            # Add a sentinel 0 at the end to process remaining bars in stack
+            temp_heights = heights + [0]
+            
+            for i in range(len(temp_heights)):
+                # Pop from stack when current height < stack top's height
+                while stack and temp_heights[i] < temp_heights[stack[-1]]:
+                    height_idx = stack.pop()
+                    height = temp_heights[height_idx]
+                    # Width = current index - previous index in stack - 1 (or current index if stack is empty)
+                    width = i if not stack else i - stack[-1] - 1
+                    current_max = max(current_max, height * width)
+                stack.append(i)
+            
+            # Update global maximum area
+            max_area = max(max_area, current_max)
+        
+        return max_area
 
 # golang solution
 
