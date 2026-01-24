@@ -68,6 +68,13 @@ n 是 偶数 。
 1 <= nums[i] <= 105
 '''
 
+class Solution:
+    def minPairSum(self, nums: List[int]) -> int:
+        nums.sort()
+        n = len(nums)
+        return max(nums[i] + nums[-1 - i] for i in range(n // 2))
+
+
 class Solution(object):
     def minPairSum(self, nums):
         """
