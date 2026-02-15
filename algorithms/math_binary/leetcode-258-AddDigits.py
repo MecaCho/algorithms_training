@@ -28,19 +28,5 @@ Constraints:
 Follow up: Could you do it without any loop/recursion in O(1) runtime?
 '''
 
-class Solution(object):
-    def addDigits(self, num):
-        """
-        :type num: int
-        :rtype: int
-        """
-        return (num - 1) % 9 + 1 if num else 0
-        # while num >= 10:
-        #     tmp = 0
-        #     while num:
-        #         tmp += num % 10
-        #         num /= 10
-        #     num = tmp
-        # return num
 
         
