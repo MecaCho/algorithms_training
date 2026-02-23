@@ -1,5 +1,8 @@
+# encoding=utf8
+
 '''
 1461. 检查一个字符串是否包含所有长度为 K 的二进制子串
+
 给你一个二进制字符串 s 和一个整数 k 。
 
 如果所有长度为 k 的二进制字符串都是 s 的子串，请返回 True ，否则请返回 False 。
@@ -38,6 +41,7 @@ s 中只含 0 和 1 。
 1 <= k <= 20
 
 1461. Check If a String Contains All Binary Codes of Size K
+
 Given a binary string s and an integer k.
 
 Return True if all binary codes of length k is a substring of s. Otherwise, return False.
