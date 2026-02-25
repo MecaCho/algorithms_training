@@ -1,5 +1,8 @@
+# encoding=utf8
+
 '''
 1356. Sort Integers by The Number of 1 Bits
+
 Given an integer array arr. You have to sort the integers in the array in ascending order by the number of 1's in their binary representation and in case of two or more integers have the same number of 1's you have to sort them in ascending order.
 
 Return the sorted array.
@@ -40,6 +43,7 @@ Constraints:
 0 <= arr[i] <= 10^4
 
 1356. 根据数字二进制下 1 的数目排序
+
 给你一个整数数组 arr 。请你将数组中的元素按照其二进制表示中数字 1 的数目升序排序。
 
 如果存在多个数字二进制中 1 的数目相同，则必须将它们按照数值大小升序排列。
@@ -85,9 +89,6 @@ Constraints:
 
 class Solution(object):
     def sortByBits(self, arr):
-        """
-        :type arr: List[int]
-        :rtype: List[int]
-        """
+        # arr.sort(key=lambda x: (x.bit_count(), x))
         arr.sort()
         return sorted(arr, key=lambda x:sum([int(i) for i in list(bin(x).strip("0b"))]))
