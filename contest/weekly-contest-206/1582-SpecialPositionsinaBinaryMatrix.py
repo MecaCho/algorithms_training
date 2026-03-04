@@ -2,6 +2,7 @@
 
 '''
 1582. Special Positions in a Binary Matrix
+
 Given a rows x cols matrix mat, where mat[i][j] is either 0 or 1, return the number of special positions in mat.
 
 A position (i,j) is called special if mat[i][j] == 1 and all other elements in row i and column j are 0 (rows and columns are 0-indexed).
@@ -47,6 +48,7 @@ cols == mat[i].length
 mat[i][j] is 0 or 1.
 
 1582. 二进制矩阵中的特殊位置
+
 给你一个大小为 rows x cols 的矩阵 mat，其中 mat[i][j] 是 0 或 1，请返回 矩阵 mat 中特殊位置的数目 。
 
 特殊位置 定义：如果 mat[i][j] == 1 并且第 i 行和第 j 列中的所有其他元素均为 0（行和列的下标均 从 0 开始 ），则位置 (i, j) 被称为特殊位置。
@@ -91,6 +93,37 @@ cols == mat[i].length
 1 <= rows, cols <= 100
 mat[i][j] 是 0 或 1
 '''
+
+class Solution:
+    def numSpecial(self, mat: List[List[int]]) -> int:
+        m = len(mat)
+        n = len(mat[0])
+        
+        # Step 1: Calculate sum for each row
+        row_sums = [sum(row) for row in mat]
+        
+        # Step 2: Calculate sum for each column
+        col_sums = [0] * n
+        for j in range(n):
+            current_sum = 0
+            for i in range(m):
+                current_sum += mat[i][j]
+            col_sums[j] = current_sum
+        
+        # Step 3: Count special positions
+        count = 0
+        for i in range(m):
+            # Optimization: If row sum is not 1, no cell in this row can be special
+            if row_sums[i] != 1:
+                continue
+                
+            for j in range(n):
+                # Check if the cell is 1 and the column sum is also 1
+                if mat[i][j] == 1 and col_sums[j] == 1:
+                    count += 1
+                    
+        return count
+
 
 
 class Solution(object):
