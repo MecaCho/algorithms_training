@@ -39,3 +39,23 @@ class Solution:
         a = sum([int(s[i]) == (i%2) for i in range(n)])
         return min(a, n-a)
 
+
+class Solution:
+    def minOperations(self, s: str) -> int:
+        n = len(s)
+        diff_start_0 = 0
+        
+        # Calculate cost to transform s into "010101..."
+        for i in range(n):
+            # Expected character for pattern starting with '0':
+            # Even index -> '0', Odd index -> '1'
+            expected = '0' if i % 2 == 0 else '1'
+            
+            if s[i] != expected:
+                diff_start_0 += 1
+                
+        # The cost for the other pattern ("101010...") is simply n - diff_start_0
+        diff_start_1 = n - diff_start_0
+        
+        return min(diff_start_0, diff_start_1)
+
