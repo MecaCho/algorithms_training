@@ -24,6 +24,11 @@ s[i]​​​​ is either '0' or '1'.
 s[0] is '1'.
 '''
 
+class Solution:
+    def checkOnesSegment(self, s: str) -> bool:
+        return "01" not in s
+        
+
 # golang solution
 
 '''
