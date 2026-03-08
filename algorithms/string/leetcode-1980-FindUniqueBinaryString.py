@@ -35,3 +35,20 @@ Constraints:
     nums[i] is either '0' or '1'.
     All the strings of nums are unique.
 '''
+
+class Solution:
+    def findDifferentBinaryString(self, nums: List[str]) -> str:
+        n = len(nums)
+        result = []
+        
+        # Construct the diagonal string
+        for i in range(n):
+            # Flip the bit at the diagonal position (i, i)
+            if nums[i][i] == '0':
+                result.append('1')
+            else:
+                result.append('0')
+                
+        return "".join(result)
+
+
