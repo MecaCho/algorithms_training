@@ -114,3 +114,53 @@ Constraints:
 
     1 <= zero, one, limit <= 200
 '''
+
+class Solution:
+    def numberOfStableArrays(self, zero: int, one: int, limit: int) -> int:
+        MOD = 10**9 + 7
+        
+        # dp0[i][j] = number of stable arrays with i zeros and j ones, ending in 0
+        # dp1[i][j] = number of stable arrays with i zeros and j ones, ending in 1
+        dp0 = [[0] * (one + 1) for _ in range(zero + 1)]
+        dp1 = [[0] * (one + 1) for _ in range(zero + 1)]
+        
+        # Base cases initialization is handled within the loop logic naturally, 
+        # but let's be explicit about the "only zeros" or "only ones" scenarios.
+        
+        for i in range(zero + 1):
+            for j in range(one + 1):
+                if i == 0 and j == 0:
+                    continue
+                
+                # Calculate dp0[i][j]: Ends with 0
+                if i > 0:
+                    if j == 0:
+                        # Only zeros available. Valid only if total zeros <= limit
+                        if i <= limit:
+                            dp0[i][j] = 1
+                        else:
+                            dp0[i][j] = 0
+                    else:
+                        # Sum dp1[i-k][j] for k in 1..limit
+                        total = 0
+                        for k in range(1, min(i, limit) + 1):
+                            total = (total + dp1[i-k][j]) % MOD
+                        dp0[i][j] = total
+                
+                # Calculate dp1[i][j]: Ends with 1
+                if j > 0:
+                    if i == 0:
+                        # Only ones available. Valid only if total ones <= limit
+                        if j <= limit:
+                            dp1[i][j] = 1
+                        else:
+                            dp1[i][j] = 0
+                    else:
+                        # Sum dp0[i][j-k] for k in 1..limit
+                        total = 0
+                        for k in range(1, min(j, limit) + 1):
+                            total = (total + dp0[i][j-k]) % MOD
+                        dp1[i][j] = total
+
+        return (dp0[zero][one] + dp1[zero][one]) % MOD
+
