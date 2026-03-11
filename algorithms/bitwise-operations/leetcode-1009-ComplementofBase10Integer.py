@@ -2,6 +2,7 @@
 
 '''
 1009. Complement of Base 10 Integer
+
 The complement of an integer is the integer you get when you flip all the 0's to 1's and all the 1's to 0's in its binary representation.
 
 For example, The integer 5 is "101" in binary and its complement is "010" which is the integer 2.
@@ -34,6 +35,7 @@ Constraints:
 Note: This question is the same as 476: https://leetcode.com/problems/number-complement/
 
 1009. 十进制整数的反码
+
 每个非负整数 N 都有其二进制表示。例如， 5 可以被表示为二进制 "101"，11 可以用二进制 "1011" 表示，依此类推。注意，除 N = 0 外，任何二进制表示中都不含前导零。
 
 二进制的反码表示是将每个 1 改为 0 且每个 0 变为 1。例如，二进制数 "101" 的二进制反码为 "010"。
@@ -65,5 +67,20 @@ Note: This question is the same as 476: https://leetcode.com/problems/number-com
 本题与 476：https://leetcode-cn.com/problems/number-complement/ 相同
 '''
 
-
-
+class Solution:
+    def bitwiseComplement(self, n: int) -> int:
+        # Edge case: if n is 0, its binary is "0", complement is "1" -> 1
+        if n == 0:
+            return 1
+        
+        # Calculate the number of bits in n
+        # Method: Find the smallest power of 2 greater than n, then subtract 1 to get the mask
+        # Alternatively, calculate bit length directly
+        bit_length = n.bit_length()
+        
+        # Create a mask with all 1s of the same length as n
+        # Example: if bit_length is 3, mask is 111 (binary) = 7 (decimal)
+        mask = (1 << bit_length) - 1
+        
+        # XOR n with the mask to flip the bits
+        return n ^ mask
