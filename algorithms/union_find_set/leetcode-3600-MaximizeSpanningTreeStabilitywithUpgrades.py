@@ -69,3 +69,114 @@ Constraints:
     0 <= k <= n
     There are no duplicate edges.
 '''
+
+class UnionFind:
+    def __init__(self, n):
+        self.parent = list(range(n))
+        self.rank = [0] * n
+        self.components = n
+    
+    def find(self, x):
+        if self.parent[x] != x:
+            self.parent[x] = self.find(self.parent[x])
+        return self.parent[x]
+    
+    def union(self, x, y):
+        rootX = self.find(x)
+        rootY = self.find(y)
+        
+        if rootX == rootY:
+            return False
+        
+        if self.rank[rootX] < self.rank[rootY]:
+            self.parent[rootX] = rootY
+        elif self.rank[rootX] > self.rank[rootY]:
+            self.parent[rootY] = rootX
+        else:
+            self.parent[rootY] = rootX
+            self.rank[rootX] += 1
+        
+        self.components -= 1
+        return True
+
+class Solution:
+    def maxStability(self, n: int, edges: List[List[int]], k: int) -> int:
+        # Separate edges for easier handling if needed, but we can filter on the fly
+        # Determine the search range for binary search
+        # Minimum possible strength is 1, maximum is 2 * 10^5
+        low = 1
+        high = 2 * 10**5 
+        ans = -1
+        
+        # Pre-check connectivity with all edges (ignoring weights) to quickly return -1 if impossible?
+        # Not strictly necessary as the binary search will handle it, but good for optimization.
+        # However, the mandatory cycle constraint is specific.
+        
+        def can_achieve(target):
+            uf = UnionFind(n)
+            upgrades_used = 0
+            edges_count = 0
+            
+            # 1. Process Mandatory Edges
+            for u, v, s, must in edges:
+                if must == 1:
+                    if s < target:
+                        return False # Mandatory edge too weak and cannot be upgraded
+                    if not uf.union(u, v):
+                        return False # Cycle detected among mandatory edges
+                    edges_count += 1
+            
+            # 2. Prepare Optional Edges
+            optional_no_upgrade = []
+            optional_need_upgrade = []
+            
+            for u, v, s, must in edges:
+                if must == 0:
+                    if s >= target:
+                        optional_no_upgrade.append((u, v))
+                    elif 2 * s >= target:
+                        optional_need_upgrade.append((u, v))
+                    # else: edge is too weak even with upgrade
+            
+            # 3. Greedily add optional edges without upgrade
+            for u, v in optional_no_upgrade:
+                if uf.union(u, v):
+                    edges_count += 1
+            
+            # 4. Greedily add optional edges with upgrade
+            for u, v in optional_need_upgrade:
+                if uf.union(u, v):
+                    edges_count += 1
+                    upgrades_used += 1
+                    if upgrades_used > k:
+                        # We exceeded budget, but maybe we already formed a tree?
+                        # No, we need to finish connecting. If we exceed k before finishing, it's fail.
+                        # But wait, we might have finished connecting before this specific edge.
+                        # The check should be after the loop or carefully inside.
+                        # Actually, if we increment and it becomes > k, we can't use this edge.
+                        # But maybe we don't need this edge if the tree is already complete.
+                        # The condition "if uf.union" ensures we only count necessary edges.
+                        # So if we are here, we needed this edge to connect components.
+                        # Thus, if upgrades_used > k, we fail.
+                        pass 
+            
+            if upgrades_used > k:
+                return False
+                
+            # Check if full spanning tree is formed (n-1 edges)
+            # Alternatively check uf.components == 1
+            if edges_count == n - 1:
+                return True
+            
+            return False
+
+        while low <= high:
+            mid = (low + high) // 2
+            if can_achieve(mid):
+                ans = mid
+                low = mid + 1
+            else:
+                high = mid - 1
+                
+        return ans
+
