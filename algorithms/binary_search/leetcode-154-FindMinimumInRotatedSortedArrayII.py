@@ -46,18 +46,6 @@ This is a follow up problem to Find Minimum in Rotated Sorted Array.
 Would allow duplicates affect the run-time complexity? How and why?
 '''
 
-# 执行用时 :
-# 24 ms
-# , 在所有 Python 提交中击败了
-# 71.10%
-# 的用户
-# 内存消耗 :
-# 12.8 MB
-# , 在所有 Python 提交中击败了
-# 33.33%
-# 的用户
-# 双指针
-
 class Solution(object):
     def minArray(self, nums):
         """
@@ -97,16 +85,6 @@ class Solution1_(object):
             else: j -= 1
         return nums[i]
 
-# 执行用时 :
-# 28 ms
-# , 在所有 Python 提交中击败了
-# 55.78%
-# 的用户
-# 内存消耗 :
-# 12.8 MB
-# , 在所有 Python 提交中击败了
-# 33.33%
-# 的用户
 class Solution1(object):
     def findMin(self, nums):
         """
