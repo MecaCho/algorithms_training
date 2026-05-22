@@ -76,56 +76,6 @@ class Solution1(object):
         return -1
 
 
-class Solution(object):
-    def search(self, nums, target):
-        """
-        :type nums: List[int]
-        :type target: int
-        :rtype: int
-        """
-        if not nums:
-            return -1
-        if len(nums) == 1:
-            return 0 if nums[0] == target else -1
-        def find_index():
-            i, j = 0, len(nums) - 1
-            while i < j:
-                if nums[i] < nums[ i +1]:
-                    i += 1
-                else:
-                    return i+ 1
-
-                if nums[j] > nums[j - 1]:
-                    j -= 1
-                else:
-                    return j
-            return 0
-
-        def bin_search(nums, t):
-            i, j = 0, len(nums) - 1
-            while i <= j:
-                mid = (i + j) / 2
-                if nums[mid] == t:
-                    return mid
-                elif nums[mid] > t:
-                    j = mid - 1
-                else:
-                    i = mid + 1
-            print(i, j, nums, t)
-            return None
-
-        min_index = find_index()
-        # print(min_index)
-        if nums[min_index] <= target <= nums[-1]:
-            res = bin_search(nums[min_index:], target)
-            if res is not None:
-                return res + min_index
-        if nums[0] <= target <= nums[min_index - 1]:
-            res = bin_search(nums[:min_index], target)
-            if res is not None:
-                return res
-        return -1
-
 
 '''
 方法一：二分搜索
