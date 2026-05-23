@@ -34,3 +34,13 @@ Constraints:
 1 <= nums.length <= 100
 1 <= nums[i] <= 100
 '''
+
+class Solution:
+    def check(self, nums: List[int]) -> bool:
+        # count = sum([1 if nums[i] < nums[i-1] else 0 for i in range(len(nums))])
+        # 1.递增数组， count = 1
+        # 2.递增数组只rotate一次， count = 1
+        # 3.数组元素全相等，count = 0， 例如[1,1,1]
+        return sum([1 if nums[i] < nums[i-1] else 0 for i in range(len(nums))]) < 2
+
+
