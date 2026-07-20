@@ -54,5 +54,25 @@ class Solution(object):
                 res[index1 // n][index1 % n] = v
         return res
 
-
-      
+class Solution:
+    def shiftGrid(self, grid: List[List[int]], k: int) -> List[List[int]]:
+        from typing import List
+        m, n = len(grid), len(grid[0])
+        total = m * n
+        k = k % total # Optimize in case k > total
+        
+        # Initialize an empty grid of the same dimensions
+        ans = [[0] * n for _ in range(m)]
+        
+        for r in range(m):
+            for c in range(n):
+                # Convert to 1D, shift, and wrap around
+                new_1d = (r * n + c + k) % total
+                
+                # Convert back to 2D
+                new_r = new_1d // n
+                new_c = new_1d % n
+                
+                ans[new_r][new_c] = grid[r][c]
+                
+        return ans 
