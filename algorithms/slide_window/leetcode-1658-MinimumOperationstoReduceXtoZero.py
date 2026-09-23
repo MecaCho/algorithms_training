@@ -13,40 +13,119 @@ Example 1:
 Input: nums = [1,1,4,2,3], x = 5
 Output: 2
 Explanation: The optimal solution is to remove the last two elements to reduce x to zero.
+
 Example 2:
 
 Input: nums = [5,6,7,8,9], x = 4
 Output: -1
+
 Example 3:
 
 Input: nums = [3,2,20,1,1,3], x = 10
 Output: 5
 Explanation: The optimal solution is to remove the last three elements and the first two elements (5 operations in total) to reduce x to zero.
+
  
 
 Constraints:
 
-1 <= nums.length <= 105
-1 <= nums[i] <= 104
-1 <= x <= 109
+1 <= nums.length <= 10^5
+1 <= nums[i] <= 10^4
+1 <= x <= 10^9
+
+
+1658. 将 x 减到 0 的最小操作数
+给你一个整数数组 nums 和一个整数 x 。每一次操作时，你应当移除数组 nums 最左边或最右边的元素，然后从 x 中减去该元素的值。请注意，需要 修改 数组以供接下来的操作使用。
+
+如果可以将 x 恰好 减到 0 ，返回 最小操作数 ；否则，返回 -1 。
+
+ 
+
+示例 1：
+
+输入：nums = [1,1,4,2,3], x = 5
+输出：2
+解释：最佳解决方案是移除后两个元素，将 x 减到 0 。
+
+示例 2：
+
+输入：nums = [5,6,7,8,9], x = 4
+输出：-1
+
+示例 3：
+
+输入：nums = [3,2,20,1,1,3], x = 10
+输出：5
+解释：最佳解决方案是移除后三个元素和前两个元素（总共 5 次操作），将 x 减到 0 。
+
+ 
+
+提示：
+
+1 <= nums.length <= 10^5
+1 <= nums[i] <= 10^4
+1 <= x <= 10^9
 '''
+
 
 class Solution:
     def minOperations(self, nums: List[int], x: int) -> int:
-        total = sum(nums)
-        if total < x:
+        target = sum(nums) - x
+        if target < 0:
             return -1
-        target = total - x
-        sum_tmp = 0
+        if target == 0:
+            return len(nums)
+
         left = 0
-        res = -1
-        for i in range(len(nums)):
-            sum_tmp += nums[i]
-            while left >= 0 and sum_tmp > target:
-                sum_tmp -= nums[left]
+        cur_sum = 0
+        max_len = -1
+        for right, val in enumerate(nums):
+            cur_sum += val
+            while left <= right and cur_sum > target:
+                cur_sum -= nums[left]
                 left += 1
+            if cur_sum == target:
+                max_len = max(max_len, right - left + 1)
 
-            if sum_tmp == target:
-                res = max(res, i - left + 1)
-        return -1 if res == -1 else len(nums) - res    
+        return -1 if max_len == -1 else len(nums) - max_len
 
+
+# golang solution
+
+'''
+func minOperations(nums []int, x int) int {
+	total := 0
+	for _, v := range nums {
+		total += v
+	}
+	target := total - x
+	if target < 0 {
+		return -1
+	}
+	if target == 0 {
+		return len(nums)
+	}
+
+	left := 0
+	curSum := 0
+	maxLen := -1
+
+	for right, val := range nums {
+		curSum += val
+		for left <= right && curSum > target {
+			curSum -= nums[left]
+			left++
+		}
+		if curSum == target {
+			if length := right - left + 1; length > maxLen {
+				maxLen = length
+			}
+		}
+	}
+
+	if maxLen == -1 {
+		return -1
+	}
+	return len(nums) - maxLen
+}
+'''
