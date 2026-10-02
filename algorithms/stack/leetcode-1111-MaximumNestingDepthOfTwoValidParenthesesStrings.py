@@ -1,5 +1,4 @@
 # encoding=utf8
-from typing import List
 
 '''
 1111. Maximum Nesting Depth of Two Valid Parentheses Strings
